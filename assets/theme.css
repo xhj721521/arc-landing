@@ -6,19 +6,21 @@
 }
 *{box-sizing:border-box}
 body{
-  margin:0;color:var(--text);font:16px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;
+  margin:0;color:var(--text);
+  font:16px/1.65 "Manrope",ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;
   background:linear-gradient(180deg,var(--bg1),var(--bg2));
   overflow-x:hidden;
 }
-/* 背景层（SVG动效） */
+/* 背景 */
 .bgfx{position:fixed;inset:0;z-index:-3;width:100%;height:100%;display:block}
 
-/* 容器与排版 */
+/* 容器/标题 */
 .container{max-width:1200px;margin:0 auto;padding:24px}
 .small{font-size:13px;color:var(--muted)}
 h1,h2,h3{margin:0 0 8px}
+h2{font-weight:800;letter-spacing:.2px}
 
-/* 玻璃导航 */
+/* 导航玻璃 */
 .nav{position:sticky;top:12px;z-index:50}
 .nav .row{
   display:flex;align-items:center;justify-content:space-between;padding:10px 16px;
@@ -74,8 +76,12 @@ h1,h2,h3{margin:0 0 8px}
 .btn.ghost{background:transparent}
 .btn:hover{transform:translateY(-1px);filter:saturate(110%)}
 .ripple{position:relative;overflow:hidden}
-.ripple::after{content:"";position:absolute;border-radius:50%;transform:scale(0);opacity:.5;background:#fff}
-.ripple:active::after{transform:scale(6);transition:transform .5s,opacity .8s;opacity:0}
+.ripple::after{
+  content:""; position:absolute; width:24px; height:24px; border-radius:50%;
+  background:rgba(255,255,255,.35); transform:scale(0); opacity:.6;
+  left:var(--ripple-x,50%); top:var(--ripple-y,50%); pointer-events:none;
+}
+.ripple:active::after{ transform:scale(8); transition:transform .5s, opacity .8s; opacity:0 }
 
 /* 信任栏 */
 .trustbar{display:grid;gap:14px;margin:-8px 0 16px}
@@ -129,14 +135,13 @@ h1,h2,h3{margin:0 0 8px}
 input[type="email"],input[type="text"]{width:100%;padding:12px;border-radius:10px;border:1px solid var(--stroke);background:#0e1422;color:#e6eaf3}
 button[type="submit"]{padding:10px 14px;border-radius:10px;border:1px solid var(--stroke);background:#141c2e;color:#e6eaf3;font-weight:800}
 
-/* 列表与标签/小卡片 */
+/* 标签/小卡片 */
 .list{margin:10px 0 0 18px}
 .tag{display:inline-block;padding:4px 8px;border:1px solid var(--stroke);border-radius:10px;background:rgba(255,255,255,.06);
   font-size:12px;color:#d5dff5;margin-bottom:8px}
 .mini-grid{display:grid;gap:16px}
 @media(min-width:900px){.mini-grid{grid-template-columns:1fr 1fr}}
 .mini-card{background:#0f1423;border:1px solid var(--stroke);border-radius:14px;padding:12px}
-.r-line>div{display:flex;justify-content:space-between;border-bottom:1px dashed var(--stroke);padding:6px 0}
 .pill{display:inline-block;padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:#10172a;color:#cfe3ff}
 
 /* 分配圆环 */
@@ -159,25 +164,16 @@ button[type="submit"]{padding:10px 14px;border-radius:10px;border:1px solid var(
 .vbar{height:12px;background:#0e1422;border:1px solid var(--stroke);border-radius:999px;overflow:hidden;margin:8px 0}
 #vbarInner{height:100%;width:0;background:linear-gradient(90deg,#9fe3c7,#6ea8fe);transition:width .4s ease}
 
-/* 山形路线/标签 */
-.mountain .mountain-svg,.mountain .tower-svg{width:100%;height:240px;display:block;margin-bottom:10px}
+/* 路线图（山形） */
+.mountain .mountain-svg{width:100%;height:240px;display:block;margin-bottom:10px}
 .mountain .trail{fill:none;stroke:url(#mg);stroke-width:4;filter:drop-shadow(0 6px 16px rgba(0,0,0,.4))}
 .mountain .node{fill:#0f1423;stroke:url(#mg);stroke-width:3}
-.mountain .label rect{fill:rgba(15,20,35,.9);stroke:#1e2740;rx:8;ry:8}
+.mountain .label rect{fill:rgba(15,20,35,.9);stroke:#1e2740;rx:8;ry:8;width:180px;height:28px}
 .mountain .label text{fill:#cfe3ff;font-weight:700;font-size:12px;transform:translate(8px,18px)}
-.mountain .label rect{width:180px;height:28px}
 .tips{margin-top:6px}
 .tips>div{background:#0f1423;border:1px solid var(--stroke);border-radius:12px;padding:12px}
 
-/* 显示控制：雪山/神域塔 */
-body.style-mountain .tower-svg{display:none}
-body.style-tower   .mountain-svg{display:none}
-
-/* 渐显动画 */
-.card,.tips>div,.trust-item,.hero-copy,.visual{opacity:0;transform:translateY(8px);transition:opacity .5s ease, transform .5s ease}
-.reveal{opacity:1!important;transform:translateY(0)!important}
-
-/* 页脚/分隔线 */
+/* 页脚 */
 .footer hr{border:0;border-top:1px solid var(--stroke);opacity:.6}
 
 /* 弹窗 */
@@ -186,6 +182,8 @@ body.style-tower   .mountain-svg{display:none}
 .modal-hd{padding:14px 16px;font-weight:800;border-bottom:1px solid var(--stroke)}
 .modal-bd{padding:14px 16px}
 .modal-ft{padding:12px 16px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid var(--stroke)}
+
+
 
 
 
