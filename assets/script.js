@@ -3,7 +3,7 @@
   const $$ = s => Array.from(document.querySelectorAll(s));
   const cfg = window.CONFIG || {};
 
-  /* ========== 多语言（可继续扩展） ========== */
+  /* ========== 多语言 ========== */
   const I18N = {
     "zh-CN": {
       nav_subscribe:"认购", nav_alloc:"分配", nav_cases:"分红案例", nav_mech:"稳健机制",
@@ -45,19 +45,22 @@
   $("[data-cfg='price']").textContent = price;
   $("[data-cfg='total']").textContent = total;
   $("#sold").textContent = sold;
+
   const raised = sold * price;
   $("#raised").textContent = raised.toLocaleString();
+
   const pct = total ? Math.min(100, (sold/total*100)) : 0;
   $("#soldPct").textContent = pct.toFixed(1) + "%";
   $("#bar").style.width = pct + "%";
   $("#barLabel").textContent = pct.toFixed(0) + "%";
+
   const remain = Math.max(0, total - sold);
   const closeTip = document.createElement('p');
   closeTip.className = 'small';
   closeTip.textContent = `剩余名额：${remain} 枚 · 预计关账：本月最后一个周五（JST）`;
   document.querySelector('#subscribe .grid-2 > div').appendChild(closeTip);
 
-  /* ========== 外链填充 ========== */
+  /* ========== 外链/邮箱填充 ========== */
   $$("[data-link]").forEach(a=>{
     const k = a.getAttribute("data-link");
     if (cfg.links && cfg.links[k]) a.href = cfg.links[k];
@@ -68,7 +71,7 @@
   });
   $("#footBrand").textContent = cfg.brand || "AOMI Protocol";
 
-  /* ========== 表单 action ========== */
+  /* ========== 表单提交 ========== */
   const form = $("#invest-form");
   if (form) {
     if (cfg.formspree) form.action = cfg.formspree;
@@ -92,14 +95,6 @@
     d.style.setProperty("--a3", a3);
   });
 
-  /* ========== 进入视口渐显 ========== */
-  const io = new IntersectionObserver(es=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add("reveal"); io.unobserve(e.target); }
-    });
-  },{threshold:0.12});
-  $$(".card, .tips>div, .trust-item, .hero-copy, .visual").forEach(el=>io.observe(el));
-
   /* ========== 锁仓演示 ========== */
   const cliff = cfg.vesting?.cliffMonths ?? 1;
   const vm    = cfg.vesting?.vestingMonths ?? 12;
@@ -118,25 +113,21 @@
   range.addEventListener("input", renderVest); renderVest();
 
   /* ========== 可验证指标（weekly.json） ========== */
-  fetch("data/weekly.json").then(r=>r.json()).then(d=>{
-    const P = d.P_week_arc ?? d.P_week ?? 0;
-    const C = d.C_week_arc ?? d.C_week ?? 1;
-    const R = C ? (P/C) : 0;
-    $("#Pweek")?.(v=>v); // 预留
-    $("#Cweek")?.(v=>v);
-    $("#Rval")?.(v=>v);
-    $("#halving")?.(v=>v);
-    if (d.cumulative){
-      const n = v => (v||0).toLocaleString();
-      $("#m-burn").textContent  = n(d.cumulative.burn_arc);
-      $("#m-addlp").textContent = n(d.cumulative.addLP_arc);
-      $("#m-divu").textContent  = n(d.cumulative.dividend_usdt);
-      $("#m-diva").textContent  = n(d.cumulative.dividend_arc);
-    }
-  }).catch(()=>{ /* ignore on demo */ });
+  fetch("data/weekly.json")
+    .then(r => r.json())
+    .then(d => {
+      if (!d || !d.cumulative) return;
+      const n = v => (v || 0).toLocaleString();
+      const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = n(val); };
+      set("m-burn",  d.cumulative.burn_arc);
+      set("m-addlp", d.cumulative.addLP_arc);
+      set("m-divu",  d.cumulative.dividend_usdt);
+      set("m-diva",  d.cumulative.dividend_arc);
+    })
+    .catch(console.warn);
 
   /* ========== 钱包连接（MetaMask/兼容钱包） ========== */
-  let provider, signer, account, chainIdHex;
+  let provider, signer, account;
 
   function short(addr){ return addr ? addr.slice(0,6)+"…"+addr.slice(-4) : ""; }
 
@@ -145,7 +136,6 @@
     const target = cfg.chain?.chainId;
     const cur = (await ethereum.request({ method:"eth_chainId" })) || "";
     if (cur.toLowerCase() === target.toLowerCase()) return true;
-    // 尝试切换；没有则添加
     try{
       await ethereum.request({ method:"wallet_switchEthereumChain", params:[{ chainId: target }] });
       return true;
@@ -165,7 +155,6 @@
     account = accounts[0];
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer   = provider.getSigner();
-    chainIdHex = await ethereum.request({ method:"eth_chainId" });
     $("#connectText").textContent = short(account);
     $("#connectBtn").classList.add("connected");
   }
@@ -186,17 +175,13 @@
   $("#closeBuy").addEventListener("click", ()=> buyModal.style.display = "none");
   $("#confirmBuy").addEventListener("click", async ()=>{
     if (!account){ alert("请先连接钱包"); return; }
-    try{
-      // 这里仅演示，不发真实交易
-      alert("演示：已发送购买请求（仅前端演示，无真实交易）");
-      buyModal.style.display = "none";
-    }catch(e){
-      alert("购买失败：" + (e.message||e));
-    }
+    // 这里仅演示，不发真实交易；接主网时在此调用 saleContract.mint()
+    alert("演示：已发送购买请求（仅前端演示，无真实交易）");
+    buyModal.style.display = "none";
   });
   window.addEventListener("keydown", e=>{ if(e.key==="Escape") buyModal.style.display="none"; });
 
-  /* ========== 按钮涟漪特效（CSS辅助） ========== */
+  /* ========== 按钮涟漪位置 ========== */
   document.addEventListener("click", e=>{
     const t = e.target.closest(".ripple");
     if(!t) return;
@@ -206,15 +191,11 @@
     t.style.setProperty("--ripple-y", (e.clientY - rect.top  - d/2) + "px");
   });
 
-  /* ========== 路线风格切换（可配塔形） ========== */
+  /* ========== 路线风格切换（如需塔形，可设 cfg.roadmapStyle='tower'） ========== */
   if ((cfg.roadmapStyle||"mountain") === "tower"){
     document.body.classList.remove("style-mountain");
     document.body.classList.add("style-tower");
   }
-
 })();
-
-})();
-
 
 
