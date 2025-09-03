@@ -3,6 +3,12 @@
   const $$ = s => Array.from(document.querySelectorAll(s));
   const cfg = window.CONFIG || {};
 
+  // 设置风格（雪山/神域塔）
+  if (cfg.roadmapStyle === 'tower') {
+    document.body.classList.remove('style-mountain');
+    document.body.classList.add('style-tower');
+  }
+
   // 进度条/数字
   const price = cfg.pricePerNFT || 500;
   const total = cfg.totalSupply || 100;
@@ -17,7 +23,7 @@
   $("#soldPct").textContent = pct.toFixed(1) + "%";
   $("#bar").style.width = pct + "%";
 
-  // 表单 action 填充
+  // 表单 action
   const form = $("#invest-form");
   if (form && cfg.formspree) form.action = cfg.formspree;
 
@@ -31,7 +37,7 @@
     if (cfg.links && cfg.links[k]) { a.href = "mailto:"+cfg.links[k]; a.textContent = cfg.links[k]; }
   });
 
-  // Donut 图（把 data-slices 数字转成角度）
+  // 分配圆环
   $$(".donut").forEach(d=>{
     const slices = (d.getAttribute("data-slices")||"").split("|").map(n=>+n);
     const sum = slices.reduce((a,b)=>a+b,0) || 1;
@@ -51,8 +57,8 @@
   },{threshold:0.12});
   $$(".card, .tips>div").forEach(el=>io.observe(el));
 
-  // 读取 weekly.json（占位数据）
-  fetch("/data/weekly.json").then(r=>r.json()).then(d=>{
+  // 读取 weekly.json
+  fetch("data/weekly.json").then(r=>r.json()).then(d=>{
     const P = d.P_week_arc ?? d.P_week ?? 0;
     const C = d.C_week_arc ?? d.C_week ?? 1;
     const R = C ? (P/C) : 0;
@@ -63,3 +69,5 @@
   }).catch(()=>{ /* 忽略 */ });
 
 })();
+
+
