@@ -1,178 +1,267 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>YOUR_BRAND — 不会崩盘的链游 · 周度减半 × 5%费率通缩 × 每周双币分红</title>
-<meta name="description" content="只融一次 50,000 USDT（创世股东NFT × 100，固定总量，不增发）。周度减半 + 5%费率：50%销毁/30%补LP/20%分红；公测起每周 USDT+ARC 双池分红；全部链上可查，多签托管，达标放款/不达标退款。">
-<style>
-:root{
-  --bg:#0b0c10; --card:#121318; --text:#e6e8ee; --muted:#9aa0aa; --accent:#86efac; --brand:#60a5fa; --warning:#f59e0b; --ok:#34d399; --danger:#f87171;
-}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto}
-a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
-.container{max-width:1080px;margin:0 auto;padding:24px}
-nav{position:sticky;top:0;background:rgba(11,12,16,.8);backdrop-filter:blur(8px);z-index:10;border-bottom:1px solid #1f2430}
-nav .row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
-nav .menu a{margin-left:16px;font-weight:600}
-.hero{padding:48px 0}
-h1{font-size:28px;line-height:1.2;margin:0 0 10px}
-.hero p{color:var(--muted);margin:6px 0 20px}
-.badges{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px}
-.badge{padding:6px 10px;border-radius:999px;background:#1b1f2a;color:#cbd5e1;border:1px solid #2a3140;font-size:12px}
-.cta{display:flex;flex-wrap:wrap;gap:10px}
-.btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid #2a3140;background:linear-gradient(180deg,#1a1e27,#141722);color:#e6e8ee;font-weight:700}
-.btn.primary{background:linear-gradient(180deg,#2563eb,#1d4ed8)}
-.grid{display:grid;gap:16px}
-@media(min-width:900px){ .grid-2{grid-template-columns:1fr 1fr} .grid-3{grid-template-columns:1fr 1fr 1fr}}
-.card{background:var(--card);border:1px solid #222735;border-radius:16px;padding:18px}
-.card h2{margin:0 0 8px;font-size:18px}
-.small{font-size:13px;color:var(--muted)}
-.kv{display:grid;grid-template-columns:180px 1fr;gap:8px;margin:10px 0}
-.kv div:first-child{color:#a8b1bb}
-.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0f1116;border:1px solid #222735;border-radius:10px;padding:10px;overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{border-bottom:1px solid #252a36;padding:10px;text-align:left}
-.tag{font-size:12px;padding:2px 8px;border-radius:6px;border:1px solid #2a3140;color:#b9c3d1}
-.ok{color:var(--ok)} .warn{color:var(--warning)} .danger{color:var(--danger)}
-.footer{margin:40px 0 20px;color:#8b94a3}
-.form{display:grid;gap:8px}
-input[type="email"],input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid #2a3140;background:#0f1116;color:#e6e8ee}
-button[type="submit"]{padding:10px 14px;border-radius:10px;border:1px solid #2a3140;background:#1a1e27;color:#e6e8ee;font-weight:700}
-.section-title{display:flex;align-items:center;gap:8px}
-.section-title .dot{width:10px;height:10px;border-radius:50%;background:var(--brand)}
-hr{border:0;border-top:1px solid #232733;margin:24px 0}
-ul{margin:8px 0 0 18px}
-</style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AOMI Protocol — 奥秘协议</title>
+<meta name="description" content="AOMI Protocol · 神域探险链游 · 链上可核验 · 通缩自稳 · 每周USDT+ARC分红">
+<link rel="stylesheet" href="/assets/theme.css"/>
+<link rel="icon" href="/assets/logo-light.svg">
+<script>
+  /* 这里是可改配置 —— 只改引号里的数字或链接即可 */
+  window.CONFIG = {
+    pricePerNFT: 500,             // 每枚股东NFT价格（USDT）
+    totalSupply: 100,             // 总量固定
+    sold: 12,                     // 已售数量（上线时你来改）
+    formspree: "https://formspree.io/f/your_form_id", // 表单地址
+    links: {
+      shareholderNFT: "#",        // 链上股东NFT浏览器链接
+      feeSplitTx: "#",            // FeeSplit示例交易
+      weeklyTx: "#",              // WeeklySettle/Dividend示例
+      safeMultisig: "#",          // Safe多签地址
+      telegram: "#",
+      discord: "#",
+      x: "#",
+      email: "hi@aomi.gg"
+    }
+  };
+</script>
 </head>
 <body>
-<nav>
+
+<nav class="nav glass">
   <div class="container row">
-    <div><strong>金蚀协议</strong></div>
+    <a class="brand" href="#">
+      <img class="logo" src="/assets/logo-light.svg" alt="AOMI Protocol">
+      <div class="brand-text">
+        <strong class="brand-en">AOMI Protocol</strong>
+        <small class="brand-local">奥秘协议</small>
+      </div>
+    </a>
     <div class="menu">
-      <a href="#mechanism">机制</a>
-      <a href="#revenue">分红</a>
-      <a href="#gameplay">玩法</a>
-      <a href="#roadmap">阶段</a>
-      <a href="#proof">证明</a>
-      <a href="#invest">认购</a>
+      <a href="#subscribe">认购</a>
+      <a href="#allocation">分配</a>
+      <a href="#cases">分红案例</a>
+      <a href="#mechanism">稳健机制</a>
+      <a href="#gameplay">玩法亮点</a>
+      <a href="#roadmap">登顶路线</a>
+      <a href="#proof">可验证</a>
     </div>
   </div>
 </nav>
 
-<section class="container hero">
-  <h1>不会崩盘的链游：<br/>周度减半 × 5%费率通缩 × 每周双币分红</h1>
-  <div class="badges">
-    <span class="badge">只融一次：50,000 USDT</span>
-    <span class="badge">股东NFT：固定总量 100，不增发</span>
-    <span class="badge">公测起：每周 USDT + ARC 双币分红</span>
+<header class="hero">
+  <div class="container">
+    <h1>神域探险链游 · 链上可核验<br/>通缩自稳 × 每周 USDT+ARC 双币分红</h1>
+    <p class="lead">
+      我们只保留 <b>10%～15%</b> 用于运营与风控，<b>其余全部进入分红与流动性</b>；股东拥有优先补流与做市收益、治理投票、官方代充资格。
+    </p>
+    <div class="badges">
+      <span class="badge">本轮规模：50,000 USDT</span>
+      <span class="badge">股东NFT：100 枚 × 500 USDT/枚（固定总量）</span>
+      <span class="badge">每周结算 · 链上可查</span>
+    </div>
+    <a class="btn primary" href="#subscribe">立即认购</a>
+    <a class="btn" href="#allocation">查看分配方案</a>
   </div>
-  <p>核心玩法：团队地图 / 12 层爬塔 / 大逃杀 + 观战预测。全部规则与资金流上链公开，多签托管，达标放款 / 不达标退款。</p>
-  <div class="cta">
-    <a class="btn primary" href="#proof">查看测试网事件</a>
-    <a class="btn" href="#invest">申请股东位（托管认购）</a>
-    <a class="btn" href="#dashboard">查看周度看板</a>
+</header>
+
+<section id="subscribe" class="container card">
+  <div class="section-title"><span class="dot"></span><h2>认购与进度</h2></div>
+  <div class="grid-2">
+    <div>
+      <div class="kv"><div>本轮规模</div><div><b>50,000 USDT</b></div></div>
+      <div class="kv"><div>价格/枚</div><div><b>$<span data-cfg="price"></span></b></div></div>
+      <div class="kv"><div>总量</div><div><b><span data-cfg="total"></span> 枚</b>（固定，不增发）</div></div>
+      <div class="kv"><div>已售</div><div><b><span id="sold">0</span>/<span data-cfg="total"></span></b>（<b id="soldPct">0%</b>）</div></div>
+      <div class="kv"><div>已募</div><div><b><span id="raised">0</span> USDT</b></div></div>
+      <div class="kv"><div>股东权益</div><div>每周 USDT+ARC 双币分红 · LP优先补流（做市与滑点收益按占比分配）· 治理投票 · 官方代充白名单</div></div>
+      <div class="progress">
+        <div id="bar" class="bar" style="width:0%"></div>
+      </div>
+      <p class="small">备注：募集资金进入「开发专用金库」（多签），用于研发/服务器/CDN/美术/风控/审计/推广；每周公开周报与支出明细。</p>
+    </div>
+    <form id="invest-form" class="form" method="POST">
+      <h3>申请白名单</h3>
+      <input type="email" name="email" required placeholder="邮箱 Email">
+      <input type="text" name="wallet" placeholder="钱包地址（可选）">
+      <button class="btn primary" type="submit">提交申请</button>
+      <p class="small">社群：<a target="_blank" data-link="telegram">Telegram</a> · <a target="_blank" data-link="discord">Discord</a> · <a target="_blank" data-link="x">X/Twitter</a> · <a href="#" data-mail="email">hi@aomi.gg</a></p>
+    </form>
   </div>
 </section>
 
-<div class="container grid grid-2">
-  <section id="mechanism" class="card">
-    <div class="section-title"><span class="dot"></span><h2>不会崩盘的机制</h2></div>
-    <ul>
-      <li><b>周度阈值减半</b>：若 <span class="code">R = P_week / C_week ≥ 1 + 15%</span> → 下一周全图减半（不低于地板）。</li>
-      <li><b>5% 手续费三分</b>：<b>50%</b> 销毁 / <b>30%</b> 补 LP / <b>20%</b> 分红（链上事件可查）。</li>
-      <li><b>损耗=非收入</b>：门票/修理/质押，仅计入“消耗”，不分红。</li>
-      <li><b>金币→ARC 闸门</b>：内产出不过度冲击外部价格。</li>
-    </ul>
-  </section>
+<section id="allocation" class="container card">
+  <div class="section-title"><span class="dot"></span><h2>分配方案（公测后生效 · 净收益=USDT｜损耗=ARC）</h2></div>
 
-  <section id="revenue" class="card">
-    <div class="section-title"><span class="dot"></span><h2>收入与每周双币分红（USDT + ARC）</h2></div>
-    <table>
-      <thead><tr><th>类别</th><th>来源</th><th>分配口径</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="tag">净收益</span></td>
-          <td>会员、官方铸造/通行证、功能费、碎片合成铸造费、便捷购/提现服务费</td>
-          <td>公测起：前 2 个月 <b>40%</b> / 其后 <b>20%</b> 周入分红池（按入账资产入 USDT/ARC 各自池）</td>
-        </tr>
-        <tr>
-          <td><span class="tag">交易费</span></td>
-          <td>二级交易 / 游戏内撮合 / 预测结算（成交额 × <b>5%</b>）</td>
-          <td><b>即时</b> 50% 销毁 / 30% 补 LP / 20% 入分红池（不受 40/20 限制）</td>
-        </tr>
-        <tr>
-          <td><span class="tag">损耗</span></td>
-          <td>开图、门票、修理、质押锁仓</td>
-          <td>非收入，不分红，仅影响是否减半</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="small">说明：种子 5 万 USDT 仅用于阶段 1 交付，不参与分红；达标且有结余才注入 LP。</p>
-  </section>
+  <div class="grid-2">
+    <div class="alloc">
+      <h3>公测第 1 月（增长冲刺）</h3>
+      <div class="donut" data-slices="50|40|10" data-labels="分红|LP|营销"></div>
+      <ul class="list">
+        <li><b>50%</b> 分红（USDT→USDT分红池；ARC→ARC分红池）</li>
+        <li><b>40%</b> 注入 LP（分别注入USDT/ARC做市池）</li>
+        <li><b>10%</b> 营销（买量/活动/主播合作）</li>
+      </ul>
+    </div>
+    <div class="alloc">
+      <h3>公测第 2 个月起（稳态拉深）</h3>
+      <div class="donut" data-slices="30|40|15|15" data-labels="分红|LP|营销|运营"></div>
+      <ul class="list">
+        <li><b>30%</b> 分红</li>
+        <li><b>40%</b> 注入 LP</li>
+        <li><b>15%</b> 营销</li>
+        <li><b>15%</b> 项目方运营（运维/安全/审计/法务/人力）</li>
+      </ul>
+    </div>
+  </div>
 
-  <section id="gameplay" class="card">
-    <div class="section-title"><span class="dot"></span><h2>玩法与零撸</h2></div>
-    <ul>
-      <li>团队地图 / 12 层爬塔 / 大逃杀 + 观战预测</li>
-      <li><b>个人地图（零撸）</b>：每日 1 次免费，少量金币 + 极低概率 NFT 碎片 → <b>付费合成</b>整件 NFT</li>
-    </ul>
-    <div class="code">视频演示：上线后嵌入 30–45 秒屏录（连接测试网钱包 → 触发 FeeSplit/WeeklySettle 提示）</div>
-  </section>
+  <p class="small">交易手续费（基础 5%）计入“损耗（ARC）”口径，与其他损耗按上方案拆分；分红频率：每周一次（JST）。</p>
+</section>
 
-  <section id="roadmap" class="card">
-    <div class="section-title"><span class="dot"></span><h2>阶段（东京时区｜硬日期）</h2></div>
-    <div class="kv"><div>2025/10/03</div><div>阶段 1：大厅、团队/个人地图、12 层爬塔、大逃杀演示、5% 费路、周度看板、股东治理</div></div>
-    <div class="kv"><div>2025/11/03</div><div>阶段 2：电竞/体育预测、代币波动预测、主播挂件、DEX 演示池</div></div>
-    <div class="kv"><div>2026/01/03</div><div>阶段 3：赛季制 v1、耐久+修理、UGC 参数模板、通行证&装饰、官方赛事</div></div>
-  </section>
-</div>
+<section id="cases" class="container card">
+  <div class="section-title"><span class="dot"></span><h2>分红案例（演示模型，非承诺）</h2></div>
+  <div class="grid-2">
+    <div class="case">
+      <div class="tag">A｜第1月（50/40/10）</div>
+      <ul>
+        <li>当周净收益：<b>20,000 USDT</b>；损耗：<b>120,000 ARC</b>；已售：<b>60</b></li>
+        <li>分红入池：<b>10,000 USDT</b> & <b>60,000 ARC</b></li>
+        <li>每枚约：<b>166.67 USDT</b> + <b>1,000 ARC</b></li>
+        <li>LP注入：USDT 8,000｜ARC 48,000；营销：USDT 2,000｜ARC 12,000</li>
+      </ul>
+    </div>
+    <div class="case">
+      <div class="tag">B｜第2月+（30/40/15/15）</div>
+      <ul>
+        <li>当周净收益：<b>12,000 USDT</b>；损耗：<b>80,000 ARC</b>；已售：<b>80</b></li>
+        <li>分红入池：<b>3,600 USDT</b> & <b>24,000 ARC</b></li>
+        <li>每枚：<b>45.00 USDT</b> + <b>300 ARC</b></li>
+        <li>LP注入：USDT 4,800｜ARC 32,000；营销/运营：各 USDT 1,800｜ARC 12,000</li>
+      </ul>
+    </div>
+    <div class="case">
+      <div class="tag hot">C｜强势周·第1月</div>
+      <ul>
+        <li>当周净收益：<b>50,000 USDT</b>；损耗：<b>300,000 ARC</b>；已售：<b>70</b></li>
+        <li>分红入池：<b>25,000 USDT</b> & <b>150,000 ARC</b></li>
+        <li>每枚约：<b>357.14 USDT</b> + <b>2,142.86 ARC</b></li>
+        <li>LP注入：USDT 20,000｜ARC 120,000；营销：USDT 5,000｜ARC 30,000</li>
+      </ul>
+    </div>
+    <div class="case">
+      <div class="tag">D｜稳态周·第2月+</div>
+      <ul>
+        <li>当周净收益：<b>30,000 USDT</b>；损耗：<b>150,000 ARC</b>；已售：<b>100</b></li>
+        <li>分红入池：<b>9,000 USDT</b> & <b>45,000 ARC</b></li>
+        <li>每枚：<b>90.00 USDT</b> + <b>450 ARC</b></li>
+        <li>LP注入：USDT 12,000｜ARC 60,000；营销/运营：USDT 4,500/4,500｜ARC 22,500/22,500</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="mechanism" class="container card">
+  <div class="section-title"><span class="dot"></span><h2>不会崩盘的原理（机制托底，而非价格保证）</h2></div>
+  <ol class="list">
+    <li><b>周度阈值减半</b>：记 <code>Pweek</code>=新增ARC产出，<code>Cweek</code>=当周损耗，<code>R=P/C</code>。若 <code>R ≥ 1+15%</code> → 下周全局减半（不低于地板）；若 <code>R ≤ 1</code> → 下周回弹 25%（不超基准）。</li>
+    <li><b>持续做市加深流动性</b>：按分配方案每周注入 LP，配合手续费 <b>50%销毁 / 30%加LP / 20%入分红</b>，形成有效“底价带”。</li>
+    <li><b>闸门与沉淀</b>：金币/碎片需经“闸门”兑换成 ARC 才可外流；地图/探险队升级、修理/门票、合成铸造形成结构性沉淀。</li>
+    <li><b>治理保险丝</b>：阈值、回弹、地板、费率与限额由股东投票微调；所有分配与结算写链，周度指标同步到 <code>/data/weekly.json</code>。</li>
+  </ol>
+
+  <div class="grid-2">
+    <div class="mini-card">
+      <div class="tag">本周R值（示例）</div>
+      <p class="small">自动读取 <code>/data/weekly.json</code></p>
+      <div class="r-line">
+        <div>产出 P_week：<b id="Pweek">—</b></div>
+        <div>消耗 C_week：<b id="Cweek">—</b></div>
+        <div>R = P/C：<b id="Rval">—</b></div>
+        <div>下周：<b id="halving">—</b></div>
+      </div>
+    </div>
+    <div class="mini-card">
+      <div class="tag">代币与做市</div>
+      <ul>
+        <li>公测即上链，ARC/USDT 交易对</li>
+        <li>股东享有<strong>LP优先补流</strong>窗口；做市与滑点收益按LP占比分配</li>
+        <li>LP持续注入 + 减半 + 销毁&加LP → 稳定器组合</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small">注：上述为机制说明，用于抑制下行与通胀、平滑波动，<b>不构成价格或收益保证</b>。</p>
+</section>
+
+<section id="gameplay" class="container card">
+  <div class="section-title"><span class="dot"></span><h2>玩法亮点 · 神域探险 × 全品类竞猜 × 强拉新</h2></div>
+  <div class="grid-2">
+    <div>
+      <h3>大世界&核心循环</h3>
+      <ul class="list">
+        <li><b>团队地图</b>：多人协作开图、团徽与领地加成、<b>每周团队作战</b>（周赛）</li>
+        <li><b>12 层爬塔</b>：每 3 层一小关；失败掉耐久，成功掉碎片，<b>付费合成</b>成为NFT</li>
+        <li><b>大逃杀 + 观战预测</b>：玩家对战、观众在合规地区可做预测；平台仅收基础手续费</li>
+        <li><b>基础每日探索</b>：每日发放基础探险次数，产出少量金币与小概率碎片，引导进入合成/升级/交易</li>
+      </ul>
+      <h3>拉新与激励</h3>
+      <ul class="list">
+        <li><b>邀请奖励</b>：按有效活跃与贡献发放积分/碎片概率券（从营销预算列支）</li>
+        <li><b>排行榜奖励</b>：个人榜 & 团队榜每周结算公开发放</li>
+      </ul>
+    </div>
+    <div>
+      <h3>竞猜（分阶段开放）</h3>
+      <ul class="list">
+        <li><b>代币波动预测</b>：最高 <b>15×</b>，<b>5/30/60 分钟</b>一期（限额与强平线由治理设定，链上结算）</li>
+        <li><b>电竞/体育</b>：LOL / DOTA / 永劫无间 / NBA / 欧洲杯 / 世界杯 / 搏击等（按地区合规开放）</li>
+      </ul>
+      <h3>公平与可验证</h3>
+      <ul class="list">
+        <li>预测结果采集自权威数据源/预言机，链上可复核</li>
+        <li>撮合与费用拆分写链；参数改动皆留痕</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" class="container card mountain">
+  <div class="section-title"><span class="dot"></span><h2>登顶路线（JST）</h2></div>
+  <svg class="mountain-svg" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7ab0ff"/><stop offset="1" stop-color="#8af0be"/>
+      </linearGradient>
+    </defs>
+    <polyline class="trail" points="0,320 200,300 350,260 520,210 700,180 900,140 1200,120"/>
+    <circle class="node" cx="200" cy="300" r="8"/><circle class="node" cx="520" cy="210" r="8"/>
+    <circle class="node" cx="900" cy="140" r="8"/>
+    <g class="label" transform="translate(160,310)"><rect/><text>Base Camp｜第1月</text></g>
+    <g class="label" transform="translate(480,220)"><rect/><text>High Camp｜第2月</text></g>
+    <g class="label" transform="translate(860,150)"><rect/><text>Summit｜第3–4月</text></g>
+  </svg>
+  <div class="grid-3 tips">
+    <div><b>Base Camp｜第1月</b><br/>大厅、团队/个人地图、12层爬塔、BR演示、分配合约（50/40/10）、weekly.json看板、只读治理台。</div>
+    <div><b>High Camp｜第2月</b><br/>代币上链与股东LP窗口、代币波动预测（≤15×；5/30/60min）、主播Overlay、DEX演示池、首批通行证。</div>
+    <div><b>Summit｜第3–4月</b><br/>赛季制v1、地图/探险队升级全量、周度团队战与排行榜常态化、UGC参数模板、数据看板2.0、合规电竞/体育预测。</div>
+  </div>
+</section>
 
 <section id="proof" class="container card">
-  <div class="section-title"><span class="dot"></span><h2>可信证明（测试网可查）</h2></div>
-  <ul>
-    <li><b>股东 NFT（ERC721）</b>：固定总量 <b>100</b>，已 <code>finalize()</code>（不可增发） → 
-      <a href="EXPLORER_LINK_SHAREHOLDER" target="_blank">浏览器链接</a></li>
-    <li><b>手续费事件</b>：<code>FeeSplit(fee, burn, addLP, dividend)</code>（<b>50/30/20</b> 数值清晰） → 
-      <a href="EXPLORER_LINK_FEESPLIT" target="_blank">示例交易</a></li>
-    <li><b>周度事件</b>：<code>WeeklySettle(P,C,R,halving)</code> / <code>DividendAccrual</code> → 
-      <a href="EXPLORER_LINK_WEEKLY" target="_blank">示例交易</a></li>
-    <li><b>多签金库（2/3）</b>：托管认购专用 → <a href="SAFE_MULTISIG_LINK" target="_blank">多签地址</a></li>
+  <div class="section-title"><span class="dot"></span><h2>可验证（测试网/主网上线前演示）</h2></div>
+  <ul class="list">
+    <li><b>股东 NFT（总量 100）</b>：<a target="_blank" data-link="shareholderNFT">Explorer</a></li>
+    <li><b>手续费事件</b>：FeeSplit(fee, burn, addLP, dividend)（50/30/20）→ <a target="_blank" data-link="feeSplitTx">示例交易</a></li>
+    <li><b>周度事件</b>：WeeklySettle(P,C,R,halving)/DividendAccrual → <a target="_blank" data-link="weeklyTx">示例交易</a></li>
+    <li><b>多签金库（2/3）</b>：<a target="_blank" data-link="safeMultisig">Safe 地址</a></li>
   </ul>
 </section>
 
-<section id="dashboard" class="container card">
-  <div class="section-title"><span class="dot"></span><h2>周度看板（占位）</h2></div>
-  <p class="small">字段：<code>P_week / C_week / R / halving / cumulative{ burn_arc, addLP_arc, dividend_usdt, dividend_arc }</code></p>
-  <p><a class="btn" href="WEEKLY_JSON_LINK" target="_blank">查看 weekly.json</a></p>
-</section>
-
-<section id="invest" class="container grid grid-2">
-  <div class="card">
-    <div class="section-title"><span class="dot"></span><h2>认购（托管保障）</h2></div>
-    <ul>
-      <li>开放 <b>20 枚股东位</b>（总量 100 固定），<b>500 USDT/枚</b></li>
-      <li><b>多签托管</b>：达标三件套（可点演示 / 测试网事件 / 周度看板）→ 放款；未达标 → <b>退款</b></li>
-      <li>种子资金<b>不分红</b>；分红仅来自玩家真实净收益 & 5% 交易费中的 20%</li>
-    </ul>
-    <p><a class="btn" href="#" target="_blank">下载《托管认购条款》PDF</a></p>
-  </div>
-  <div class="card">
-    <div class="section-title"><span class="dot"></span><h2>申请白名单</h2></div>
-    <form class="form" action="https://formspree.io/f/your_form_id" method="POST">
-      <input type="email" name="email" required placeholder="邮箱 Email">
-      <input type="text" name="wallet" placeholder="钱包地址（可选）">
-      <button type="submit">提交申请</button>
-      <p class="small">提交即表示你已阅读并同意本站免责声明与隐私政策。</p>
-    </form>
-    <p class="small">社群：<a href="TG_LINK" target="_blank">Telegram</a> · <a href="DISCORD_LINK" target="_blank">Discord</a> · <a href="X_LINK" target="_blank">X/Twitter</a> · <a href="mailto:EMAIL">EMAIL</a></p>
-  </div>
-</section>
-
-<div class="container footer small">
+<footer class="container footer small">
   <hr/>
-  <p>免责声明：本页不构成收益承诺或投资建议。功能按地区白名单提供；中国内地/美国提供“观战版”（不开放充值/提现/交易/预测）。</p>
-</div>
+  <p>免责声明：以上为机制与示例说明，旨在抑制下行与通胀、平滑波动，不构成价格或收益保证；功能按地区白名单开放。</p>
+</footer>
+
+<script src="/assets/script.js" defer></script>
 </body>
 </html>
-

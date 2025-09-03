@@ -1,2 +1,13 @@
-{ "week":"2025-W36","P_week_arc":12345,"C_week_arc":10000,"R":1.2345,"halving":true,
-  "cumulative":{"burn_arc":250000,"addLP_arc":150000,"dividend_usdt":18000,"dividend_arc":14000}}
+{
+  "week": "2025-W36",
+  "P_week_arc": 123450,
+  "C_week_arc": 100000,
+  "R": 1.2345,
+  "halving": true,
+  "cumulative": {
+    "burn_arc": 250000,
+    "addLP_arc": 150000,
+    "dividend_usdt": 18000,
+    "dividend_arc": 14000
+  }
+}
