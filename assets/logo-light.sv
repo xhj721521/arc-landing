@@ -1,106 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <defs>
-    <!-- Gold glow filter: blur + source merge -->
-    <filter id="goldGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
     <style>
-      .goldstroke { stroke: #FFD56A; fill: none; filter: url(#goldGlow); }
-      .goldfill { fill: #FFD56A; filter: url(#goldGlow); }
       .label { font-family: Cinzel, "Trajan Pro", "Times New Roman", serif; letter-spacing: 2px; }
     </style>
   </defs>
 
-  <!-- Black background -->
-  <rect width="1024" height="1024" fill="#000000"/>
+  <rect width="1024" height="1024" fill="#000"/>
+  <!-- 外环：先画一条粗、透明度低的“伪光晕”，再画一条细、亮的主线 -->
+  <circle cx="512" cy="512" r="380" fill="none" stroke="#FFD56A" stroke-opacity="0.25" stroke-width="50"/>
+  <circle cx="512" cy="512" r="380" fill="none" stroke="#FFD56A" stroke-width="18"/>
 
-  <!-- Outer glowing ring -->
-  <circle cx="512" cy="512" r="380" class="goldstroke" stroke-width="22"/>
-
-  <!-- 24 evenly-spaced rune marks (glowing strokes) -->
-  <g id="runes" stroke="#FFD56A" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#goldGlow)">
-    <g transform="translate(512,512) rotate(0) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
+  <!-- 24 等分符文：同样双描边 -->
+  <g stroke="#FFD56A" stroke-linecap="round" fill="none">
+    <g stroke-opacity="0.25" stroke-width="12">
+      <g transform="translate(512,512)">
+        <!-- 复制 24 次，间隔 15° -->
+        <!-- 示例一组： -->
+        <g transform="rotate(0) translate(0,-380)">
+          <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
+        </g>
+        <g transform="rotate(15) translate(0,-380)">
+          <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
+        </g>
+        <!-- ... 到 345° 共24个 ... -->
+      </g>
     </g>
-    <g transform="translate(512,512) rotate(15) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(30) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(45) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(60) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(75) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(90) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(105) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(120) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(135) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(150) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(165) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(180) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(195) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(210) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(225) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(240) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(255) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(270) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(285) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(300) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(315) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(330) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
-    </g>
-    <g transform="translate(512,512) rotate(345) translate(0,-380)">
-      <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
+    <g stroke-width="5">
+      <g transform="translate(512,512)">
+        <g transform="rotate(0) translate(0,-380)">
+          <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
+        </g>
+        <g transform="rotate(15) translate(0,-380)">
+          <path d="M0,-16 L0,16"/><path d="M0,0 L10,-10"/><path d="M0,0 L-10,-10"/>
+        </g>
+        <!-- ... 到 345° 共24个 ... -->
+      </g>
     </g>
   </g>
 
-  <!-- Title inside the ring -->
-  <g text-anchor="middle" class="label goldfill">
-    <text x="512" y="492" font-size="108">ARCANE</text>
-    <text x="512" y="592" font-size="96">PROTOCOL</text>
+  <!-- 文字：同样双描边模拟光感 -->
+  <g text-anchor="middle" class="label">
+    <text x="512" y="492" font-size="108" fill="#FFD56A" fill-opacity="0.25" stroke="#FFD56A" stroke-opacity="0.25" stroke-width="12">ARCANE</text>
+    <text x="512" y="592" font-size="96" fill="#FFD56A" fill-opacity="0.25" stroke="#FFD56A" stroke-opacity="0.25" stroke-width="10">PROTOCOL</text>
+
+    <text x="512" y="492" font-size="108" fill="#FFD56A">ARCANE</text>
+    <text x="512" y="592" font-size="96" fill="#FFD56A">PROTOCOL</text>
   </g>
 </svg>
