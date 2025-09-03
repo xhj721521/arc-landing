@@ -5,34 +5,90 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>AOMI Protocol — 奥秘协议</title>
 <meta name="description" content="AOMI Protocol · 神域探险链游 · 链上可核验 · 通缩自稳 · 每周USDT+ARC分红">
-<link rel="stylesheet" href="/assets/theme.css"/>
-<link rel="icon" href="/assets/logo-light.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css"/>
+<link rel="icon" href="assets/logo-light.svg">
 <script>
-  /* 这里是可改配置 —— 只改引号里的数字或链接即可 */
+  // 只改这里的数字和链接即可
   window.CONFIG = {
-    pricePerNFT: 500,             // 每枚股东NFT价格（USDT）
-    totalSupply: 100,             // 总量固定
-    sold: 12,                     // 已售数量（上线时你来改）
-    formspree: "https://formspree.io/f/your_form_id", // 表单地址
+    pricePerNFT: 500,
+    totalSupply: 100,
+    sold: 12, // ← 已售数量
+    formspree: "https://formspree.io/f/your_form_id",
     links: {
-      shareholderNFT: "#",        // 链上股东NFT浏览器链接
-      feeSplitTx: "#",            // FeeSplit示例交易
-      weeklyTx: "#",              // WeeklySettle/Dividend示例
-      safeMultisig: "#",          // Safe多签地址
+      shareholderNFT: "#",
+      feeSplitTx: "#",
+      weeklyTx: "#",
+      safeMultisig: "#",
       telegram: "#",
       discord: "#",
       x: "#",
       email: "hi@aomi.gg"
-    }
+    },
+    // 路线风格：'mountain' 雪山 / 'tower' 神域塔
+    roadmapStyle: "mountain"
   };
 </script>
 </head>
-<body>
+
+<!-- 切换风格：style-mountain / style-tower -->
+<body class="style-mountain">
+
+<!-- ====== 内联 SVG 主背景（微动效） ====== -->
+<svg class="bgfx" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"  stop-color="#0b0f1a"/><stop offset="1" stop-color="#0a0d14"/>
+    </linearGradient>
+    <radialGradient id="s1" cx="0.18" cy="0.15" r="0.65">
+      <stop offset="0" stop-color="#7ab0ff" stop-opacity=".85"/><stop offset="1" stop-color="#7ab0ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s2" cx="0.9" cy="0.08" r="0.55">
+      <stop offset="0" stop-color="#8af0be" stop-opacity=".75"/><stop offset="1" stop-color="#8af0be" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s3" cx="0.5" cy="0.85" r="0.7">
+      <stop offset="0" stop-color="#648cff" stop-opacity=".55"/><stop offset="1" stop-color="#648cff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7ab0ff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#8af0be" stop-opacity=".12"/>
+    </linearGradient>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#fff" stroke-opacity=".05" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <!-- 呼吸的品牌光斑 -->
+  <g>
+    <rect width="1920" height="1080" fill="url(#s1)">
+      <animate attributeName="opacity" values="0.9;0.6;0.9" dur="12s" repeatCount="indefinite"/>
+    </rect>
+    <rect width="1920" height="1080" fill="url(#s2)">
+      <animate attributeName="opacity" values="0.8;0.5;0.8" dur="14s" repeatCount="indefinite"/>
+    </rect>
+    <rect width="1920" height="1080" fill="url(#s3)">
+      <animate attributeName="opacity" values="0.6;0.3;0.6" dur="16s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  <!-- 轻网格 -->
+  <rect width="1920" height="1080" fill="url(#grid)" opacity=".08"/>
+  <!-- 山体慢速起伏 -->
+  <path id="mountain" fill="url(#hill)" d="M0,860 C140,820 260,820 380,800 C520,770 660,740 800,720 C980,690 1180,660 1400,640 C1600,620 1760,610 1920,600 L1920,1080 L0,1080 Z">
+    <animate attributeName="d" dur="18s" repeatCount="indefinite"
+      values="M0,860 C140,820 260,820 380,800 C520,770 660,740 800,720 C980,690 1180,660 1400,640 C1600,620 1760,610 1920,600 L1920,1080 L0,1080 Z;
+              M0,870 C160,820 280,810 400,800 C560,770 700,740 840,720 C1020,700 1220,660 1420,650 C1620,630 1780,620 1920,610 L1920,1080 L0,1080 Z;
+              M0,860 C140,820 260,820 380,800 C520,770 660,740 800,720 C980,690 1180,660 1400,640 C1600,620 1760,610 1920,600 L1920,1080 L0,1080 Z"/>
+  </path>
+</svg>
+<!-- ====== /内联 SVG ====== -->
 
 <nav class="nav glass">
   <div class="container row">
     <a class="brand" href="#">
-      <img class="logo" src="/assets/logo-light.svg" alt="AOMI Protocol">
+      <img class="logo" src="assets/logo-light.svg" alt="AOMI Protocol">
       <div class="brand-text">
         <strong class="brand-en">AOMI Protocol</strong>
         <small class="brand-local">奥秘协议</small>
@@ -51,37 +107,41 @@
 </nav>
 
 <header class="hero">
-  <div class="container">
-    <h1>神域探险链游 · 链上可核验<br/>通缩自稳 × 每周 USDT+ARC 双币分红</h1>
+  <div class="container hero-inner">
+    <h1 class="display">
+      <span class="fx">神域探险链游 · 链上可核验</span><br>
+      <span class="grad">通缩自稳 × 每周 USDT+ARC 双币分红</span>
+    </h1>
     <p class="lead">
-      我们只保留 <b>10%～15%</b> 用于运营与风控，<b>其余全部进入分红与流动性</b>；股东拥有优先补流与做市收益、治理投票、官方代充资格。
+      我们只保留 <b>10%~15%</b> 用于运营与风控，<b>其余全部进入分红与流动性</b>；股东拥有优先补流与做市收益、治理投票、官方代充资格。
     </p>
     <div class="badges">
-      <span class="badge">本轮规模：50,000 USDT</span>
-      <span class="badge">股东NFT：100 枚 × 500 USDT/枚（固定总量）</span>
+      <span class="badge">本轮规模：<b>50,000 USDT</b></span>
+      <span class="badge">股东NFT：<b>100 枚 × 500 USDT/枚</b>（固定总量）</span>
       <span class="badge">每周结算 · 链上可查</span>
     </div>
-    <a class="btn primary" href="#subscribe">立即认购</a>
-    <a class="btn" href="#allocation">查看分配方案</a>
+    <div class="cta">
+      <a class="btn primary glow" href="#subscribe">立即认购</a>
+      <a class="btn ghost" href="#allocation">查看分配方案</a>
+    </div>
   </div>
 </header>
 
-<section id="subscribe" class="container card">
+<section id="subscribe" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>认购与进度</h2></div>
   <div class="grid-2">
     <div>
-      <div class="kv"><div>本轮规模</div><div><b>50,000 USDT</b></div></div>
-      <div class="kv"><div>价格/枚</div><div><b>$<span data-cfg="price"></span></b></div></div>
-      <div class="kv"><div>总量</div><div><b><span data-cfg="total"></span> 枚</b>（固定，不增发）</div></div>
-      <div class="kv"><div>已售</div><div><b><span id="sold">0</span>/<span data-cfg="total"></span></b>（<b id="soldPct">0%</b>）</div></div>
-      <div class="kv"><div>已募</div><div><b><span id="raised">0</span> USDT</b></div></div>
-      <div class="kv"><div>股东权益</div><div>每周 USDT+ARC 双币分红 · LP优先补流（做市与滑点收益按占比分配）· 治理投票 · 官方代充白名单</div></div>
-      <div class="progress">
-        <div id="bar" class="bar" style="width:0%"></div>
+      <div class="chips">
+        <span class="chip k">本轮规模</span><span class="chip v"><b>50,000 USDT</b></span>
+        <span class="chip k">价格/枚</span><span class="chip v">$<span data-cfg="price"></span></span>
+        <span class="chip k">总量</span><span class="chip v"><span data-cfg="total"></span> 枚（固定，不增发）</span>
+        <span class="chip k">已售</span><span class="chip v"><b id="sold">0</b>/<span data-cfg="total"></span>（<b id="soldPct">0%</b>）</span>
+        <span class="chip k">已募</span><span class="chip v"><b id="raised">0</b> USDT</span>
       </div>
-      <p class="small">备注：募集资金进入「开发专用金库」（多签），用于研发/服务器/CDN/美术/风控/审计/推广；每周公开周报与支出明细。</p>
+      <div class="progress"><div id="bar" class="bar"></div></div>
+      <p class="small">募集资金进入「<b>开发专用金库</b>」（多签），用于研发/服务器/CDN/美术/风控/审计/推广；每周公开周报与支出明细。</p>
     </div>
-    <form id="invest-form" class="form" method="POST">
+    <form id="invest-form" class="form glass2" method="POST">
       <h3>申请白名单</h3>
       <input type="email" name="email" required placeholder="邮箱 Email">
       <input type="text" name="wallet" placeholder="钱包地址（可选）">
@@ -91,9 +151,8 @@
   </div>
 </section>
 
-<section id="allocation" class="container card">
+<section id="allocation" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>分配方案（公测后生效 · 净收益=USDT｜损耗=ARC）</h2></div>
-
   <div class="grid-2">
     <div class="alloc">
       <h3>公测第 1 月（增长冲刺）</h3>
@@ -115,65 +174,58 @@
       </ul>
     </div>
   </div>
-
-  <p class="small">交易手续费（基础 5%）计入“损耗（ARC）”口径，与其他损耗按上方案拆分；分红频率：每周一次（JST）。</p>
+  <p class="small">交易手续费（基础 5%）计入“损耗（ARC）”，与其他损耗按上方案拆分；分红频率：每周一次（JST）。</p>
 </section>
 
-<section id="cases" class="container card">
+<section id="cases" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>分红案例（演示模型，非承诺）</h2></div>
   <div class="grid-2">
     <div class="case">
       <div class="tag">A｜第1月（50/40/10）</div>
       <ul>
-        <li>当周净收益：<b>20,000 USDT</b>；损耗：<b>120,000 ARC</b>；已售：<b>60</b></li>
+        <li>净收益：<b>20,000 USDT</b>；损耗：<b>120,000 ARC</b>；已售：<b>60</b></li>
         <li>分红入池：<b>10,000 USDT</b> & <b>60,000 ARC</b></li>
         <li>每枚约：<b>166.67 USDT</b> + <b>1,000 ARC</b></li>
-        <li>LP注入：USDT 8,000｜ARC 48,000；营销：USDT 2,000｜ARC 12,000</li>
       </ul>
     </div>
     <div class="case">
       <div class="tag">B｜第2月+（30/40/15/15）</div>
       <ul>
-        <li>当周净收益：<b>12,000 USDT</b>；损耗：<b>80,000 ARC</b>；已售：<b>80</b></li>
+        <li>净收益：<b>12,000 USDT</b>；损耗：<b>80,000 ARC</b>；已售：<b>80</b></li>
         <li>分红入池：<b>3,600 USDT</b> & <b>24,000 ARC</b></li>
         <li>每枚：<b>45.00 USDT</b> + <b>300 ARC</b></li>
-        <li>LP注入：USDT 4,800｜ARC 32,000；营销/运营：各 USDT 1,800｜ARC 12,000</li>
       </ul>
     </div>
     <div class="case">
       <div class="tag hot">C｜强势周·第1月</div>
       <ul>
-        <li>当周净收益：<b>50,000 USDT</b>；损耗：<b>300,000 ARC</b>；已售：<b>70</b></li>
+        <li>净收益：<b>50,000 USDT</b>；损耗：<b>300,000 ARC</b>；已售：<b>70</b></li>
         <li>分红入池：<b>25,000 USDT</b> & <b>150,000 ARC</b></li>
         <li>每枚约：<b>357.14 USDT</b> + <b>2,142.86 ARC</b></li>
-        <li>LP注入：USDT 20,000｜ARC 120,000；营销：USDT 5,000｜ARC 30,000</li>
       </ul>
     </div>
     <div class="case">
       <div class="tag">D｜稳态周·第2月+</div>
       <ul>
-        <li>当周净收益：<b>30,000 USDT</b>；损耗：<b>150,000 ARC</b>；已售：<b>100</b></li>
+        <li>净收益：<b>30,000 USDT</b>；损耗：<b>150,000 ARC</b>；已售：<b>100</b></li>
         <li>分红入池：<b>9,000 USDT</b> & <b>45,000 ARC</b></li>
         <li>每枚：<b>90.00 USDT</b> + <b>450 ARC</b></li>
-        <li>LP注入：USDT 12,000｜ARC 60,000；营销/运营：USDT 4,500/4,500｜ARC 22,500/22,500</li>
       </ul>
     </div>
   </div>
 </section>
 
-<section id="mechanism" class="container card">
+<section id="mechanism" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>不会崩盘的原理（机制托底，而非价格保证）</h2></div>
   <ol class="list">
-    <li><b>周度阈值减半</b>：记 <code>Pweek</code>=新增ARC产出，<code>Cweek</code>=当周损耗，<code>R=P/C</code>。若 <code>R ≥ 1+15%</code> → 下周全局减半（不低于地板）；若 <code>R ≤ 1</code> → 下周回弹 25%（不超基准）。</li>
-    <li><b>持续做市加深流动性</b>：按分配方案每周注入 LP，配合手续费 <b>50%销毁 / 30%加LP / 20%入分红</b>，形成有效“底价带”。</li>
-    <li><b>闸门与沉淀</b>：金币/碎片需经“闸门”兑换成 ARC 才可外流；地图/探险队升级、修理/门票、合成铸造形成结构性沉淀。</li>
-    <li><b>治理保险丝</b>：阈值、回弹、地板、费率与限额由股东投票微调；所有分配与结算写链，周度指标同步到 <code>/data/weekly.json</code>。</li>
+    <li><b>周度阈值减半</b>：记 <code>Pweek</code>=新增ARC产出，<code>Cweek</code>=当周损耗，<code>R=P/C</code>。若 <code>R ≥ 1+15%</code> → 下周全局减半；若 <code>R ≤ 1</code> → 下周回弹 25%。</li>
+    <li><b>持续做市加深流动性</b>：按分配方案每周注入 LP，叠加手续费 <b>50%销毁 / 30%加LP / 20%入分红</b>，形成“底价带”。</li>
+    <li><b>闸门与沉淀</b>：金币/碎片需经“闸门”兑换成 ARC 才可外流；地图/探险队升级、修理/门票、合成铸造形成沉淀。</li>
+    <li><b>治理保险丝</b>：参数由股东投票微调；所有分配与结算写链，周度指标同步到 <code>/data/weekly.json</code>。</li>
   </ol>
-
-  <div class="grid-2">
+  <div class="mini-grid">
     <div class="mini-card">
       <div class="tag">本周R值（示例）</div>
-      <p class="small">自动读取 <code>/data/weekly.json</code></p>
       <div class="r-line">
         <div>产出 P_week：<b id="Pweek">—</b></div>
         <div>消耗 C_week：<b id="Cweek">—</b></div>
@@ -183,17 +235,16 @@
     </div>
     <div class="mini-card">
       <div class="tag">代币与做市</div>
-      <ul>
+      <ul class="list">
         <li>公测即上链，ARC/USDT 交易对</li>
-        <li>股东享有<strong>LP优先补流</strong>窗口；做市与滑点收益按LP占比分配</li>
-        <li>LP持续注入 + 减半 + 销毁&加LP → 稳定器组合</li>
+        <li>股东享有<strong>LP优先补流</strong>；做市与滑点收益按LP占比分配</li>
+        <li>LP持续注入 + 减半 + 销毁/加LP → 稳定器组合</li>
       </ul>
     </div>
   </div>
-  <p class="small">注：上述为机制说明，用于抑制下行与通胀、平滑波动，<b>不构成价格或收益保证</b>。</p>
 </section>
 
-<section id="gameplay" class="container card">
+<section id="gameplay" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>玩法亮点 · 神域探险 × 全品类竞猜 × 强拉新</h2></div>
   <div class="grid-2">
     <div>
@@ -201,67 +252,88 @@
       <ul class="list">
         <li><b>团队地图</b>：多人协作开图、团徽与领地加成、<b>每周团队作战</b>（周赛）</li>
         <li><b>12 层爬塔</b>：每 3 层一小关；失败掉耐久，成功掉碎片，<b>付费合成</b>成为NFT</li>
-        <li><b>大逃杀 + 观战预测</b>：玩家对战、观众在合规地区可做预测；平台仅收基础手续费</li>
-        <li><b>基础每日探索</b>：每日发放基础探险次数，产出少量金币与小概率碎片，引导进入合成/升级/交易</li>
-      </ul>
-      <h3>拉新与激励</h3>
-      <ul class="list">
-        <li><b>邀请奖励</b>：按有效活跃与贡献发放积分/碎片概率券（从营销预算列支）</li>
-        <li><b>排行榜奖励</b>：个人榜 & 团队榜每周结算公开发放</li>
+        <li><b>大逃杀 + 观战预测</b>：合规地区可做预测；平台仅收基础手续费</li>
+        <li><b>基础每日探索</b>：每日基础探险次数，小额金币与小概率碎片，引导进入合成/升级/交易</li>
       </ul>
     </div>
     <div>
       <h3>竞猜（分阶段开放）</h3>
       <ul class="list">
         <li><b>代币波动预测</b>：最高 <b>15×</b>，<b>5/30/60 分钟</b>一期（限额与强平线由治理设定，链上结算）</li>
-        <li><b>电竞/体育</b>：LOL / DOTA / 永劫无间 / NBA / 欧洲杯 / 世界杯 / 搏击等（按地区合规开放）</li>
+        <li><b>电竞/体育</b>：LOL / DOTA / 永劫无间 / NBA / 欧洲杯 / 世界杯 / 搏击（按地区合规开放）</li>
       </ul>
-      <h3>公平与可验证</h3>
+      <h3>拉新与激励</h3>
       <ul class="list">
-        <li>预测结果采集自权威数据源/预言机，链上可复核</li>
-        <li>撮合与费用拆分写链；参数改动皆留痕</li>
+        <li><b>邀请奖励</b>：按有效活跃与贡献发放（从营销预算列支）</li>
+        <li><b>排行榜奖励</b>：个人榜 & 团队榜每周结算公开发放</li>
       </ul>
     </div>
   </div>
 </section>
 
-<section id="roadmap" class="container card mountain">
+<section id="roadmap" class="container card mountain float">
   <div class="section-title"><span class="dot"></span><h2>登顶路线（JST）</h2></div>
-  <svg class="mountain-svg" viewBox="0 0 1200 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+
+  <!-- 雪山路线（默认显示） -->
+  <svg class="mountain-svg" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#7ab0ff"/><stop offset="1" stop-color="#8af0be"/>
       </linearGradient>
+      <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="rgba(122,176,255,.25)"/>
+        <stop offset="1" stop-color="rgba(138,240,190,.12)"/>
+      </linearGradient>
     </defs>
-    <polyline class="trail" points="0,320 200,300 350,260 520,210 700,180 900,140 1200,120"/>
-    <circle class="node" cx="200" cy="300" r="8"/><circle class="node" cx="520" cy="210" r="8"/>
-    <circle class="node" cx="900" cy="140" r="8"/>
-    <g class="label" transform="translate(160,310)"><rect/><text>Base Camp｜第1月</text></g>
-    <g class="label" transform="translate(480,220)"><rect/><text>High Camp｜第2月</text></g>
-    <g class="label" transform="translate(860,150)"><rect/><text>Summit｜第3–4月</text></g>
+    <path d="M0,300 C150,260 250,260 350,240 C480,210 600,180 720,160 C860,140 1000,130 1200,120 L1200,360 L0,360 Z"
+          fill="url(#hill2)" />
+    <polyline class="trail" points="40,300 220,270 420,230 650,190 900,150 1160,130" />
+    <circle class="node" cx="220" cy="270" r="7"/>
+    <circle class="node" cx="650" cy="190" r="7"/>
+    <circle class="node" cx="900" cy="150" r="7"/>
+    <g class="label" transform="translate(180,280)"><rect/><text>Base Camp｜第1月</text></g>
+    <g class="label" transform="translate(610,200)"><rect/><text>High Camp｜第2月</text></g>
+    <g class="label" transform="translate(860,160)"><rect/><text>Summit｜第3–4月</text></g>
   </svg>
+
+  <!-- 神域塔（切换时显示） -->
+  <svg class="tower-svg" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="tg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8af0be"/><stop offset="1" stop-color="#7ab0ff"/>
+      </linearGradient>
+    </defs>
+    <rect x="0" y="260" width="1200" height="100" fill="rgba(122,176,255,.12)"/>
+    <g transform="translate(520,40)" fill="url(#tg)" stroke="#a8c9ff" stroke-width="2" opacity=".9">
+      <path d="M90 280 h60 v-40 h50 v-40 h50 v-45 h-35 v-30 h25 v-45 h-45 v-30 h25 v-55 h-60 v-40 h40 v-60 h-115 v60 h40 v40 h-60 v55 h35 v30 h-50 v45 h25 v30 h-40 v45 h20 v30 h-30 v40 h45 v40 h50 v40z"/>
+      <circle cx="120" cy="20" r="8" fill="#d7f7ff" stroke="none"/>
+    </g>
+  </svg>
+
   <div class="grid-3 tips">
-    <div><b>Base Camp｜第1月</b><br/>大厅、团队/个人地图、12层爬塔、BR演示、分配合约（50/40/10）、weekly.json看板、只读治理台。</div>
+    <div><b>Base Camp｜第1月</b><br/>大厅、团队/个人地图、12层爬塔、BR演示、分配合约（50/40/10）、weekly看板、只读治理台。</div>
     <div><b>High Camp｜第2月</b><br/>代币上链与股东LP窗口、代币波动预测（≤15×；5/30/60min）、主播Overlay、DEX演示池、首批通行证。</div>
-    <div><b>Summit｜第3–4月</b><br/>赛季制v1、地图/探险队升级全量、周度团队战与排行榜常态化、UGC参数模板、数据看板2.0、合规电竞/体育预测。</div>
+    <div><b>Summit｜第3–4月</b><br/>赛季制v1、地图/探险队升级全量、周度团队战与榜单常态化、UGC参数模板、数据看板2.0、合规电竞/体育预测。</div>
   </div>
 </section>
 
-<section id="proof" class="container card">
+<section id="proof" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>可验证（测试网/主网上线前演示）</h2></div>
   <ul class="list">
     <li><b>股东 NFT（总量 100）</b>：<a target="_blank" data-link="shareholderNFT">Explorer</a></li>
-    <li><b>手续费事件</b>：FeeSplit(fee, burn, addLP, dividend)（50/30/20）→ <a target="_blank" data-link="feeSplitTx">示例交易</a></li>
-    <li><b>周度事件</b>：WeeklySettle(P,C,R,halving)/DividendAccrual → <a target="_blank" data-link="weeklyTx">示例交易</a></li>
+    <li><b>手续费事件</b>：FeeSplit(50/30/20) → <a target="_blank" data-link="feeSplitTx">示例交易</a></li>
+    <li><b>周度事件</b>：WeeklySettle/DividendAccrual → <a target="_blank" data-link="weeklyTx">示例交易</a></li>
     <li><b>多签金库（2/3）</b>：<a target="_blank" data-link="safeMultisig">Safe 地址</a></li>
   </ul>
+  <p class="small">免责声明：以上为机制与示例说明，用于抑制下行与通胀、平滑波动，不构成价格或收益保证；功能按地区白名单开放。</p>
 </section>
 
 <footer class="container footer small">
   <hr/>
-  <p>免责声明：以上为机制与示例说明，旨在抑制下行与通胀、平滑波动，不构成价格或收益保证；功能按地区白名单开放。</p>
+  <p>© AOMI Protocol</p>
 </footer>
 
-<script src="/assets/script.js" defer></script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>
+
