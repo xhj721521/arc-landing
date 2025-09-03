@@ -6,44 +6,49 @@
   <title>AOMI Protocol — 奥秘协议</title>
   <meta name="description" content="AOMI Protocol · 神域探险链游 · 链上可核验 · 通缩自稳 · 每周USDT+ARC双币分红">
   <link rel="icon" href="assets/logo-light.svg">
+
+  <!-- 新字体：Manrope（高质感） -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="assets/theme.css"/>
-  <!-- ethers 用于连接钱包（前期演示即可，正式版可锁版本或改为 viem/wagmi） -->
+
+  <!-- ethers：钱包连接演示 -->
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 
+  <!-- ========= 统一配置（按需改） ========= -->
   <script>
-  /* ========= 统一配置（只改这里就行） ========= */
   window.CONFIG = {
     brand: "AOMI Protocol",
     email: "hi@aomi.gg",
 
     // 认购配置
-    pricePerNFT: 500,             // 每枚价格（USDT）
-    totalSupply: 100,             // 固定总量
-    sold: 12,                     // 已售（示例）
-    formspree: "",                // 可填 Formspree 表单地址，留空则不提交
+    pricePerNFT: 500,          // 每枚价格（USDT）
+    totalSupply: 100,          // 固定总量
+    sold: 12,                  // 已售（示例）
+    formspree: "",             // 表单端点（可用 Formspree），留空仅前端演示
 
     // 分红/锁仓演示（仅前端模拟）
-    vesting: { cliffMonths: 1, vestingMonths: 12 }, // 悬崖 + 线性解锁月数
+    vesting: { cliffMonths: 1, vestingMonths: 12 },
 
-    // 链与合约（演示为 Polygon Amoy 测试网）
+    // 链与合约（演示：Polygon Amoy 测试网）
     chain: {
-      chainId: "0x13882",                  // 80002
+      chainId: "0x13882",   // 80002
       chainName: "Polygon Amoy",
       rpcUrls: ["https://rpc-amoy.polygon.technology"],
       blockExplorerUrls: ["https://www.oklink.com/amoy"],
       nativeCurrency: { name:"MATIC", symbol:"MATIC", decimals:18 }
     },
     contracts: {
-      arcToken: "0xArcTokenAddressDEMO000000000000000000000001",          // ARC
-      shareholderNFT: "0xShareholderNFTDEMO00000000000000000000002",      // 股东NFT
-      sale: "0xSaleContractDEMO0000000000000000000000000000003"           // 销售合约
+      arcToken: "0xArcTokenAddressDEMO000000000000000000000001",
+      shareholderNFT: "0xShareholderNFTDEMO00000000000000000000002",
+      sale: "0xSaleContractDEMO0000000000000000000000000000003"
     },
     links: {
       telegram:"#", discord:"#", x:"#",
-      shareholderNFT:"#", safeMultisig:"#", weeklyTx:"#", feeSplitTx:"#", github:"#", whitepaper:"#", deck:"#"
+      shareholderNFT:"#", safeMultisig:"#", weeklyTx:"#", feeSplitTx:"#",
+      github:"#", whitepaper:"#", deck:"#"
     },
     roadmapStyle: "mountain" // or "tower"
   };
@@ -51,7 +56,7 @@
 </head>
 
 <body class="style-mountain">
-<!-- ===== 背景 SVG（微动效） ===== -->
+<!-- 背景 SVG 微动效 -->
 <svg class="bgfx" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
@@ -90,7 +95,7 @@
   </path>
 </svg>
 
-<!-- ===== 导航 ===== -->
+<!-- 导航 -->
 <nav class="nav glass">
   <div class="container row">
     <a class="brand" href="#"><img class="logo" src="assets/logo-light.svg" alt="logo">
@@ -115,7 +120,7 @@
   </div>
 </nav>
 
-<!-- ===== 首屏（左文案 + 右插画） ===== -->
+<!-- 首屏 -->
 <header class="hero">
   <div class="container hero-grid">
     <div class="hero-copy">
@@ -135,6 +140,7 @@
       </div>
     </div>
 
+    <!-- 右侧插画 -->
     <div class="visual">
       <div class="orb orb-a"></div><div class="orb orb-b"></div>
       <svg viewBox="0 0 420 360" class="tower" aria-hidden="true">
@@ -155,7 +161,7 @@
   </div>
 </header>
 
-<!-- ===== 信任栏 ===== -->
+<!-- 信任栏 -->
 <section class="trustbar container">
   <div class="trust-item">
     <div class="ti-title">多签金库</div>
@@ -179,7 +185,7 @@
   </div>
 </section>
 
-<!-- ===== 认购与进度 ===== -->
+<!-- 认购与进度 -->
 <section id="subscribe" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>认购与进度</h2></div>
   <div class="grid-2">
@@ -213,7 +219,7 @@
   </div>
 </section>
 
-<!-- ===== 分配方案 ===== -->
+<!-- 分配方案 -->
 <section id="allocation" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>分配方案（净收益=USDT｜损耗=ARC；每周发放）</h2></div>
   <div class="grid-2">
@@ -237,7 +243,7 @@
   <p class="small">交易手续费（基础5%）计入“损耗（ARC）”，与其他损耗按上方案拆分；分红频率：每周一次（JST）。</p>
 </section>
 
-<!-- ===== 尽调资料包 ===== -->
+<!-- 尽调资料包 -->
 <section class="container ddpack card float">
   <div class="section-title"><span class="dot"></span><h2>尽调资料包（DD Pack）</h2></div>
   <ul class="list">
@@ -247,7 +253,7 @@
   </ul>
 </section>
 
-<!-- ===== 实机画面 / 预告 ===== -->
+<!-- 实机画面 / 预告 -->
 <section class="container card float" id="gallery">
   <div class="section-title"><span class="dot"></span><h2>实机画面 / 预告</h2></div>
   <div class="grid-2">
@@ -263,7 +269,7 @@
   </div>
 </section>
 
-<!-- ===== 稳健机制 ===== -->
+<!-- 稳健机制 -->
 <section id="mechanism" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>不会崩盘的原理（机制托底，不是收益承诺）</h2></div>
   <ol class="list">
@@ -274,7 +280,7 @@
   </ol>
 </section>
 
-<!-- ===== 股东权益 & 锁仓演示 ===== -->
+<!-- 股东权益 & 锁仓演示 -->
 <section id="rights" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>股东权益 · 锁仓示意</h2></div>
   <div class="grid-2">
@@ -296,7 +302,7 @@
   </div>
 </section>
 
-<!-- ===== 玩法亮点 ===== -->
+<!-- 玩法亮点 -->
 <section id="gameplay" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>玩法亮点 · 神域探险 × 全品类竞猜 × 强拉新</h2></div>
   <div class="grid-2">
@@ -323,7 +329,7 @@
   </div>
 </section>
 
-<!-- ===== 登顶路线 ===== -->
+<!-- 登顶路线（山形） -->
 <section id="roadmap" class="container card mountain float">
   <div class="section-title"><span class="dot"></span><h2>登顶路线（JST）</h2></div>
 
@@ -347,7 +353,7 @@
   </div>
 </section>
 
-<!-- ===== 可验证 ===== -->
+<!-- 可验证 -->
 <section id="proof" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>可验证（测试网/主网上线前演示）</h2></div>
   <ul class="list">
@@ -365,7 +371,7 @@
   <p class="small">免责声明：以上为机制与示例说明，用于抑制下行与通胀、平滑波动，不构成价格或收益保证；功能按地区白名单开放。</p>
 </section>
 
-<!-- ===== 团队/FAQ ===== -->
+<!-- 团队/FAQ -->
 <section id="team" class="container card float">
   <div class="section-title"><span class="dot"></span><h2>团队与顾问</h2></div>
   <div class="grid-3">
@@ -411,5 +417,7 @@
 <script src="assets/script.js" defer></script>
 </body>
 </html>
+
+
 
 
