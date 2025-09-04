@@ -1,195 +1,234 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Arcane Protocol · 奥秘协议</title>
-  <meta name="description" content="Arcane Protocol（奥秘协议）— 以 ARC 驱动的神域链游生态。黑金符文风，高端且可信。">
-  <meta name="theme-color" content="#070C12">
-  <!-- 可选字体（加载失败也不影响排版） -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700..900&family=Cardo:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-  <!-- 只用你的 LOGO 做网站图标，不参与页面渲染 -->
-  <link rel="icon" href="logo-light.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="theme.css">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Arcane Protocol · 奥秘协议</title>
+<meta name="description" content="Arcane Protocol（奥秘协议）— 以 ARC 驱动的神域链游生态。黑金符文风，高端且可信。">
+<meta name="theme-color" content="#070C12">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700..900&family=Cardo:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root{--gold:#FFD56A;--gold-2:#D4AF37;--gold-3:#FFE9A3;--muted:#b9c6cf;--h-top:80px;--radius:16px}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#070C12;color:#e8eef4;font-family:"Cardo","Noto Serif SC",serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+radial-gradient(120% 90% at 50% -10%,rgba(255,213,106,.12),transparent 60%),
+linear-gradient(180deg,#0A1119 0%, #070C12 100%)}
+/* 顶部导航（始终显示） */
+.topbar{height:var(--h-top);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:10;backdrop-filter:saturate(1.2) blur(6px)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{height:56px}
+.logotype{font-family:"Cinzel",serif;font-weight:900;letter-spacing:.6px}
+.logotype b{color:var(--gold);text-shadow:0 0 12px rgba(255,213,106,.55)}
+.logotype .cn{opacity:.78;font:700 12px 'Noto Serif SC',serif;letter-spacing:.3px}
+.nav{display:flex;gap:14px}
+.nav-item{padding:10px 14px;border-radius:12px;font-weight:700;letter-spacing:.3px}
+.nav-item:hover,.nav-item.is-active{color:var(--gold);text-shadow:0 0 10px rgba(255,213,106,.7)}
+/* Hero */
+.hero{min-height:68vh;display:grid;place-items:center;text-align:center;padding-top:10px}
+.title{font-family:"Cinzel",serif;font-weight:900;font-size:clamp(28px,4.6vw,56px);letter-spacing:.6px;margin:8px 0;color:#fff;display:inline-flex;align-items:center;gap:12px}
+.title .dot{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%, rgba(255,213,106,.25) 50%, transparent 70%);box-shadow:0 0 16px rgba(255,213,106,.8),0 0 32px rgba(255,213,106,.35);animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.25)}}
+.subtitle{color:#cfe2f3;max-width:760px;margin:0 auto 18px;line-height:1.6}
+.gold{color:var(--gold)}
+.cta{display:flex;gap:12px;justify-content:center;margin-top:10px}
+.btn{display:inline-block;background:linear-gradient(180deg,#223243,#101820);color:#fff;border:1px solid rgba(255,213,106,.35);padding:12px 18px;border-radius:14px;font-weight:700;letter-spacing:.3px}
+.btn.alt{border-color:rgba(146,198,255,.35)}
+/* 模块标题 */
+.section-title{font-family:"Cinzel",serif;font-weight:900;font-size:26px;letter-spacing:.6px;margin:22px 0 12px;color:#fff;display:flex;align-items:center;gap:10px}
+.mini-dot{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%, rgba(255,213,106,.25) 50%, transparent 70%);box-shadow:0 0 12px rgba(255,213,106,.8)}
+/* 卡片 */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:18px}
+.card{position:relative;padding:18px;border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg, rgba(20,32,44,.92) 0%, rgba(11,18,26,.9) 100%);border:1px solid rgba(255,213,106,.28);box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.card::after{content:"";position:absolute;inset:-3px;border-radius:var(--radius);border:2px solid transparent;background:linear-gradient(90deg,var(--gold),var(--gold-2),var(--gold-3)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.9}
+.card h3{margin:0 0 8px;font:900 20px "Cinzel",serif;color:#fff}
+.card p{margin:0;color:var(--muted);line-height:1.6}
+.card:hover{transform:translateY(-1px)}
+/* 进度条 */
+.ap-progress{position:relative;margin:12px 0 6px;padding-top:6px}
+.ap-progress__bar{--val:65;height:14px;border-radius:10px;overflow:hidden;position:relative;background:linear-gradient(180deg,#16212c,#0e1621);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.ap-progress__bar::before{content:"";position:absolute;inset:0;width:calc(var(--val)*1%);border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--gold-2),var(--gold-3));filter:drop-shadow(0 0 12px rgba(255,213,106,.45))}
+.ap-progress__ticks{pointer-events:none;position:absolute;inset:auto 0 0 0;height:14px;transform:translateY(-14px);background:repeating-linear-gradient(90deg, rgba(255,213,106,.34) 0 2px, transparent 2px 30px);border-radius:10px;opacity:.55}
+.ap-progress__label{margin-top:6px;color:#cfe2f3;font:600 13px/1.4 "Cardo",serif}
+.ap-progress__label b{color:var(--gold);font-family:"Cinzel",serif}
+/* 环形 + KPI */
+.ring-row{display:flex;gap:14px;align-items:center;margin-top:10px}
+.ap-ring{display:inline-block}
+.big-num{font:800 36px "Cinzel",serif;color:var(--gold);text-shadow:0 0 12px rgba(255,213,106,.6)}
+.muted{color:#cfe2f3}
+/* 路线容器 */
+.route-wrap{border-radius:16px;overflow:hidden;border:1px solid rgba(255,213,106,.28);background:linear-gradient(180deg, rgba(16,25,35,.85), rgba(10,16,24,.85));box-shadow:0 10px 30px rgba(0,0,0,.35)}
+/* 页脚 */
+.footer{margin-top:30px;padding:26px 0;border-top:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,#0b121a,#0a1017)}
+.foot-grid{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.foot-brand{font:900 18px "Cinzel",serif}
+.foot-brand b{color:var(--gold)}
+.foot-sub{color:#99aab9;font:600 12px "Cardo",serif}
+.foot-links{display:flex;gap:14px;flex-wrap:wrap}
+.foot-links a{color:#cfe2f3;font-size:13px}
+.foot-links a:hover{color:var(--gold)}
+@media (max-width:960px){.cards{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <!-- 顶部导航：始终显示 -->
-  <header class="topbar container" role="banner">
-    <a class="brand" href="#">
-      <img src="logo-light.svg" alt="Arcane Protocol Logo" class="logo">
-      <div class="logotype">
-        <div class="en">ARCANE <b>PROTOCOL</b></div>
-        <div class="cn">奥秘协议</div>
-      </div>
-    </a>
-    <nav class="nav" aria-label="主导航">
-      <a class="nav-item is-active" href="#subscribe">认购</a>
-      <a class="nav-item" href="#alloc">分配</a>
-      <a class="nav-item" href="#div">分红</a>
-      <a class="nav-item" href="#gov">治理</a>
-      <a class="nav-item" href="#road">路线</a>
-    </nav>
-  </header>
 
-  <!-- Hero -->
-  <section class="hero container">
+<header class="topbar container" role="banner">
+  <a class="brand" href="#">
+    <!-- 如果 logo-light.svg 不在根目录，图片会被隐藏，不会报错或撑坏布局 -->
+    <img src="logo-light.svg" alt="Arcane Protocol Logo" class="logo" onerror="this.style.display='none'">
+    <div class="logotype">
+      <div class="en">ARCANE <b>PROTOCOL</b></div>
+      <div class="cn">奥秘协议</div>
+    </div>
+  </a>
+  <nav class="nav" aria-label="主导航">
+    <a class="nav-item is-active" href="#subscribe">认购</a>
+    <a class="nav-item" href="#alloc">分配</a>
+    <a class="nav-item" href="#div">分红</a>
+    <a class="nav-item" href="#gov">治理</a>
+    <a class="nav-item" href="#road">路线</a>
+  </nav>
+</header>
+
+<section class="hero container">
+  <div>
+    <h1 class="title"><span class="dot" aria-hidden="true"></span>唤醒未知，铸就你的传奇</h1>
+    <p class="subtitle">探索 · 试炼 · 集市 · 远征 —— 以 <b class="gold">ARC</b> 驱动的神域链游生态。连接九宫功能页与团队地图，延展长期玩法与价值。</p>
+    <div class="cta">
+      <a class="btn" href="#subscribe">立即认购</a>
+      <a class="btn alt" href="#whitepaper">查看白皮书</a>
+    </div>
+  </div>
+</section>
+
+<section class="container" id="subscribe">
+  <h2 class="section-title"><span class="mini-dot"></span>奥秘祝福</h2>
+  <div class="cards">
+    <article class="card">
+      <h3>启程祝福（认购）</h3>
+      <p>以初火点亮旅程。早期认购者将获得专属徽章与限时增益。</p>
+      <div class="ap-progress">
+        <div class="ap-progress__bar" style="--val:65"></div>
+        <div class="ap-progress__ticks"></div>
+        <div class="ap-progress__label"><b>认购进度</b> <span id="salePct">65%</span> / <span data-count="50000">0</span> USDT</div>
+      </div>
+    </article>
+
+    <article class="card" id="alloc">
+      <h3>契约祝福（分配）</h3>
+      <p>遵循秩序之环，ARC 分配透明可溯：团队/生态/质押/流动/空投。</p>
+      <div class="ap-alloc__bar" style="margin-top:10px">
+        <span style="--w:30%">团队 30%</span>
+        <span style="--w:20%">生态 20%</span>
+        <span style="--w:25%">质押 25%</span>
+        <span style="--w:15%">流动 15%</span>
+        <span style="--w:10%">空投 10%</span>
+      </div>
+    </article>
+
+    <article class="card" id="div">
+      <h3>丰收祝福（分红）</h3>
+      <p>长线同行者共享战果。收益规则清晰、发放有序、公开可查。</p>
+      <div class="ring-row">
+        <svg class="ap-ring" width="110" height="110" viewBox="0 0 140 140" aria-hidden="true">
+          <defs>
+            <linearGradient id="apGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#FFD56A"/><stop offset="100%" stop-color="#D4AF37"/>
+            </linearGradient>
+            <filter id="apGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <circle cx="70" cy="70" r="58" fill="none" stroke="#0e1621" stroke-width="10"/>
+          <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,213,106,.22)" stroke-width="10"/>
+          <circle id="ringProg" cx="70" cy="70" r="58" fill="none" stroke="url(#apGold)" stroke-width="12"
+                  stroke-linecap="round" transform="rotate(-90 70 70)" filter="url(#apGlow)"
+                  stroke-dasharray="210 364"/>
+          <text x="70" y="77" text-anchor="middle" font-family="Cinzel,serif" font-size="22" fill="#FFD56A">58%</text>
+        </svg>
+        <div class="ap-kpi">
+          <div class="muted">累计分红（USDT）</div>
+          <div class="big-num" data-count="128000">0</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" id="gov">
+      <h3>秩序祝福（治理）</h3>
+      <p>提案、投票、执行三位一体；以符文之律，维系世界公正。</p>
+      <div class="btns">
+        <a class="btn" href="#proposals">查看提案</a>
+        <a class="btn" href="#vote">参与投票</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="container" id="road">
+  <h2 class="section-title"><span class="mini-dot"></span>登顶路线</h2>
+  <div class="route-wrap">
+    <svg viewBox="0 0 1200 420" width="100%" height="420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Arcane Protocol 登顶路线">
+      <defs>
+        <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD56A"/><stop offset="60%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#FFE9A3"/></linearGradient>
+        <filter id="glowR" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <style>
+          .mount{fill:url(#gradSky);opacity:.14}.halo{stroke:url(#gold);stroke-width:16;filter:url(#glowR);opacity:.55}
+          .route{fill:none;stroke:url(#gold);stroke-width:6;stroke-linecap:round}.dash{stroke-dasharray:16 22;animation:flow 6s linear infinite}
+          @keyframes flow{to{stroke-dashoffset:-300}}.milestone{fill:#0e1621;filter:url(#glowR)}.ring{stroke:url(#gold);stroke-width:3}
+          .txt1{font:700 18px Cinzel,serif;fill:#fff}.txt2{font:600 14px Cardo,serif;fill:#cfe2f3}.pct{font:700 18px Cinzel,serif;fill:#FFD56A;filter:url(#glowR)}
+        </style>
+        <linearGradient id="gradSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0B1520"/><stop offset="100%" stop-color="#091019"/></linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1200" height="420" fill="url(#gradSky)"/>
+      <path class="mount" d="M0,320 L120,280 240,310 360,250 480,300 600,220 720,300 840,260 960,300 1080,260 1200,300 1200,420 0,420 Z"/>
+      <path class="halo" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
+      <path class="route dash" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
+      <g transform="translate(80,320)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">启动</text><text class="txt2" x="0" y="-18" text-anchor="middle">白皮书 / 官网</text><text class="pct" x="0" y="40" text-anchor="middle">完成</text></g>
+      <g transform="translate(340,260)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">私募</text><text class="txt2" x="0" y="-18" text-anchor="middle">合规对接 / 文档</text><text class="pct" x="0" y="40" text-anchor="middle">70%</text></g>
+      <g transform="translate(620,250)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">公募</text><text class="txt2" x="0" y="-18" text-anchor="middle">IDO / KOL 联动</text><text class="pct" x="0" y="40" text-anchor="middle">45%</text></g>
+      <g transform="translate(940,240)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">上线</text><text class="txt2" x="0" y="-18" text-anchor="middle">DEX / 流动性池</text><text class="pct" x="0" y="40" text-anchor="middle">准备</text></g>
+    </svg>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container foot-grid">
     <div>
-      <h1 class="title"><span class="dot" aria-hidden="true"></span>唤醒未知，铸就你的传奇</h1>
-      <p class="subtitle">探索 · 试炼 · 集市 · 远征 —— 以 <b class="gold">ARC</b> 驱动的神域链游生态。连接九宫功能页与团队地图，延展长期玩法与价值。</p>
-      <div class="cta">
-        <a class="btn" href="#subscribe">立即认购</a>
-        <a class="btn alt" href="#whitepaper">查看白皮书</a>
-      </div>
+      <div class="foot-brand">ARCANE <b>PROTOCOL</b></div>
+      <div class="foot-sub">© <span id="year"></span> Arcane Protocol. All rights reserved.</div>
     </div>
-  </section>
+    <nav class="foot-links" aria-label="底部链接">
+      <a href="#whitepaper" rel="nofollow">白皮书</a>
+      <a href="#audit" rel="nofollow">审计报告</a>
+      <a href="#privacy" rel="nofollow">隐私政策</a>
+      <a href="#terms" rel="nofollow">用户协议</a>
+    </nav>
+  </div>
+</footer>
 
-  <!-- 四卡 -->
-  <section class="container" id="subscribe">
-    <h2 class="section-title"><span class="mini-dot"></span>奥秘祝福</h2>
-    <div class="cards">
-      <article class="card">
-        <h3>启程祝福（认购）</h3>
-        <p>以初火点亮旅程。早期认购者将获得专属徽章与限时增益。</p>
-        <div class="ap-progress">
-          <div class="ap-progress__bar" style="--val:65"></div>
-          <div class="ap-progress__ticks"></div>
-          <div class="ap-progress__label"><b>认购进度</b> <span id="salePct">65%</span> / <span data-count="50000">0</span> USDT</div>
-        </div>
-      </article>
+<script>
+// 导航激活
+document.querySelectorAll('.nav .nav-item').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav .nav-item').forEach(n=>n.classList.remove('is-active'));
+    a.classList.add('is-active');
+  });
+});
+// 数字滚动
+function countUp(el,dur=900){const tgt=+el.dataset.count||0;const s=performance.now();(function step(t){const k=Math.min(1,(t-s)/dur);const e=1-Math.pow(1-k,3);el.textContent=Math.floor(tgt*e).toLocaleString();if(k<1)requestAnimationFrame(step)})(s)}
+document.querySelectorAll('[data-count]').forEach(el=>countUp(el));
+// 环形进度
+(function(){const r=58,C=2*Math.PI*r,pct=0.58,ring=document.getElementById('ringProg');if(ring)ring.setAttribute('stroke-dasharray',(C*pct).toFixed(0)+' '+C.toFixed(0));})();
+// 年份
+const y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
+</script>
 
-      <article class="card" id="alloc">
-        <h3>契约祝福（分配）</h3>
-        <p>遵循秩序之环，ARC 分配透明可溯：团队/生态/质押/流动/空投。</p>
-        <div class="ap-alloc__bar" style="margin-top:10px">
-          <span style="--w:30%">团队 30%</span>
-          <span style="--w:20%">生态 20%</span>
-          <span style="--w:25%">质押 25%</span>
-          <span style="--w:15%">流动 15%</span>
-          <span style="--w:10%">空投 10%</span>
-        </div>
-      </article>
-
-      <article class="card" id="div">
-        <h3>丰收祝福（分红）</h3>
-        <p>长线同行者共享战果。收益规则清晰、发放有序、公开可查。</p>
-        <div class="ring-row">
-          <svg class="ap-ring" width="110" height="110" viewBox="0 0 140 140" aria-hidden="true">
-            <defs>
-              <linearGradient id="apGold" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#FFD56A"/><stop offset="100%" stop-color="#D4AF37"/>
-              </linearGradient>
-              <filter id="apGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            </defs>
-            <circle cx="70" cy="70" r="58" fill="none" stroke="#0e1621" stroke-width="10"/>
-            <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,213,106,.22)" stroke-width="10"/>
-            <circle id="ringProg" cx="70" cy="70" r="58" fill="none" stroke="url(#apGold)" stroke-width="12"
-                    stroke-linecap="round" transform="rotate(-90 70 70)" filter="url(#apGlow)"
-                    stroke-dasharray="210 364"/>
-            <text x="70" y="77" text-anchor="middle" font-family="Cinzel,serif" font-size="22" fill="#FFD56A">58%</text>
-          </svg>
-          <div class="ap-kpi">
-            <div class="muted">累计分红（USDT）</div>
-            <div class="big-num" data-count="128000">0</div>
-          </div>
-        </div>
-      </article>
-
-      <article class="card" id="gov">
-        <h3>秩序祝福（治理）</h3>
-        <p>提案、投票、执行三位一体；以符文之律，维系世界公正。</p>
-        <div class="btns">
-          <a class="btn" href="#proposals">查看提案</a>
-          <a class="btn" href="#vote">参与投票</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- 登顶路线（内联 SVG） -->
-  <section class="container" id="road">
-    <h2 class="section-title"><span class="mini-dot"></span>登顶路线</h2>
-    <div class="route-wrap">
-      <svg viewBox="0 0 1200 420" width="100%" height="420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Arcane Protocol 登顶路线">
-        <defs>
-          <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#FFD56A"/>
-            <stop offset="60%" stop-color="#D4AF37"/>
-            <stop offset="100%" stop-color="#FFE9A3"/>
-          </linearGradient>
-          <filter id="glowR" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="8" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <style>
-            .mount{ fill:url(#gradSky); opacity:.14 }
-            .halo{ stroke:url(#gold); stroke-width:16; filter:url(#glowR); opacity:.55 }
-            .route{ fill:none; stroke:url(#gold); stroke-width:6; stroke-linecap:round }
-            .dash{ stroke-dasharray:16 22; animation:flow 6s linear infinite }
-            @keyframes flow{ to{ stroke-dashoffset:-300 } }
-            .milestone{ fill:#0e1621; filter:url(#glowR) }
-            .ring{ stroke:url(#gold); stroke-width:3 }
-            .txt1{ font:700 18px Cinzel, serif; fill:#fff }
-            .txt2{ font:600 14px Cardo, serif; fill:#cfe2f3 }
-            .pct{ font:700 18px Cinzel, serif; fill:#FFD56A; filter:url(#glowR) }
-          </style>
-          <linearGradient id="gradSky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#0B1520"/><stop offset="100%" stop-color="#091019"/>
-          </linearGradient>
-        </defs>
-
-        <rect x="0" y="0" width="1200" height="420" fill="url(#gradSky)"/>
-        <path class="mount" d="M0,320 L120,280 240,310 360,250 480,300 600,220 720,300 840,260 960,300 1080,260 1200,300 1200,420 0,420 Z"/>
-        <path class="halo" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
-        <path class="route dash" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
-
-        <g transform="translate(80,320)">
-          <circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/>
-          <text class="txt1" x="0" y="-38" text-anchor="middle">启动</text>
-          <text class="txt2" x="0" y="-18" text-anchor="middle">白皮书 / 官网</text>
-          <text class="pct"  x="0" y="40"  text-anchor="middle">完成</text>
-        </g>
-        <g transform="translate(340,260)">
-          <circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/>
-          <text class="txt1" x="0" y="-38" text-anchor="middle">私募</text>
-          <text class="txt2" x="0" y="-18" text-anchor="middle">合规对接 / 文档</text>
-          <text class="pct"  x="0" y="40"  text-anchor="middle">70%</text>
-        </g>
-        <g transform="translate(620,250)">
-          <circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/>
-          <text class="txt1" x="0" y="-38" text-anchor="middle">公募</text>
-          <text class="txt2" x="0" y="-18" text-anchor="middle">IDO / KOL 联动</text>
-          <text class="pct"  x="0" y="40"  text-anchor="middle">45%</text>
-        </g>
-        <g transform="translate(940,240)">
-          <circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/>
-          <text class="txt1" x="0" y="-38" text-anchor="middle">上线</text>
-          <text class="txt2" x="0" y="-18" text-anchor="middle">DEX / 流动性池</text>
-          <text class="pct"  x="0" y="40"  text-anchor="middle">准备</text>
-        </g>
-      </svg>
-    </div>
-  </section>
-
-  <!-- 页脚 -->
-  <footer class="footer">
-    <div class="container foot-grid">
-      <div>
-        <div class="foot-brand">ARCANE <b>PROTOCOL</b></div>
-        <div class="foot-sub">© <span id="year"></span> Arcane Protocol. All rights reserved.</div>
-      </div>
-      <nav class="foot-links" aria-label="底部链接">
-        <a href="#whitepaper" rel="nofollow">白皮书</a>
-        <a href="#audit" rel="nofollow">审计报告</a>
-        <a href="#privacy" rel="nofollow">隐私政策</a>
-        <a href="#terms" rel="nofollow">用户协议</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
