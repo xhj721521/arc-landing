@@ -1,233 +1,405 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Arcane Protocol · 奥秘协议</title>
-<meta name="description" content="Arcane Protocol（奥秘协议）— 以 ARC 驱动的神域链游生态。黑金符文风，高端且可信。">
-<meta name="theme-color" content="#070C12">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700..900&family=Cardo:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ARCANE PROTOCOL — 奥秘协议</title>
+  <meta name="description" content="奥秘协议 · 神域探险链游 · 链上可核验 · 通缩自稳 · 每周 USDT+ARC 双币分红">
+  <link rel="icon" href="assets/logo-light.svg">
 
-<style>
-:root{--gold:#FFD56A;--gold-2:#D4AF37;--gold-3:#FFE9A3;--muted:#b9c6cf;--h-top:80px;--radius:16px}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#070C12;color:#e8eef4;font-family:"Cardo","Noto Serif SC",serif}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
-.container{max-width:1200px;margin:0 auto;padding:0 16px}
-body::before{content:"";position:fixed;inset:0;z-index:-1;background:
-radial-gradient(120% 90% at 50% -10%,rgba(255,213,106,.12),transparent 60%),
-linear-gradient(180deg,#0A1119 0%, #070C12 100%)}
-/* 顶部导航（始终显示） */
-.topbar{height:var(--h-top);display:flex;align-items:center;justify-content:space-between;padding:0 20px;position:sticky;top:0;z-index:10;backdrop-filter:saturate(1.2) blur(6px)}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{height:56px}
-.logotype{font-family:"Cinzel",serif;font-weight:900;letter-spacing:.6px}
-.logotype b{color:var(--gold);text-shadow:0 0 12px rgba(255,213,106,.55)}
-.logotype .cn{opacity:.78;font:700 12px 'Noto Serif SC',serif;letter-spacing:.3px}
-.nav{display:flex;gap:14px}
-.nav-item{padding:10px 14px;border-radius:12px;font-weight:700;letter-spacing:.3px}
-.nav-item:hover,.nav-item.is-active{color:var(--gold);text-shadow:0 0 10px rgba(255,213,106,.7)}
-/* Hero */
-.hero{min-height:68vh;display:grid;place-items:center;text-align:center;padding-top:10px}
-.title{font-family:"Cinzel",serif;font-weight:900;font-size:clamp(28px,4.6vw,56px);letter-spacing:.6px;margin:8px 0;color:#fff;display:inline-flex;align-items:center;gap:12px}
-.title .dot{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%, rgba(255,213,106,.25) 50%, transparent 70%);box-shadow:0 0 16px rgba(255,213,106,.8),0 0 32px rgba(255,213,106,.35);animation:pulse 2.2s ease-in-out infinite}
-@keyframes pulse{50%{transform:scale(1.25)}}
-.subtitle{color:#cfe2f3;max-width:760px;margin:0 auto 18px;line-height:1.6}
-.gold{color:var(--gold)}
-.cta{display:flex;gap:12px;justify-content:center;margin-top:10px}
-.btn{display:inline-block;background:linear-gradient(180deg,#223243,#101820);color:#fff;border:1px solid rgba(255,213,106,.35);padding:12px 18px;border-radius:14px;font-weight:700;letter-spacing:.3px}
-.btn.alt{border-color:rgba(146,198,255,.35)}
-/* 模块标题 */
-.section-title{font-family:"Cinzel",serif;font-weight:900;font-size:26px;letter-spacing:.6px;margin:22px 0 12px;color:#fff;display:flex;align-items:center;gap:10px}
-.mini-dot{width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,var(--gold) 0%, rgba(255,213,106,.25) 50%, transparent 70%);box-shadow:0 0 12px rgba(255,213,106,.8)}
-/* 卡片 */
-.cards{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:18px}
-.card{position:relative;padding:18px;border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg, rgba(20,32,44,.92) 0%, rgba(11,18,26,.9) 100%);border:1px solid rgba(255,213,106,.28);box-shadow:0 12px 28px rgba(0,0,0,.35)}
-.card::after{content:"";position:absolute;inset:-3px;border-radius:var(--radius);border:2px solid transparent;background:linear-gradient(90deg,var(--gold),var(--gold-2),var(--gold-3)) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.9}
-.card h3{margin:0 0 8px;font:900 20px "Cinzel",serif;color:#fff}
-.card p{margin:0;color:var(--muted);line-height:1.6}
-.card:hover{transform:translateY(-1px)}
-/* 进度条 */
-.ap-progress{position:relative;margin:12px 0 6px;padding-top:6px}
-.ap-progress__bar{--val:65;height:14px;border-radius:10px;overflow:hidden;position:relative;background:linear-gradient(180deg,#16212c,#0e1621);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
-.ap-progress__bar::before{content:"";position:absolute;inset:0;width:calc(var(--val)*1%);border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--gold-2),var(--gold-3));filter:drop-shadow(0 0 12px rgba(255,213,106,.45))}
-.ap-progress__ticks{pointer-events:none;position:absolute;inset:auto 0 0 0;height:14px;transform:translateY(-14px);background:repeating-linear-gradient(90deg, rgba(255,213,106,.34) 0 2px, transparent 2px 30px);border-radius:10px;opacity:.55}
-.ap-progress__label{margin-top:6px;color:#cfe2f3;font:600 13px/1.4 "Cardo",serif}
-.ap-progress__label b{color:var(--gold);font-family:"Cinzel",serif}
-/* 环形 + KPI */
-.ring-row{display:flex;gap:14px;align-items:center;margin-top:10px}
-.ap-ring{display:inline-block}
-.big-num{font:800 36px "Cinzel",serif;color:var(--gold);text-shadow:0 0 12px rgba(255,213,106,.6)}
-.muted{color:#cfe2f3}
-/* 路线容器 */
-.route-wrap{border-radius:16px;overflow:hidden;border:1px solid rgba(255,213,106,.28);background:linear-gradient(180deg, rgba(16,25,35,.85), rgba(10,16,24,.85));box-shadow:0 10px 30px rgba(0,0,0,.35)}
-/* 页脚 */
-.footer{margin-top:30px;padding:26px 0;border-top:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,#0b121a,#0a1017)}
-.foot-grid{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.foot-brand{font:900 18px "Cinzel",serif}
-.foot-brand b{color:var(--gold)}
-.foot-sub{color:#99aab9;font:600 12px "Cardo",serif}
-.foot-links{display:flex;gap:14px;flex-wrap:wrap}
-.foot-links a{color:#cfe2f3;font-size:13px}
-.foot-links a:hover{color:var(--gold)}
-@media (max-width:960px){.cards{grid-template-columns:1fr}}
-</style>
+  <!-- 字体：标题 Cinzel + 正文 Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/theme.css"/>
+
+  <!-- ethers 用于连接钱包（演示） -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+  <!-- ========= 统一配置（按需修改） ========= -->
+  <script>
+  window.CONFIG = {
+    brand: "ARCANE PROTOCOL",
+    email: "hi@aomi.gg",
+
+    // 认购
+    pricePerNFT: 500,
+    totalSupply: 100,
+    sold: 12,
+    formspree: "",
+
+    // 锁仓演示
+    vesting: { cliffMonths: 1, vestingMonths: 12 },
+
+    // 链&合约（演示：Polygon Amoy 测试网）
+    chain: {
+      chainId: "0x13882",
+      chainName: "Polygon Amoy",
+      rpcUrls: ["https://rpc-amoy.polygon.technology"],
+      blockExplorerUrls: ["https://www.oklink.com/amoy"],
+      nativeCurrency: { name:"MATIC", symbol:"MATIC", decimals:18 }
+    },
+    contracts: {
+      arcToken: "0xArcTokenAddressDEMO000000000000000000000001",
+      shareholderNFT: "0xShareholderNFTDEMO00000000000000000000002",
+      sale: "0xSaleContractDEMO0000000000000000000000000000003"
+    },
+
+    // 链接（替换成你自己的）
+    links: {
+      telegram:"#", discord:"#", x:"#",
+      shareholderNFT:"#", safeMultisig:"#", weeklyTx:"#", feeSplitTx:"#",
+      github:"#", whitepaper:"#", deck:"#", docs:"#"
+    },
+
+    // 首屏视频（可填YouTube视频ID；留空显示占位图）
+    heroYtId: "",
+
+    // 画廊截图（把文件放到 assets/shot1.webp 等即可自动显示）
+    gallery: [
+      "assets/shot1.webp","assets/shot2.webp","assets/shot3.webp","assets/shot4.webp"
+    ],
+
+    roadmapStyle: "mountain" // or "tower"
+  };
+  </script>
 </head>
-<body>
 
-<header class="topbar container" role="banner">
-  <a class="brand" href="#">
-    <!-- 如果 logo-light.svg 不在根目录，图片会被隐藏，不会报错或撑坏布局 -->
-    <img src="logo-light.svg" alt="Arcane Protocol Logo" class="logo" onerror="this.style.display='none'">
-    <div class="logotype">
-      <div class="en">ARCANE <b>PROTOCOL</b></div>
-      <div class="cn">奥秘协议</div>
+<body class="style-mountain">
+<!-- 背景：深色 + 金绿雾光 + 轻网格 -->
+<svg class="bgfx" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0b0f"/><stop offset="1" stop-color="#0b0f14"/>
+    </linearGradient>
+    <radialGradient id="g1" cx="0.1" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#f0d38b" stop-opacity=".25"/><stop offset="1" stop-color="#f0d38b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="0.9" cy="0.1" r="0.6">
+      <stop offset="0" stop-color="#7ab0ff" stop-opacity=".18"/><stop offset="1" stop-color="#7ab0ff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#fff" stroke-opacity=".04" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#g1)"><animate attributeName="opacity" values="1;.6;1" dur="14s" repeatCount="indefinite"/></rect>
+  <rect width="1920" height="1080" fill="url(#g2)"><animate attributeName="opacity" values=".9;.4;.9" dur="18s" repeatCount="indefinite"/></rect>
+  <rect width="1920" height="1080" fill="url(#grid)" opacity=".08"/>
+</svg>
+
+<!-- 顶部导航 -->
+<nav class="nav glass">
+  <div class="container row">
+    <a class="brand" href="#"><img class="logo" src="assets/logo-light.svg" alt="logo">
+      <div class="brand-text">
+        <strong class="brand-en">ARCANE <span class="gold">PROTOCOL</span></strong>
+        <small class="brand-local">奥秘协议</small>
+      </div>
+    </a>
+
+    <div class="menu">
+      <a href="#subscribe">认购</a>
+      <a href="#allocation">分配</a>
+      <a href="#cases">分红案例</a>
+      <a href="#mechanism">稳健机制</a>
+      <a href="#gameplay">玩法亮点</a>
+      <a href="#roadmap">登顶路线</a>
+      <a href="#proof">可验证</a>
+      <a href="#docs">文档</a>
+      <a href="#team">团队</a>
     </div>
-  </a>
-  <nav class="nav" aria-label="主导航">
-    <a class="nav-item is-active" href="#subscribe">认购</a>
-    <a class="nav-item" href="#alloc">分配</a>
-    <a class="nav-item" href="#div">分红</a>
-    <a class="nav-item" href="#gov">治理</a>
-    <a class="nav-item" href="#road">路线</a>
-  </nav>
+
+    <div class="nav-right">
+      <select id="langSel" class="langsel">
+        <option value="zh-CN">中文</option><option value="en">English</option>
+      </select>
+      <button class="btn ghost" id="connectBtn"><span id="connectText">连接钱包</span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- 首屏 Hero -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <h1 class="display-arcane">
+        唤醒未知，铸就你的传奇
+      </h1>
+      <p class="lead">
+        探索 · 试炼 · 集市 · 远征 —— 以 <b>ARC</b> 驱动的神域链游生态。连接九大功能页与团队地图，延展长期玩法与价值。
+      </p>
+      <div class="badges">
+        <span class="badge">规模：<b>50,000 USDT</b></span>
+        <span class="badge">股东NFT：<b>100 枚 × $500</b></span>
+        <span class="badge">周结分红 · 上链可查</span>
+      </div>
+      <div class="cta">
+        <a class="btn primary glow ripple" href="#subscribe">立即认购</a>
+        <a class="btn ghost ripple" href="#docs">查看白皮书</a>
+      </div>
+    </div>
+
+    <!-- 右侧：视频/插画 -->
+    <div class="hero-visual card float">
+      <div class="video ph" id="heroVideo">
+        <div class="ph-inner">预告片占位（在 CONFIG.heroYtId 填写 YouTube 视频ID 即可自动嵌入）</div>
+      </div>
+      <div class="hero-points">
+        <div class="hp"><span class="dot"></span> 团队地图：拉新效率最大化</div>
+        <div class="hp"><span class="dot"></span> 12层爬塔：碎片合成NFT</div>
+        <div class="hp"><span class="dot"></span> 观战预测：公平下注有据可查</div>
+      </div>
+    </div>
+  </div>
 </header>
 
-<section class="hero container">
-  <div>
-    <h1 class="title"><span class="dot" aria-hidden="true"></span>唤醒未知，铸就你的传奇</h1>
-    <p class="subtitle">探索 · 试炼 · 集市 · 远征 —— 以 <b class="gold">ARC</b> 驱动的神域链游生态。连接九宫功能页与团队地图，延展长期玩法与价值。</p>
-    <div class="cta">
-      <a class="btn" href="#subscribe">立即认购</a>
-      <a class="btn alt" href="#whitepaper">查看白皮书</a>
-    </div>
+<!-- 信任/合规栏 -->
+<section class="trustbar container">
+  <div class="trust-item">
+    <div class="ti-title">多签金库</div>
+    <a data-link="safeMultisig" target="_blank" class="ti-link">Safe (2/3) 地址</a>
+    <div class="ti-note">研发/服务器拨付走多签，周报公示</div>
+  </div>
+  <div class="trust-item">
+    <div class="ti-title">合约审计</div>
+    <a data-link="whitepaper" target="_blank" class="ti-link">审计报告（进行中）</a>
+    <div class="ti-note">上线前发布报告与整改清单</div>
+  </div>
+  <div class="trust-item">
+    <div class="ti-title">测试网演示</div>
+    <a data-link="weeklyTx" target="_blank" class="ti-link">事件哈希</a>
+    <div class="ti-note">产出/销毁/分红事件链上可查</div>
+  </div>
+  <div class="trust-item">
+    <div class="ti-title">开源仓库</div>
+    <a data-link="github" target="_blank" class="ti-link">GitHub</a>
+    <div class="ti-note">前端/合约提交记录可核验</div>
   </div>
 </section>
 
-<section class="container" id="subscribe">
-  <h2 class="section-title"><span class="mini-dot"></span>奥秘祝福</h2>
-  <div class="cards">
-    <article class="card">
-      <h3>启程祝福（认购）</h3>
-      <p>以初火点亮旅程。早期认购者将获得专属徽章与限时增益。</p>
-      <div class="ap-progress">
-        <div class="ap-progress__bar" style="--val:65"></div>
-        <div class="ap-progress__ticks"></div>
-        <div class="ap-progress__label"><b>认购进度</b> <span id="salePct">65%</span> / <span data-count="50000">0</span> USDT</div>
-      </div>
-    </article>
-
-    <article class="card" id="alloc">
-      <h3>契约祝福（分配）</h3>
-      <p>遵循秩序之环，ARC 分配透明可溯：团队/生态/质押/流动/空投。</p>
-      <div class="ap-alloc__bar" style="margin-top:10px">
-        <span style="--w:30%">团队 30%</span>
-        <span style="--w:20%">生态 20%</span>
-        <span style="--w:25%">质押 25%</span>
-        <span style="--w:15%">流动 15%</span>
-        <span style="--w:10%">空投 10%</span>
-      </div>
-    </article>
-
-    <article class="card" id="div">
-      <h3>丰收祝福（分红）</h3>
-      <p>长线同行者共享战果。收益规则清晰、发放有序、公开可查。</p>
-      <div class="ring-row">
-        <svg class="ap-ring" width="110" height="110" viewBox="0 0 140 140" aria-hidden="true">
-          <defs>
-            <linearGradient id="apGold" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#FFD56A"/><stop offset="100%" stop-color="#D4AF37"/>
-            </linearGradient>
-            <filter id="apGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <circle cx="70" cy="70" r="58" fill="none" stroke="#0e1621" stroke-width="10"/>
-          <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,213,106,.22)" stroke-width="10"/>
-          <circle id="ringProg" cx="70" cy="70" r="58" fill="none" stroke="url(#apGold)" stroke-width="12"
-                  stroke-linecap="round" transform="rotate(-90 70 70)" filter="url(#apGlow)"
-                  stroke-dasharray="210 364"/>
-          <text x="70" y="77" text-anchor="middle" font-family="Cinzel,serif" font-size="22" fill="#FFD56A">58%</text>
-        </svg>
-        <div class="ap-kpi">
-          <div class="muted">累计分红（USDT）</div>
-          <div class="big-num" data-count="128000">0</div>
-        </div>
-      </div>
-    </article>
-
-    <article class="card" id="gov">
-      <h3>秩序祝福（治理）</h3>
-      <p>提案、投票、执行三位一体；以符文之律，维系世界公正。</p>
-      <div class="btns">
-        <a class="btn" href="#proposals">查看提案</a>
-        <a class="btn" href="#vote">参与投票</a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<section class="container" id="road">
-  <h2 class="section-title"><span class="mini-dot"></span>登顶路线</h2>
-  <div class="route-wrap">
-    <svg viewBox="0 0 1200 420" width="100%" height="420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Arcane Protocol 登顶路线">
-      <defs>
-        <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFD56A"/><stop offset="60%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#FFE9A3"/></linearGradient>
-        <filter id="glowR" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <style>
-          .mount{fill:url(#gradSky);opacity:.14}.halo{stroke:url(#gold);stroke-width:16;filter:url(#glowR);opacity:.55}
-          .route{fill:none;stroke:url(#gold);stroke-width:6;stroke-linecap:round}.dash{stroke-dasharray:16 22;animation:flow 6s linear infinite}
-          @keyframes flow{to{stroke-dashoffset:-300}}.milestone{fill:#0e1621;filter:url(#glowR)}.ring{stroke:url(#gold);stroke-width:3}
-          .txt1{font:700 18px Cinzel,serif;fill:#fff}.txt2{font:600 14px Cardo,serif;fill:#cfe2f3}.pct{font:700 18px Cinzel,serif;fill:#FFD56A;filter:url(#glowR)}
-        </style>
-        <linearGradient id="gradSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0B1520"/><stop offset="100%" stop-color="#091019"/></linearGradient>
-      </defs>
-      <rect x="0" y="0" width="1200" height="420" fill="url(#gradSky)"/>
-      <path class="mount" d="M0,320 L120,280 240,310 360,250 480,300 600,220 720,300 840,260 960,300 1080,260 1200,300 1200,420 0,420 Z"/>
-      <path class="halo" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
-      <path class="route dash" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
-      <g transform="translate(80,320)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">启动</text><text class="txt2" x="0" y="-18" text-anchor="middle">白皮书 / 官网</text><text class="pct" x="0" y="40" text-anchor="middle">完成</text></g>
-      <g transform="translate(340,260)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">私募</text><text class="txt2" x="0" y="-18" text-anchor="middle">合规对接 / 文档</text><text class="pct" x="0" y="40" text-anchor="middle">70%</text></g>
-      <g transform="translate(620,250)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">公募</text><text class="txt2" x="0" y="-18" text-anchor="middle">IDO / KOL 联动</text><text class="pct" x="0" y="40" text-anchor="middle">45%</text></g>
-      <g transform="translate(940,240)"><circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/><text class="txt1" x="0" y="-38" text-anchor="middle">上线</text><text class="txt2" x="0" y="-18" text-anchor="middle">DEX / 流动性池</text><text class="pct" x="0" y="40" text-anchor="middle">准备</text></g>
-    </svg>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container foot-grid">
+<!-- 认购与进度 -->
+<section id="subscribe" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>认购与进度</h2></div>
+  <div class="grid-2">
     <div>
-      <div class="foot-brand">ARCANE <b>PROTOCOL</b></div>
-      <div class="foot-sub">© <span id="year"></span> Arcane Protocol. All rights reserved.</div>
+      <div class="chips">
+        <span class="chip k">规模</span><span class="chip v"><b>50,000 USDT</b></span>
+        <span class="chip k">价格/枚</span><span class="chip v">$<span data-cfg="price"></span></span>
+        <span class="chip k">总量</span><span class="chip v"><span data-cfg="total"></span> 枚（固定，不增发）</span>
+        <span class="chip k">已售</span><span class="chip v"><b id="sold">0</b>/<span data-cfg="total"></span>（<b id="soldPct">0%</b>）</span>
+        <span class="chip k">已募</span><span class="chip v"><b id="raised">0</b> USDT</span>
+      </div>
+      <div class="progress gold"><div id="bar" class="bar"><span id="barLabel" class="label">0%</span></div></div>
+      <p class="small">募集资金进入「<b>开发专用金库</b>」（多签），用于研发/服务器/CDN/美术/风控/审计/推广；每周公开周报与支出明细。</p>
+      <ul class="list small">
+        <li>风险提示：项目不承诺收益；不同地区功能与可用性受合规限制。</li>
+        <li>资金拨付由多签金库执行，所有交易哈希对外公开。</li>
+      </ul>
+      <div class="cta">
+        <button class="btn primary glow ripple" id="buyBtn">购买股东NFT（$500）</button>
+        <a class="btn ghost ripple" href="#allocation">查看分配方案</a>
+      </div>
     </div>
-    <nav class="foot-links" aria-label="底部链接">
-      <a href="#whitepaper" rel="nofollow">白皮书</a>
-      <a href="#audit" rel="nofollow">审计报告</a>
-      <a href="#privacy" rel="nofollow">隐私政策</a>
-      <a href="#terms" rel="nofollow">用户协议</a>
-    </nav>
+
+    <form id="invest-form" class="form glass2" method="POST">
+      <h3>申请白名单</h3>
+      <input type="email" name="email" required placeholder="邮箱 Email">
+      <input type="text" name="wallet" placeholder="钱包地址（可选）">
+      <button class="btn primary ripple" type="submit">提交申请</button>
+      <p class="small">社群：<a target="_blank" data-link="telegram">Telegram</a> · <a target="_blank" data-link="discord">Discord</a> · <a target="_blank" data-link="x">X/Twitter</a> · <a href="#" data-mail="email">hi@aomi.gg</a></p>
+    </form>
   </div>
+</section>
+
+<!-- 分配方案 -->
+<section id="allocation" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>分配方案（每周结算）</h2></div>
+  <div class="grid-2">
+    <div class="alloc">
+      <h3>公测第 1 月（增长冲刺）</h3>
+      <div class="donut" data-slices="50|40|10" data-labels="分红|LP|营销"></div>
+      <ul class="list">
+        <li><b>50%</b> 分红（USDT/ARC 双池）</li>
+        <li><b>40%</b> 注入 LP（ARC/USDT 做市池）</li>
+        <li><b>10%</b> 营销（买量/活动/主播合作）</li>
+      </ul>
+    </div>
+    <div class="alloc">
+      <h3>第 2 月起（稳态拉深）</h3>
+      <div class="donut" data-slices="30|40|15|15" data-labels="分红|LP|营销|运营"></div>
+      <ul class="list">
+        <li><b>30%</b> 分红</li><li><b>40%</b> LP</li><li><b>15%</b> 营销</li><li><b>15%</b> 项目方运营</li>
+      </ul>
+    </div>
+  </div>
+  <p class="small">手续费（基础5%）→ <b>50% 销毁 / 30% 加 LP / 20% 入分红</b>；净收益以 USDT 发放，损耗以 ARC 发放。</p>
+</section>
+
+<!-- 玩法亮点 + 画廊 -->
+<section id="gameplay" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>玩法亮点 · 神域探险 × 全品类竞猜 × 强拉新</h2></div>
+  <div class="grid-2">
+    <div>
+      <h3>大世界&核心循环</h3>
+      <ul class="list">
+        <li><b>团队地图</b>：多人协作开图、团徽与领地加成、<b>每周团队作战</b>（周赛）</li>
+        <li><b>12 层爬塔</b>：失败掉耐久，成功掉碎片，<b>付费合成</b>成为NFT</li>
+        <li><b>大逃杀 + 观战预测</b>：合规地区开放；平台收基础手续费</li>
+      </ul>
+
+      <h3>竞猜（分阶段开放）</h3>
+      <ul class="list">
+        <li><b>代币波动预测</b>：最高 <b>15×</b>，<b>5/30/60 分钟</b>一期（链上结算）</li>
+        <li><b>电竞/体育</b>：LOL / DOTA / 永劫无间 / NBA / 欧洲杯 / 世界杯 / 搏击</li>
+      </ul>
+    </div>
+    <div class="shots4" id="shotsWrap">
+      <!-- 自动注入图片项（assets/shot*.webp 存在则显示） -->
+    </div>
+  </div>
+</section>
+
+<!-- 稳健机制 -->
+<section id="mechanism" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>不会崩盘的原理（机制托底，非收益承诺）</h2></div>
+  <ol class="list">
+    <li><b>周度阈值减半</b>：记 <code>P_week</code> 为新增产出，<code>C_week</code> 为当周损耗，<code>R=P/C</code>。若 <code>R ≥ 1.15</code> → 下周全局减半；若 <code>R ≤ 1</code> → 下周回弹 25%。</li>
+    <li><b>持续做市</b>：分配中的 LP 注入 + 手续费 <b>50%销毁/30%加LP/20%分红</b>，形成 <b>底价带</b>。</li>
+    <li><b>闸门沉淀</b>：金币/碎片需经闸门兑换 ARC 才可外流；地图/探险队升级、合成铸造形成沉淀。</li>
+    <li><b>治理保险丝</b>：关键参数由股东投票微调；每周事件写入 <code>/data/weekly.json</code> 并上链公示。</li>
+  </ol>
+</section>
+
+<!-- 股东权益 & 锁仓演示 -->
+<section id="rights" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>股东权益 · 锁仓示意</h2></div>
+  <div class="grid-2">
+    <div>
+      <ul class="list">
+        <li>优先补充 LP，赚取滑点与做市收益（按 LP 占比分配）</li>
+        <li>治理投票：资金使用/参数调整/营销方向</li>
+        <li>官方代充代理：为不便充值的玩家代理充值，利润归股东</li>
+        <li>分红：净收益以 <b>USDT</b> 发放；损耗以 <b>ARC</b> 发放（每周）</li>
+      </ul>
+      <div class="pill">NFT 合约：<a data-link="shareholderNFT" target="_blank">Explorer</a></div>
+    </div>
+    <div class="vesting">
+      <div class="row-sb"><span>解锁月数</span><b id="vestOut">—</b></div>
+      <input id="vestRange" type="range" min="0" max="12" value="0"/>
+      <div class="vbar"><div id="vbarInner"></div></div>
+      <p class="small">示例：悬崖 <b id="cliffVal">1</b> 个月，线性至 <b id="vmVal">12</b> 个月解锁完毕。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 登顶路线（雪山+旗帜） -->
+<section id="roadmap" class="container card mountain float">
+  <div class="section-title"><span class="gold-dot"></span><h2>登顶路线（JST）</h2></div>
+
+  <svg class="mountain-svg" viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d38b"/><stop offset="1" stop-color="#7ab0ff"/></linearGradient>
+      <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(240,211,139,.18)"/><stop offset="1" stop-color="rgba(122,176,255,.10)"/></linearGradient>
+    </defs>
+    <path d="M0,300 C150,260 250,260 350,240 C480,210 600,180 720,160 C860,140 1000,130 1200,120 L1200,360 L0,360 Z" fill="url(#hill2)"/>
+    <polyline class="trail" points="40,300 220,270 420,230 650,190 900,150 1160,130"/>
+    <g class="flag" transform="translate(220,270)"><path d="M0 0 v-34 l28 8 v18 l-28 8 z" fill="#f0d38b"/><rect x="-2" y="-36" width="4" height="40" fill="#c9a556"/></g>
+    <g class="flag" transform="translate(650,190)"><path d="M0 0 v-34 l28 8 v18 l-28 8 z" fill="#f0d38b"/><rect x="-2" y="-36" width="4" height="40" fill="#c9a556"/></g>
+    <g class="flag" transform="translate(900,150)"><path d="M0 0 v-34 l28 8 v18 l-28 8 z" fill="#f0d38b"/><rect x="-2" y="-36" width="4" height="40" fill="#c9a556"/></g>
+  </svg>
+
+  <div class="grid-3 tips">
+    <div><b>Base Camp｜2025-10</b><br/>大厅、团队/个人地图、12层爬塔、BR演示、分配合约、weekly看板、只读治理台。</div>
+    <div><b>High Camp｜2025-11</b><br/>ARC 上链与股东 LP 窗口、代币波动预测（≤15×；5/30/60min）、DEX 演示池、主播 Overlay。</div>
+    <div><b>Summit｜2025-12</b><br/>赛季制 v1、团队战与榜单、合规电竞/体育预测、数据看板 2.0、UGC 参数模板。</div>
+  </div>
+</section>
+
+<!-- 可验证 -->
+<section id="proof" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>可验证（测试网/主网上线前演示）</h2></div>
+  <ul class="list">
+    <li><b>股东 NFT（总量 100）</b>：<a target="_blank" data-link="shareholderNFT">Explorer</a></li>
+    <li><b>手续费事件</b>：FeeSplit(50/30/20) → <a target="_blank" data-link="feeSplitTx">示例交易</a></li>
+    <li><b>周度事件</b>：WeeklySettle/DividendAccrual → <a target="_blank" data-link="weeklyTx">示例交易</a></li>
+    <li><b>多签金库（2/3）</b>：<a target="_blank" data-link="safeMultisig">Safe 地址</a></li>
+  </ul>
+  <div class="proof-metrics mini-grid">
+    <div class="mini-card"><div class="tag">累计销毁 ARC</div><div id="m-burn">—</div></div>
+    <div class="mini-card"><div class="tag">累计加 LP（ARC）</div><div id="m-addlp">—</div></div>
+    <div class="mini-card"><div class="tag">累计分红 USDT</div><div id="m-divu">—</div></div>
+    <div class="mini-card"><div class="tag">累计分红 ARC</div><div id="m-diva">—</div></div>
+  </div>
+  <p class="small">免责声明：以上为机制与示例说明，用于抑制下行与通胀、平滑波动，不构成价格或收益保证；功能按地区白名单开放。</p>
+</section>
+
+<!-- 分红案例（占位） -->
+<section id="cases" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>分红案例（示例占位）</h2></div>
+  <div class="mini-grid">
+    <div class="mini-card"><div class="tag">第 1 周</div>净收益 12,000 USDT → 分红池 6,000；LP 4,800；营销 1,200。</div>
+    <div class="mini-card"><div class="tag">第 2 周</div>净收益 18,500 USDT → 分红池 9,250；LP 7,400；营销 1,850。</div>
+  </div>
+</section>
+
+<!-- 文档/尽调包 -->
+<section id="docs" class="container ddpack card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>尽调资料包（DD Pack）</h2></div>
+  <ul class="list">
+    <li><a data-link="whitepaper" target="_blank">白皮书（v0.9）</a> · <a data-link="deck" target="_blank">路演材料/PDF</a> · <a data-link="docs" target="_blank">Docs</a></li>
+    <li><a data-link="github" target="_blank">合约地址 & 事件索引</a> · <a href="#">KPI 指标口径</a></li>
+    <li><a href="#">财务周报（研发/服务器/营销拨付）</a> · <a href="#">治理流程</a></li>
+  </ul>
+</section>
+
+<!-- 团队 & FAQ -->
+<section id="team" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>团队与顾问</h2></div>
+  <div class="grid-3">
+    <div class="member"><b>Founder & Producer</b><br/>10+年游戏系统策划/运营（占位）</div>
+    <div class="member"><b>Smart Contract</b><br/>审计所背景/安全攻防（占位）</div>
+    <div class="member"><b>Economy Design</b><br/>链上经济&做市策略（占位）</div>
+  </div>
+</section>
+
+<section id="faq" class="container card float">
+  <div class="section-title"><span class="gold-dot"></span><h2>FAQ · 风险与合规</h2></div>
+  <ul class="list">
+    <li><b>是否保证收益？</b> 否，项目不承诺收益，分红取决于真实净收入与损耗分成。</li>
+    <li><b>哪些地区开放竞猜？</b> 仅合规地区开放，按当地法律执行白名单与KYC/限额。</li>
+    <li><b>资金如何使用？</b> 由多签金库按周拨付，周报与交易哈希公开。</li>
+  </ul>
+</section>
+
+<footer class="container footer small">
+  <hr/><p>© <span id="footBrand">ARCANE PROTOCOL</span> · <a href="#" data-mail="email">hi@aomi.gg</a></p>
 </footer>
 
-<script>
-// 导航激活
-document.querySelectorAll('.nav .nav-item').forEach(a=>{
-  a.addEventListener('click', ()=>{
-    document.querySelectorAll('.nav .nav-item').forEach(n=>n.classList.remove('is-active'));
-    a.classList.add('is-active');
-  });
-});
-// 数字滚动
-function countUp(el,dur=900){const tgt=+el.dataset.count||0;const s=performance.now();(function step(t){const k=Math.min(1,(t-s)/dur);const e=1-Math.pow(1-k,3);el.textContent=Math.floor(tgt*e).toLocaleString();if(k<1)requestAnimationFrame(step)})(s)}
-document.querySelectorAll('[data-count]').forEach(el=>countUp(el));
-// 环形进度
-(function(){const r=58,C=2*Math.PI*r,pct=0.58,ring=document.getElementById('ringProg');if(ring)ring.setAttribute('stroke-dasharray',(C*pct).toFixed(0)+' '+C.toFixed(0));})();
-// 年份
-const y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
-</script>
+<!-- 购买弹窗 -->
+<div id="buyModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-hd">购买股东NFT</div>
+    <div class="modal-bd">
+      <p>合约：<code id="saleAddr">—</code></p>
+      <p>价格：<b>$500 USDT</b>（Polygon Amoy / 演示）</p>
+      <ol class="list small">
+        <li>连接钱包并切换至 <b>Polygon Amoy</b>；</li>
+        <li>确认授权与购买交易（演示按钮仅提示，不会真实发起交易）。</li>
+      </ol>
+    </div>
+    <div class="modal-ft">
+      <button class="btn ghost" id="closeBuy">取消</button>
+      <button class="btn primary glow" id="confirmBuy">演示购买</button>
+    </div>
+  </div>
+</div>
 
+<script src="assets/script.js" defer></script>
 </body>
 </html>
+
 
 
 
