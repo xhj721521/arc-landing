@@ -4,33 +4,25 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Arcane Protocol · 奥秘协议</title>
-
-  <!-- 仅保留必要的 SEO；不引用任何外部图片，避免“怪图案” -->
-  <meta name="description" content="Arcane Protocol（奥秘协议）— 以 ARC 驱动的神域链游生态。黑金符文风，高端而可信。">
+  <meta name="description" content="Arcane Protocol（奥秘协议）— 以 ARC 驱动的神域链游生态。黑金符文风，高端且可信。">
   <meta name="theme-color" content="#070C12">
-
-  <!-- 字体（CDN） -->
+  <!-- 可选字体（加载失败也不影响排版） -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700..900&family=Cardo:wght@400;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- 使用你现有的 LOGO；仅作网站图标，不参与页面渲染 -->
-  <link rel="icon" href="./logo-light.svg" type="image/svg+xml">
-
-  <!-- 样式 -->
-  <link rel="stylesheet" href="./theme.css"/>
+  <!-- 只用你的 LOGO 做网站图标，不参与页面渲染 -->
+  <link rel="icon" href="logo-light.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
-
-  <!-- 顶部导航（一直可见，不会被隐藏） -->
+  <!-- 顶部导航：始终显示 -->
   <header class="topbar container" role="banner">
     <a class="brand" href="#">
-      <img src="./logo-light.svg" alt="Arcane Protocol Logo" class="logo"/>
+      <img src="logo-light.svg" alt="Arcane Protocol Logo" class="logo">
       <div class="logotype">
         <div class="en">ARCANE <b>PROTOCOL</b></div>
         <div class="cn">奥秘协议</div>
       </div>
     </a>
-
     <nav class="nav" aria-label="主导航">
       <a class="nav-item is-active" href="#subscribe">认购</a>
       <a class="nav-item" href="#alloc">分配</a>
@@ -52,10 +44,9 @@
     </div>
   </section>
 
-  <!-- 四卡：祝福模块 -->
+  <!-- 四卡 -->
   <section class="container" id="subscribe">
     <h2 class="section-title"><span class="mini-dot"></span>奥秘祝福</h2>
-
     <div class="cards">
       <article class="card">
         <h3>启程祝福（认购）</h3>
@@ -83,7 +74,6 @@
         <h3>丰收祝福（分红）</h3>
         <p>长线同行者共享战果。收益规则清晰、发放有序、公开可查。</p>
         <div class="ring-row">
-          <!-- 小巧环形进度（无外部图片） -->
           <svg class="ap-ring" width="110" height="110" viewBox="0 0 140 140" aria-hidden="true">
             <defs>
               <linearGradient id="apGold" x1="0" y1="0" x2="1" y2="1">
@@ -116,7 +106,7 @@
     </div>
   </section>
 
-  <!-- 登顶路线（SVG 内联，不依赖任何外链图片） -->
+  <!-- 登顶路线（内联 SVG） -->
   <section class="container" id="road">
     <h2 class="section-title"><span class="mini-dot"></span>登顶路线</h2>
     <div class="route-wrap">
@@ -152,6 +142,7 @@
         <path class="mount" d="M0,320 L120,280 240,310 360,250 480,300 600,220 720,300 840,260 960,300 1080,260 1200,300 1200,420 0,420 Z"/>
         <path class="halo" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
         <path class="route dash" d="M80,320 C180,300 240,260 340,260 S520,300 620,250 820,200 940,240 1100,260 1120,250"/>
+
         <g transform="translate(80,320)">
           <circle r="16" class="milestone"/><circle r="22" class="ring" fill="none"/>
           <text class="txt1" x="0" y="-38" text-anchor="middle">启动</text>
@@ -196,10 +187,10 @@
     </div>
   </footer>
 
-  <!-- 脚本 -->
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
