@@ -1,213 +1,340 @@
-<!DOCTYPE html>
-<html lang="en"> <!-- Default language is English -->
+<!doctype html>
+<html lang="zh" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arc Game Fundraising - Landing</title>
-  <!-- 本站点所有资源均为本地引用，不依赖任何 CDN -->
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>ARC Protocol — 全球链游募资官网</title>
+  <meta name="description" content="ARC 驱动的神域探险链游：早鸟预售、分配方案、周结分红、链上可核验。">
+  <meta name="theme-color" content="#0C1220">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/theme.css" />
 </head>
 <body>
-  <!-- Loading overlay -->
-  <div id="loading">
-    <div class="spinner"></div>
-  </div>
 
-  <!-- Header: brand logo, navigation menu, language switch, wallet button -->
-  <header>
-    <!-- Brand Name / Logo -->
-    <div class="logo">
-      <!-- 可替换为 logo 图像 -->
-      <span class="brand-name">ARCANE <span class="brand-sub">PROTOCOL</span></span>
-    </div>
-    <!-- Navigation menu (desktop links hidden on mobile) -->
-    <nav>
-      <ul>
-        <li><a href="#game-intro" data-i18n="navGame">Game</a></li>
-        <li><a href="#token-info" data-i18n="navToken">Token</a></li>
-        <li><a href="#dividend-demo" data-i18n="navDividends">Dividends</a></li>
-        <li><a href="#community" data-i18n="navCommunity">Community</a></li>
-        <li><a href="#subscription-status" data-i18n="navSubscribe">Subscribe</a></li>
-        <!-- Language switcher (visible on mobile only) -->
-        <li class="mobile-only">
-          <div class="lang-switch">
-            <button data-lang="en">EN</button>
-            <button data-lang="zh">中文</button>
-            <button data-lang="ar">عربي</button>
-          </div>
-        </li>
-        <!-- Wallet button (visible on mobile only) -->
-        <li class="mobile-only">
-          <button class="wallet-btn" data-i18n="" /* no translation needed for "Connect Wallet" text if left in English */>
-            Connect Wallet
-          </button>
-        </li>
-      </ul>
+  <!-- 顶部导航 -->
+  <header class="nav wrap">
+    <a class="brand" href="#">
+      <img src="assets/logo.svg" alt="ARC" />
+      <span>ARC Protocol</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#subscribe" data-i18n="nav.buy">认购</a>
+      <a href="#allocationChart" data-i18n="nav.dist">分配</a>
+      <a href="#dividend" data-i18n="nav.cases">分红案例</a>
+      <a href="#mechanism" data-i18n="nav.mech">稳健机制</a>
+      <a href="#highlights" data-i18n="nav.features">玩法亮点</a>
+      <a href="#roadmap" data-i18n="nav.route">路线图</a>
+      <a href="#verify" data-i18n="nav.verify">可验证</a>
+      <a href="#links" data-i18n="nav.links">链接</a>
     </nav>
-    <!-- Language and wallet (visible on desktop) -->
-    <div class="desktop-only">
-      <div class="lang-switch">
-        <button data-lang="en">EN</button>
-        <button data-lang="zh">中文</button>
-        <button data-lang="ar">عربي</button>
-      </div>
-      <button class="wallet-btn">Connect Wallet</button>
+
+    <div class="nav-ops">
+      <select id="langSelect" aria-label="Language">
+        <option value="zh">中文</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="vi">Tiếng Việt</option>
+        <option value="th">ไทย</option>
+        <option value="ms">Bahasa</option>
+        <option value="ar">العربية</option>
+      </select>
+      <button class="btn wallet" id="btnWallet" data-i18n="cta.wallet">
+        <img src="assets/icons/wallet.svg" alt="" class="i"/>连接钱包
+      </button>
     </div>
-    <!-- Mobile menu toggle button -->
-    <button id="menu-toggle">☰</button>
+    <button id="menuToggle" class="menu">☰</button>
   </header>
 
-  <main>
-    <!-- Section: Hero / Introduction -->
-    <section id="hero" class="hero">
-      <!-- Video background -->
-      <video class="hero-video" src="assets/hero-bg.mp4" autoplay muted loop playsinline>
-        <!-- Fallback image for older browsers -->
-      </video>
-      <!-- Hero text overlay -->
-      <div class="hero-overlay">
-        <h1 class="hero-title" data-i18n="heroTitle">The Next Generation Blockchain Game</h1>
-        <p class="hero-subtitle" data-i18n="heroSubtitle">Experience an ARC-driven realm where adventure meets blockchain.</p>
-        <div class="hero-buttons">
-          <a href="#subscription-status" class="btn btn-primary" data-i18n="ctaPrimary">Participate Now</a>
-          <a href="#" class="btn btn-secondary" data-i18n="ctaSecondary" target="_blank" rel="noopener">View Whitepaper</a>
-          <!-- ^ Replace href with actual whitepaper PDF link or page -->
-        </div>
-      </div>
-    </section>
+  <!-- HERO：视频背景 + 极光 -->
+  <section class="hero">
+    <video class="hero-video" playsinline muted loop autoplay preload="metadata" poster="assets/hero-poster.jpg">
+      <source src="assets/hero.mp4" type="video/mp4" />
+    </video>
+    <canvas id="aurora"></canvas>
+    <div class="hero-overlay"></div>
 
-    <!-- Section: Game Introduction -->
-    <section id="game-intro" class="fade-in">
-      <h2 data-i18n="gameIntroTitle">Game Introduction</h2>
-      <!-- Feature 1: Map Mechanism -->
-      <div class="feature">
-        <img src="assets/feature_map.png" alt="Map Mechanism" />
-        <div class="feature-text">
-          <h3 data-i18n="feature1Title">Map Mechanism</h3>
-          <p data-i18n="feature1Desc">Explore a vast world with a dynamic map system that evolves as you play.</p>
-        </div>
+    <div class="hero-content wrap">
+      <h1 class="hero-title" data-i18n="hero.title">唤醒未知，铸就你的传奇</h1>
+      <p class="hero-sub" data-i18n="hero.subtitle">探索·试炼·集市·远征 —— 以 <b>ARC</b> 驱动的神域链游生态。</p>
+      <div class="hero-cta">
+        <a href="#subscribe" class="btn primary" data-i18n="cta.buy">立即认购</a>
+        <a href="#allocationChart" class="btn ghost" data-i18n="cta.plan">查看分配</a>
+        <a href="assets/whitepaper.pdf" target="_blank" class="btn ghost" data-i18n="cta.whitepaper">白皮书</a>
       </div>
-      <!-- Feature 2: Special Gameplay -->
-      <div class="feature reverse">
-        <img src="assets/feature_gameplay.png" alt="Special Gameplay" />
-        <div class="feature-text">
-          <h3 data-i18n="feature2Title">Special Gameplay</h3>
-          <p data-i18n="feature2Desc">Unique challenges and trials that set this game apart from the rest.</p>
-        </div>
-      </div>
-      <!-- Feature 3: Fragment Drops -->
-      <div class="feature">
-        <img src="assets/feature_fragments.png" alt="Fragment Drops" />
-        <div class="feature-text">
-          <h3 data-i18n="feature3Title">Fragment Drops</h3>
-          <p data-i18n="feature3Desc">Collect valuable fragments throughout your adventures to boost your power.</p>
-        </div>
-      </div>
-      <!-- Feature 4: Team Battles -->
-      <div class="feature reverse">
-        <img src="assets/feature_team.png" alt="Team Battles" />
-        <div class="feature-text">
-          <h3 data-i18n="feature4Title">Team Battles</h3>
-          <p data-i18n="feature4Desc">Form teams and engage in epic battles for territory and glory.</p>
-        </div>
-      </div>
-      <!-- Feature 5: Prediction Contests -->
-      <div class="feature">
-        <img src="assets/feature_bet.png" alt="Prediction Contests" />
-        <div class="feature-text">
-          <h3 data-i18n="feature5Title">Prediction Contests</h3>
-          <p data-i18n="feature5Desc">Take part in prediction contests and win rewards based on outcomes.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- Section: Token Information -->
-    <section id="token-info" class="fade-in">
-      <h2 data-i18n="tokenInfoTitle">Token Information</h2>
-      <div class="token-container">
-        <!-- Token mechanism diagram image placeholder -->
-        <div class="token-diagram">
-          <img src="assets/token-diagram.png" alt="Token mechanism diagram" class="token-image" />
+      <div class="hero-badges">
+        <div class="badge">
+          <span data-i18n="badge.scale">本轮规模</span><strong>50,000 USDT</strong>
         </div>
-        <!-- Interactive token details -->
-        <div class="token-details">
-          <ul class="token-tabs">
-            <li data-part="burn" class="active" data-i18n="burnTitle">Burn</li>
-            <li data-part="release" data-i18n="releaseTitle">Release</li>
-            <li data-part="lock" data-i18n="lockTitle">Lock</li>
-            <li data-part="dividend" data-i18n="dividendTitle">Dividends</li>
-          </ul>
-          <div class="token-info-text">
-            <!-- Description of the currently selected token mechanism -->
-            <p id="token-detail" data-i18n="">A portion of tokens is burned to reduce supply and increase value.</p>
+        <div class="badge">
+          <span data-i18n="badge.share">股东NFT</span><strong>100 枚 × $500</strong>
+        </div>
+        <div class="badge">
+          <span data-i18n="badge.cycle">周期</span><strong data-i18n="badge.cycleVal">周结分红 · 上链可查</strong>
+        </div>
+        <div class="badge">
+          <span data-i18n="badge.rights">权益</span><strong data-i18n="badge.rightsVal">治理/补流/双分红</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 投资人快讯条 -->
+  <section id="investor-strip" class="strip wrap anim">
+    <div class="pill"><span data-i18n="strip.tier">早鸟</span> <b id="pillEarly">20 枚 @ 400 USDT</b></div>
+    <div class="pill"><span data-i18n="strip.std">标准</span> <b id="pillStd">80 枚 @ 500 USDT</b></div>
+    <div class="pill"><span data-i18n="strip.start">预售开始</span> <b id="pillStart">2025-09-08</b></div>
+    <div class="pill"><span data-i18n="strip.state">状态</span> <b id="pillState">COUNTDOWN</b></div>
+  </section>
+
+  <!-- 资金曲线 + 翻牌数字（新增模块） -->
+  <section id="metrics" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="metrics.title">资金趋势与核心数据</h2>
+    <div class="grid two">
+      <div class="card anim">
+        <h4 data-i18n="metrics.sparkFunds">资金曲线（USDT）</h4>
+        <canvas id="sparkFunds" width="800" height="180" aria-label="funds sparkline"></canvas>
+      </div>
+      <div class="card anim">
+        <h4 data-i18n="metrics.sparkSales">销量曲线（份额）</h4>
+        <canvas id="sparkSales" width="800" height="180" aria-label="sales sparkline"></canvas>
+      </div>
+    </div>
+
+    <div class="flip-row">
+      <div class="flip-card anim">
+        <div class="flip-label" data-i18n="metrics.raised">已募集（USDT）</div>
+        <div class="flip-value" id="flipRaised">0</div>
+      </div>
+      <div class="flip-card anim">
+        <div class="flip-label" data-i18n="metrics.sold">已售（份）</div>
+        <div class="flip-value" id="flipSold">0</div>
+      </div>
+      <div class="flip-card anim">
+        <div class="flip-label" data-i18n="metrics.lastweek">上周净收益（USDT）</div>
+        <div class="flip-value" id="flipNet">0</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 认购/进度 + 倒计时 -->
+  <section id="subscribe" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.subscribe">认购与进度</h2>
+
+    <div class="grid two">
+      <!-- 左：档位卡 -->
+      <div class="card anim">
+        <div class="tiers">
+          <div class="tier">
+            <div class="tier-hd">
+              <span class="tag" data-i18n="tier.early">早鸟</span>
+              <span class="limit" data-i18n="tier.limit20">限 20 枚</span>
+            </div>
+            <div class="tier-price"><b>$400</b> <span data-i18n="tier.per">/ 枚</span></div>
+            <div class="progress"><div id="earlyFill" style="width:0%"></div></div>
+            <div class="muted"><span id="earlyText">0 / 20（0%）</span></div>
+            <button class="btn primary" id="btnEarly" disabled>
+              <img src="assets/icons/cart.svg" class="i" alt=""><span data-i18n="tier.start8">9 月 8 日开启</span>
+            </button>
+          </div>
+
+          <div class="tier">
+            <div class="tier-hd">
+              <span class="tag tag-std" data-i18n="tier.std">标准</span>
+              <span class="limit" data-i18n="tier.limit80">限 80 枚</span>
+            </div>
+            <div class="tier-price"><b>$500</b> <span data-i18n="tier.per">/ 枚</span></div>
+            <div class="progress"><div id="stdFill" style="width:0%"></div></div>
+            <div class="muted"><span id="stdText">0 / 80（0%）</span></div>
+            <button class="btn ghost" id="btnStd" disabled>
+              <img src="assets/icons/cart.svg" class="i" alt=""><span data-i18n="tier.afterEarly">早鸟售罄后开放</span>
+            </button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Section: Dividend Demonstration -->
-    <section id="dividend-demo" class="fade-in">
-      <h2 data-i18n="dividendDemoTitle">Dividend Demonstration</h2>
-      <p class="note"> <!-- optional introductory note -->
-        <!-- 可在此简述分红案例或计算方法 -->
-      </p>
-      <div class="calculator">
-        <label for="nft-count" data-i18n="holdingsLabel">NFT Holdings</label>
-        <input type="number" id="nft-count" min="0" placeholder="0" />
-        <button id="calc-btn" class="btn btn-primary" data-i18n="calculateBtn">Calculate</button>
-      </div>
-      <p id="dividend-result"><!-- Estimated dividend result will be inserted here --></p>
-    </section>
+        <div class="total mt">
+          <div class="stat"><span data-i18n="sub.total">总份额</span><strong>100</strong></div>
+          <div class="stat"><span data-i18n="sub.target">目标</span><strong>50,000 USDT</strong></div>
+          <div class="stat"><span data-i18n="sub.raised">已募集</span><strong><span id="raised">0</span> USDT</strong></div>
+        </div>
 
-    <!-- Section: Subscription Progress -->
-    <section id="subscription-status" class="fade-in">
-      <h2 data-i18n="subscriptionTitle">Subscription Progress</h2>
-      <div class="stats">
-        <p>
-          <span data-i18n="subscribedLabel">Subscribed Shares</span>:
-          <span id="subscribed-count" data-target="780">0</span> /
-          <span id="subscribed-total" data-target="1000">0</span>
+        <div class="progress big mt"><div id="totalFill" style="width:0%"></div></div>
+        <div class="muted"><span id="totalText">0 / 100（0%）</span></div>
+      </div>
+
+      <!-- 右：倒计时 + 权益 -->
+      <div class="card anim">
+        <h3 data-i18n="count.title">预售倒计时</h3>
+        <div class="countdown">
+          <div><b id="cd-d">00</b><span>Days</span></div>
+          <div><b id="cd-h">00</b><span>Hours</span></div>
+          <div><b id="cd-m">00</b><span>Minutes</span></div>
+          <div><b id="cd-s">00</b><span>Seconds</span></div>
+        </div>
+        <div class="mt"></div>
+        <h3 data-i18n="sub.rights">股东权益</h3>
+        <ul class="tick">
+          <li data-i18n="sub.r1">优先补充流动性（赚取滑点手续费）</li>
+          <li data-i18n="sub.r2">治理投票（资金用途/开发/运营）</li>
+          <li data-i18n="sub.r3">USDT + ARC 双分红（周结）</li>
+          <li data-i18n="sub.r4">代为充值服务的价差收益</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 分配环形图 -->
+  <section class="section wrap" id="allocationChart">
+    <h2 class="sec-title anim" data-i18n="sec.allocation">分配与分红</h2>
+    <div class="grid two">
+      <div class="card anim">
+        <h4 data-i18n="chart.m1">公测首月分配</h4>
+        <svg class="donut" viewBox="0 0 42 42" width="220" height="220" aria-label="donut">
+          <circle class="donut-ring" cx="21" cy="21" r="15.9155" fill="transparent" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+          <circle class="donut-segment s1" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#53B7FF" stroke-width="3" stroke-dasharray="50 50" stroke-dashoffset="25"/>
+          <circle class="donut-segment s2" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#52e5a8" stroke-width="3" stroke-dasharray="40 60" stroke-dashoffset="75"/>
+          <circle class="donut-segment s3" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#FFD66B" stroke-width="3" stroke-dasharray="10 90" stroke-dashoffset="115"/>
+        </svg>
+        <ul class="legend">
+          <li><span class="dot c1"></span> <b>50%</b> <span data-i18n="legend.div">分红</span></li>
+          <li><span class="dot c2"></span> <b>40%</b> <span data-i18n="legend.lp">注入流动池</span></li>
+          <li><span class="dot c3"></span> <b>10%</b> <span data-i18n="legend.mkt">营销</span></li>
+        </ul>
+      </div>
+      <div class="card anim">
+        <h4 data-i18n="chart.m2">第 2 月起分配</h4>
+        <svg class="donut" viewBox="0 0 42 42" width="220" height="220">
+          <circle class="donut-ring" cx="21" cy="21" r="15.9155" fill="transparent" stroke="rgba(255,255,255,.12)" stroke-width="3"/>
+          <circle class="donut-segment s4" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#53B7FF" stroke-width="3" stroke-dasharray="30 70" stroke-dashoffset="25"/>
+          <circle class="donut-segment s2" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#52e5a8" stroke-width="3" stroke-dasharray="40 60" stroke-dashoffset="55"/>
+          <circle class="donut-segment s3" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#FFD66B" stroke-width="3" stroke-dasharray="15 85" stroke-dashoffset="95"/>
+          <circle class="donut-segment s5" cx="21" cy="21" r="15.9155" fill="transparent" stroke="#9aa7ff" stroke-width="3" stroke-dasharray="15 85" stroke-dashoffset="110"/>
+        </svg>
+        <ul class="legend">
+          <li><span class="dot c1"></span> <b>30%</b> <span data-i18n="legend.div">分红</span></li>
+          <li><span class="dot c2"></span> <b>40%</b> <span data-i18n="legend.lp">注入流动池</span></li>
+          <li><span class="dot c3"></span> <b>15%</b> <span data-i18n="legend.mkt">营销</span></li>
+          <li><span class="dot c4"></span> <b>15%</b> <span data-i18n="legend.ops">运营</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 分红案例/计算器 -->
+  <section id="dividend" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.cases">分红案例</h2>
+    <div class="grid two">
+      <div class="card anim highlight">
+        <h3 data-i18n="div.title">分红案例（周结示意）</h3>
+        <p class="muted" data-i18n="div.note">
+          例如当周净收益 10,000 USDT：50% → 分红池，100 枚股东NFT 等权 ≈ 50 USDT/枚；损耗以 ARC 代币分发。
         </p>
-        <p>
-          <span data-i18n="raisedLabel">Raised Amount</span>:
-          <span id="raised-amount" data-target="78000">0</span> USDT
-        </p>
       </div>
-    </section>
-
-    <!-- Section: Community & Governance -->
-    <section id="community" class="fade-in">
-      <h2 data-i18n="communityTitle">Community &amp; Governance</h2>
-      <div class="community-list">
-        <div class="community-item">
-          <img src="assets/icon-vote.png" alt="Voting icon" class="icon" />
-          <h3 data-i18n="communityItem1Title">Shareholder Voting</h3>
-          <p data-i18n="communityItem1Desc">Token holders can vote on major game decisions.</p>
+      <div class="card anim">
+        <h4 data-i18n="calc.title">分红小计算器</h4>
+        <div class="calc">
+          <label for="nftCount" data-i18n="calc.label">持有 NFT 数量</label>
+          <input id="nftCount" type="number" min="0" placeholder="0">
+          <button id="calcBtn" class="btn primary" data-i18n="calc.btn">计算</button>
         </div>
-        <div class="community-item">
-          <img src="assets/icon-governance.png" alt="Governance icon" class="icon" />
-          <h3 data-i18n="communityItem2Title">Governance Mechanism</h3>
-          <p data-i18n="communityItem2Desc">A transparent process to guide the project’s development.</p>
-        </div>
-        <div class="community-item">
-          <img src="assets/icon-dividend.png" alt="Dividends icon" class="icon" />
-          <h3 data-i18n="communityItem3Title">Dual Dividends</h3>
-          <p data-i18n="communityItem3Desc">Receive dividends in both USDT and ARC tokens for holding NFTs.</p>
-        </div>
-        <div class="community-item">
-          <img src="assets/icon-transparency.png" alt="Transparency icon" class="icon" />
-          <h3 data-i18n="communityItem4Title">On-chain Transparency</h3>
-          <p data-i18n="communityItem4Desc">All governance and reward records are publicly verifiable on-chain.</p>
-        </div>
+        <p id="calcResult" class="calc-result"></p>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <!-- Footer (optional, can include contact or social links) -->
-  <footer>
-    <p>© 2025 Arc Game. All rights reserved.</p>
+  <!-- 稳健机制 -->
+  <section id="mechanism" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.mech">稳健机制</h2>
+    <div class="grid three">
+      <div class="card anim"><h4 data-i18n="mech.burn">通缩与销毁</h4><p data-i18n="mech.burnV">交易损耗：50% 销毁 · 30% 补流 · 20% 分红；周度核算动态调节。</p></div>
+      <div class="card anim"><h4 data-i18n="mech.halving">产出“减半”</h4><p data-i18n="mech.halvingV">以周为闭环：当产出＞消耗阈值，次周减半；低于阈值则保持常规产出。</p></div>
+      <div class="card anim"><h4 data-i18n="mech.verify">链上可验证</h4><p data-i18n="mech.verifyV">合约开源、周报 JSON、公示交易哈希；投资人一键核对。</p></div>
+    </div>
+  </section>
+
+  <!-- 玩法亮点 -->
+  <section id="highlights" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.features">玩法亮点</h2>
+    <div class="grid three">
+      <div class="card icon anim"><img src="assets/feat-team.svg" alt=""><h4 data-i18n="hl.team">团队地图</h4><p data-i18n="hl.teamV">团队长专属地图与拉新榜激励，裂变效率高。</p></div>
+      <div class="card icon anim"><img src="assets/feat-tower.svg" alt=""><h4 data-i18n="hl.tower">12 层爬塔</h4><p data-i18n="hl.towerV">层层递增奖励，碎片掉落可合成稀有 NFT。</p></div>
+      <div class="card icon anim"><img src="assets/feat-br.svg" alt=""><h4 data-i18n="hl.br">观众下注大逃杀</h4><p data-i18n="hl.brV">公平匹配，观战下注；玩家 vs 大玩家对赌。</p></div>
+      <div class="card icon anim"><img src="assets/feat-bet.svg" alt=""><h4 data-i18n="hl.bet">代币波动竞猜</h4><p data-i18n="hl.betV">5/30/60 分钟一期，最高 15× 档位。</p></div>
+      <div class="card icon anim"><img src="assets/feat-vol.svg" alt=""><h4 data-i18n="hl.vol">电竞/体育赛事</h4><p data-i18n="hl.volV">LOL/Dota/永劫无间；NBA/欧洲杯/世界杯。</p></div>
+      <div class="card icon anim"><img src="assets/feat-quest.svg" alt=""><h4 data-i18n="hl.quest">任务与探索</h4><p data-i18n="hl.questV">神域探险获取金币与碎片，合成高阶 NFT。</p></div>
+      <div class="card icon anim"><img src="assets/feat-nft.svg" alt=""><h4 data-i18n="hl.nft">股东 NFT</h4><p data-i18n="hl.nftV">总量固定，不可增发；治理 + 分红 + 优先补流。</p></div>
+      <div class="card icon anim"><img src="assets/feat-stake.svg" alt=""><h4 data-i18n="hl.stake">质押与补流</h4><p data-i18n="hl.stakeV">USDT/ARC 质押，赚手续费与激励。</p></div>
+      <div class="card icon anim"><img src="assets/feat-br.svg" alt=""><h4 data-i18n="hl.fair">公平公正</h4><p data-i18n="hl.fairV">链上结算与公开周报，数据留痕可核验。</p></div>
+    </div>
+  </section>
+
+  <!-- 路线图 -->
+  <section id="roadmap" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.route">路线图</h2>
+    <div class="road anim">
+      <div class="step"><span>1</span><div><h4 data-i18n="rm.p1">阶段一（1 个月）</h4><p data-i18n="rm.p1V">上线 App（大逃杀/地图/社群）+ 募资交付与数据公示。</p></div></div>
+      <div class="step"><span>2</span><div><h4 data-i18n="rm.p2">阶段二（+1 个月）</h4><p data-i18n="rm.p2V">接入电竞（LOL/Dota/永劫无间等）+ 体育（NBA/欧洲杯/世界杯）。</p></div></div>
+      <div class="step"><span>3</span><div><h4 data-i18n="rm.p3">阶段三（+2 个月）</h4><p data-i18n="rm.p3V">引入金融衍生品、代币上市、子游戏互通，扩展长期价值。</p></div></div>
+    </div>
+  </section>
+
+  <!-- 链上可验证/文档/审计 -->
+  <section id="verify" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.verify">链上可验证</h2>
+    <div class="grid three">
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/chain.svg" class="i" alt=""><span data-i18n="v.contract">合约 & 开源仓库</span>
+      </a>
+      <a class="card link anim" href="assets/weekly.json" target="_blank">
+        <img src="assets/icons/report.svg" class="i" alt=""><span data-i18n="v.weekly">周报 JSON</span>
+      </a>
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/shield.svg" class="i" alt=""><span data-i18n="v.audit">第三方审计（占位）</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 统一链接入口 -->
+  <section id="links" class="section wrap">
+    <h2 class="sec-title anim" data-i18n="sec.links">快速链接</h2>
+    <div class="grid three">
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/download.svg" class="i" alt=""><span data-i18n="link.download">游戏下载（占位）</span>
+      </a>
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/twitter.svg" class="i" alt=""><span>Twitter</span>
+      </a>
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/telegram.svg" class="i" alt=""><span>Telegram</span>
+      </a>
+      <a class="card link anim" href="mailto:contact@arcprotocol.org">
+        <img src="assets/icons/mail.svg" class="i" alt=""><span>Email</span>
+      </a>
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/wallet.svg" class="i" alt=""><span data-i18n="link.wallet">连接钱包（占位）</span>
+      </a>
+      <a class="card link anim" href="#" target="_blank">
+        <img src="assets/icons/chain.svg" class="i" alt=""><span data-i18n="link.onchain">链上浏览（占位）</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer wrap">
+    <div>© ARC Protocol — All rights reserved.</div>
+    <div class="right">
+      <a href="assets/terms.pdf" target="_blank" data-i18n="f.terms">条款</a>
+      <a href="assets/privacy.pdf" target="_blank" data-i18n="f.policy">隐私</a>
+      <a href="assets/whitepaper.pdf" target="_blank" data-i18n="f.docs">文档</a>
+    </div>
   </footer>
+
+  <script src="assets/script.js"></script>
+</body>
+</html>
+
 
   <script src="script.js"></script>
 </body>
 </html>
+
