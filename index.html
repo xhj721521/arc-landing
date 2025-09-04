@@ -1,304 +1,213 @@
-<!doctype html>
-<html lang="zh" dir="ltr">
+<!DOCTYPE html>
+<html lang="en"> <!-- Default language is English -->
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Arc Protocol — 神域探险链游生态</title>
-  <meta name="description" content="链上可核验 · 通缩自稳 · 每周 USDT+ARC 双币分红。奥秘协议 Arc Protocol：面向全球的链游+收益生态。">
-  <link rel="canonical" href="https://arcprotocol.org/">
-  <meta property="og:title" content="Arc Protocol — 神域探险链游生态" />
-  <meta property="og:description" content="链上可核验 · 通缩自稳 · 每周 USDT+ARC 双币分红" />
-  <meta property="og:image" content="/assets/images/og-cover.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="/assets/logo-light.svg">
-  <link rel="stylesheet" href="/assets/theme.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arc Game Fundraising - Landing</title>
+  <!-- 本站点所有资源均为本地引用，不依赖任何 CDN -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 细腻噪点 & 渐变背景 -->
-  <div class="bg-gradient"></div>
-  <div class="bg-noise"></div>
+  <!-- Loading overlay -->
+  <div id="loading">
+    <div class="spinner"></div>
+  </div>
 
-  <!-- 顶部导航 -->
-  <header class="site-header glass sticky">
-    <div class="wrap header-inner">
-      <a class="brand" href="#hero">
-        <img src="/assets/logo-light.svg" alt="Arc Protocol" />
-        <span class="brand-text">ARCANE <b>PROTOCOL</b></span>
-      </a>
-
-      <!-- 桌面导航 -->
-      <nav class="nav-panel" id="navPanelDesktop">
-        <a class="nav-link" href="#subscribe" data-i18n="nav_subscribe">认购</a>
-        <a class="nav-link" href="#allocation" data-i18n="nav_allocation">分配</a>
-        <a class="nav-link" href="#cases" data-i18n="nav_cases">分红案例</a>
-        <a class="nav-link" href="#mechanism" data-i18n="nav_mechanism">稳健机制</a>
-        <a class="nav-link" href="#highlights" data-i18n="nav_highlights">玩法亮点</a>
-        <a class="nav-link" href="#roadmap" data-i18n="nav_roadmap">登顶路线</a>
-        <a class="nav-link" href="#verify" data-i18n="nav_verify">可验证</a>
-        <a class="nav-link" href="#docs" data-i18n="nav_docs">文档</a>
-        <a class="nav-link" href="#team" data-i18n="nav_team">团队</a>
-      </nav>
-
-      <div class="header-actions">
-        <select id="langSelect" class="lang-select" aria-label="Language">
-          <option value="zh">中文</option>
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="vi">Tiếng Việt</option>
-          <option value="th">ไทย</option>
-          <option value="ms">Bahasa Melayu</option>
-          <option value="ar">العربية</option>
-        </select>
-        <button id="walletBtn" class="btn btn-ghost" data-i18n="btn_wallet">连接钱包</button>
-
-        <!-- 移动端菜单按钮 -->
-        <button id="menuToggle" class="menu-btn" aria-expanded="false" aria-controls="navPanelMobile">
-          <span class="menu-dot"></span><span class="menu-dot"></span><span class="menu-dot"></span>
-        </button>
-      </div>
+  <!-- Header: brand logo, navigation menu, language switch, wallet button -->
+  <header>
+    <!-- Brand Name / Logo -->
+    <div class="logo">
+      <!-- 可替换为 logo 图像 -->
+      <span class="brand-name">ARCANE <span class="brand-sub">PROTOCOL</span></span>
     </div>
-
-    <!-- 移动端抽屉菜单（默认隐藏） -->
-    <nav id="navPanelMobile" class="nav-drawer" hidden>
-      <a class="nav-link" href="#subscribe" data-i18n="nav_subscribe">认购</a>
-      <a class="nav-link" href="#allocation" data-i18n="nav_allocation">分配</a>
-      <a class="nav-link" href="#cases" data-i18n="nav_cases">分红案例</a>
-      <a class="nav-link" href="#mechanism" data-i18n="nav_mechanism">稳健机制</a>
-      <a class="nav-link" href="#highlights" data-i18n="nav_highlights">玩法亮点</a>
-      <a class="nav-link" href="#roadmap" data-i18n="nav_roadmap">登顶路线</a>
-      <a class="nav-link" href="#verify" data-i18n="nav_verify">可验证</a>
-      <a class="nav-link" href="#docs" data-i18n="nav_docs">文档</a>
-      <a class="nav-link" href="#team" data-i18n="nav_team">团队</a>
+    <!-- Navigation menu (desktop links hidden on mobile) -->
+    <nav>
+      <ul>
+        <li><a href="#game-intro" data-i18n="navGame">Game</a></li>
+        <li><a href="#token-info" data-i18n="navToken">Token</a></li>
+        <li><a href="#dividend-demo" data-i18n="navDividends">Dividends</a></li>
+        <li><a href="#community" data-i18n="navCommunity">Community</a></li>
+        <li><a href="#subscription-status" data-i18n="navSubscribe">Subscribe</a></li>
+        <!-- Language switcher (visible on mobile only) -->
+        <li class="mobile-only">
+          <div class="lang-switch">
+            <button data-lang="en">EN</button>
+            <button data-lang="zh">中文</button>
+            <button data-lang="ar">عربي</button>
+          </div>
+        </li>
+        <!-- Wallet button (visible on mobile only) -->
+        <li class="mobile-only">
+          <button class="wallet-btn" data-i18n="" /* no translation needed for "Connect Wallet" text if left in English */>
+            Connect Wallet
+          </button>
+        </li>
+      </ul>
     </nav>
+    <!-- Language and wallet (visible on desktop) -->
+    <div class="desktop-only">
+      <div class="lang-switch">
+        <button data-lang="en">EN</button>
+        <button data-lang="zh">中文</button>
+        <button data-lang="ar">عربي</button>
+      </div>
+      <button class="wallet-btn">Connect Wallet</button>
+    </div>
+    <!-- Mobile menu toggle button -->
+    <button id="menu-toggle">☰</button>
   </header>
 
-  <!-- 首屏：视频占位 + 图片兜底 -->
-  <section id="hero" class="hero">
-    <video id="heroVideo" class="hero-video" autoplay muted loop playsinline preload="metadata">
-      <source src="/assets/videos/hero.mp4" type="video/mp4" />
-    </video>
-    <img id="heroFallback" class="hero-fallback" src="/assets/images/hero-fallback.jpg" alt="" />
-
-    <div class="wrap hero-content">
-      <h1 class="hero-title" data-i18n="hero_title">唤醒未知，铸就你的传奇</h1>
-      <p class="hero-sub" data-i18n="hero_sub">
-        探索 · 试炼 · 集市 · 远征 —— 以 <b>ARC</b> 驱动的神域链游生态。连接九大功能页与团队地图，延展长期玩法与价值。
-      </p>
-      <div class="hero-ctas">
-        <a href="#subscribe" class="btn btn-primary" data-i18n="cta_subscribe">立即认购</a>
-        <a href="#docs" class="btn btn-secondary" data-i18n="cta_whitepaper">查看白皮书</a>
+  <main>
+    <!-- Section: Hero / Introduction -->
+    <section id="hero" class="hero">
+      <!-- Video background -->
+      <video class="hero-video" src="assets/hero-bg.mp4" autoplay muted loop playsinline>
+        <!-- Fallback image for older browsers -->
+      </video>
+      <!-- Hero text overlay -->
+      <div class="hero-overlay">
+        <h1 class="hero-title" data-i18n="heroTitle">The Next Generation Blockchain Game</h1>
+        <p class="hero-subtitle" data-i18n="heroSubtitle">Experience an ARC-driven realm where adventure meets blockchain.</p>
+        <div class="hero-buttons">
+          <a href="#subscription-status" class="btn btn-primary" data-i18n="ctaPrimary">Participate Now</a>
+          <a href="#" class="btn btn-secondary" data-i18n="ctaSecondary" target="_blank" rel="noopener">View Whitepaper</a>
+          <!-- ^ Replace href with actual whitepaper PDF link or page -->
+        </div>
       </div>
+    </section>
 
-      <div class="chips">
-        <div class="chip"><span data-i18n="chip_scale">规模：</span>50,000 USDT</div>
-        <div class="chip"><span data-i18n="chip_nft">股东NFT：</span>100 枚 × $500</div>
-        <div class="chip" data-i18n="chip_weekly">周结分红 · 上链可查</div>
+    <!-- Section: Game Introduction -->
+    <section id="game-intro" class="fade-in">
+      <h2 data-i18n="gameIntroTitle">Game Introduction</h2>
+      <!-- Feature 1: Map Mechanism -->
+      <div class="feature">
+        <img src="assets/feature_map.png" alt="Map Mechanism" />
+        <div class="feature-text">
+          <h3 data-i18n="feature1Title">Map Mechanism</h3>
+          <p data-i18n="feature1Desc">Explore a vast world with a dynamic map system that evolves as you play.</p>
+        </div>
       </div>
-    </div>
+      <!-- Feature 2: Special Gameplay -->
+      <div class="feature reverse">
+        <img src="assets/feature_gameplay.png" alt="Special Gameplay" />
+        <div class="feature-text">
+          <h3 data-i18n="feature2Title">Special Gameplay</h3>
+          <p data-i18n="feature2Desc">Unique challenges and trials that set this game apart from the rest.</p>
+        </div>
+      </div>
+      <!-- Feature 3: Fragment Drops -->
+      <div class="feature">
+        <img src="assets/feature_fragments.png" alt="Fragment Drops" />
+        <div class="feature-text">
+          <h3 data-i18n="feature3Title">Fragment Drops</h3>
+          <p data-i18n="feature3Desc">Collect valuable fragments throughout your adventures to boost your power.</p>
+        </div>
+      </div>
+      <!-- Feature 4: Team Battles -->
+      <div class="feature reverse">
+        <img src="assets/feature_team.png" alt="Team Battles" />
+        <div class="feature-text">
+          <h3 data-i18n="feature4Title">Team Battles</h3>
+          <p data-i18n="feature4Desc">Form teams and engage in epic battles for territory and glory.</p>
+        </div>
+      </div>
+      <!-- Feature 5: Prediction Contests -->
+      <div class="feature">
+        <img src="assets/feature_bet.png" alt="Prediction Contests" />
+        <div class="feature-text">
+          <h3 data-i18n="feature5Title">Prediction Contests</h3>
+          <p data-i18n="feature5Desc">Take part in prediction contests and win rewards based on outcomes.</p>
+        </div>
+      </div>
+    </section>
 
-    <!-- 曲面地形 SVG 提升“高级感” -->
-    <svg class="terrain" viewBox="0 0 1440 240" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0,160 C160,120 320,200 480,170 C640,140 800,60 960,90 C1120,120 1280,200 1440,170 L1440,240 L0,240 Z" />
-    </svg>
-  </section>
-
-  <!-- 认购 -->
-  <section id="subscribe" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_subscribe">认购与进度</h2>
-      <div class="grid two">
-        <div class="card">
-          <ul class="kv">
-            <li><span data-i18n="sub_round">本轮规模</span><b>50,000 USDT</b></li>
-            <li><span data-i18n="sub_price">价格/枚</span><b>$500</b></li>
-            <li><span data-i18n="sub_total">总量</span><b>100 枚（固定，不增发）</b></li>
+    <!-- Section: Token Information -->
+    <section id="token-info" class="fade-in">
+      <h2 data-i18n="tokenInfoTitle">Token Information</h2>
+      <div class="token-container">
+        <!-- Token mechanism diagram image placeholder -->
+        <div class="token-diagram">
+          <img src="assets/token-diagram.png" alt="Token mechanism diagram" class="token-image" />
+        </div>
+        <!-- Interactive token details -->
+        <div class="token-details">
+          <ul class="token-tabs">
+            <li data-part="burn" class="active" data-i18n="burnTitle">Burn</li>
+            <li data-part="release" data-i18n="releaseTitle">Release</li>
+            <li data-part="lock" data-i18n="lockTitle">Lock</li>
+            <li data-part="dividend" data-i18n="dividendTitle">Dividends</li>
           </ul>
-          <a class="btn btn-primary w-100" data-i18n="btn_apply" href="#apply">申请白名单</a>
-          <p class="hint" data-i18n="sub_hint">早期认购者将获得专属徽章与限时增益。</p>
-        </div>
-        <div class="card">
-          <h3 class="mb8" data-i18n="sub_progress">进度</h3>
-          <div class="progress">
-            <div class="bar" id="soldBar" style="width:0%"></div>
+          <div class="token-info-text">
+            <!-- Description of the currently selected token mechanism -->
+            <p id="token-detail" data-i18n="">A portion of tokens is burned to reduce supply and increase value.</p>
           </div>
-          <div class="muted"><span data-i18n="sub_sold">已售</span> <b id="soldText">0%</b></div>
-          <p class="muted" data-i18n="sub_note">链上记录公开可查，资金用途由股东投票治理。</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 分配 -->
-  <section id="allocation" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_allocation">分配与分红</h2>
-      <div class="grid three">
-        <div class="card">
-          <h4 data-i18n="alloc_phase1_title">公测首月</h4>
-          <p data-i18n="alloc_phase1">50% 分红 · 40% 注入流动池 · 10% 营销</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="alloc_phase2_title">第2月起</h4>
-          <p data-i18n="alloc_phase2">30% 分红 · 40% 注入流动池 · 15% 营销 · 15% 项目运营</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="alloc_dual_title">双币分红</h4>
-          <p data-i18n="alloc_dual">净收入以 USDT 发放；损耗以 ARC 代币发放</p>
-        </div>
-      </div>
-      <p class="muted" data-i18n="alloc_more">
-        收入来源：NFT 铸造 / 会员费用 / 竞猜损耗 / 交易手续费 / 地图升级 / 探险队升级 / 质押手续费 等。
+    <!-- Section: Dividend Demonstration -->
+    <section id="dividend-demo" class="fade-in">
+      <h2 data-i18n="dividendDemoTitle">Dividend Demonstration</h2>
+      <p class="note"> <!-- optional introductory note -->
+        <!-- 可在此简述分红案例或计算方法 -->
       </p>
-    </div>
-  </section>
+      <div class="calculator">
+        <label for="nft-count" data-i18n="holdingsLabel">NFT Holdings</label>
+        <input type="number" id="nft-count" min="0" placeholder="0" />
+        <button id="calc-btn" class="btn btn-primary" data-i18n="calculateBtn">Calculate</button>
+      </div>
+      <p id="dividend-result"><!-- Estimated dividend result will be inserted here --></p>
+    </section>
 
-  <!-- 分红案例 -->
-  <section id="cases" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_cases">分红案例（示意）</h2>
-      <div class="grid three">
-        <div class="card">
-          <h4 data-i18n="case_week1">周度示例 A</h4>
-          <p data-i18n="case_a_text">总净收入 20,000 USDT → 50% 分红=10,000 USDT；100 股东NFT，平均每枚 100 USDT。</p>
+    <!-- Section: Subscription Progress -->
+    <section id="subscription-status" class="fade-in">
+      <h2 data-i18n="subscriptionTitle">Subscription Progress</h2>
+      <div class="stats">
+        <p>
+          <span data-i18n="subscribedLabel">Subscribed Shares</span>:
+          <span id="subscribed-count" data-target="780">0</span> /
+          <span id="subscribed-total" data-target="1000">0</span>
+        </p>
+        <p>
+          <span data-i18n="raisedLabel">Raised Amount</span>:
+          <span id="raised-amount" data-target="78000">0</span> USDT
+        </p>
+      </div>
+    </section>
+
+    <!-- Section: Community & Governance -->
+    <section id="community" class="fade-in">
+      <h2 data-i18n="communityTitle">Community &amp; Governance</h2>
+      <div class="community-list">
+        <div class="community-item">
+          <img src="assets/icon-vote.png" alt="Voting icon" class="icon" />
+          <h3 data-i18n="communityItem1Title">Shareholder Voting</h3>
+          <p data-i18n="communityItem1Desc">Token holders can vote on major game decisions.</p>
         </div>
-        <div class="card">
-          <h4 data-i18n="case_week2">周度示例 B</h4>
-          <p data-i18n="case_b_text">净收入 12,000 + 损耗 6,000 ARC → USDT/ARC 双发；LP 滑点手续费归股东。</p>
+        <div class="community-item">
+          <img src="assets/icon-governance.png" alt="Governance icon" class="icon" />
+          <h3 data-i18n="communityItem2Title">Governance Mechanism</h3>
+          <p data-i18n="communityItem2Desc">A transparent process to guide the project’s development.</p>
         </div>
-        <div class="card">
-          <h4 data-i18n="case_week3">周度示例 C</h4>
-          <p data-i18n="case_c_text">第二月起按 30% 分红，结合竞猜与会员增长，头部 NFT 可叠加增益。</p>
+        <div class="community-item">
+          <img src="assets/icon-dividend.png" alt="Dividends icon" class="icon" />
+          <h3 data-i18n="communityItem3Title">Dual Dividends</h3>
+          <p data-i18n="communityItem3Desc">Receive dividends in both USDT and ARC tokens for holding NFTs.</p>
+        </div>
+        <div class="community-item">
+          <img src="assets/icon-transparency.png" alt="Transparency icon" class="icon" />
+          <h3 data-i18n="communityItem4Title">On-chain Transparency</h3>
+          <p data-i18n="communityItem4Desc">All governance and reward records are publicly verifiable on-chain.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- 稳健机制 -->
-  <section id="mechanism" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_mechanism">稳健机制（不会崩盘的原理）</h2>
-      <div class="grid two">
-        <div class="card">
-          <h4 data-i18n="mech_halving_title">地图减半 & 周期调节</h4>
-          <p data-i18n="mech_halving_text">
-            每周统计产出与消耗：若产出显著高于消耗，则次周产量按阶梯减半；若低于阈值则维持常量。配合交易损耗（5%），其中
-            50% 销毁、30% 补充流动性、20% 进入分红池，建立向下压力释放与向上价值累积的双循环。
-          </p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="mech_lp_title">LP 深度与滑点返还</h4>
-          <p data-i18n="mech_lp_text">股东优先补充流动性，滑点手续费由股东赚取；分红以 USDT+ARC 双轨发放，上链可验。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="mech_gov_title">链上治理</h4>
-          <p data-i18n="mech_gov_text">资金使用、模块上线、营销与开发路线均由 100 枚股东 NFT 投票治理，透明公开。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="mech_zero_title">可玩可赚，零门槛体验</h4>
-          <p data-i18n="mech_zero_text">多区域语言支持，面向北美/拉美/东南亚/中东及中国用户；新手可通过任务/地图掉落获得初始资产。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 亮点 -->
-  <section id="highlights" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_highlights">玩法亮点</h2>
-      <div class="grid three">
-        <div class="card">
-          <h4 data-i18n="hl_team_map">团队地图</h4>
-          <p data-i18n="hl_team_map_text">个人地图 + 团队地图双轨成长，排行榜与拉新激励绑定，强驱动自然增长。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="hl_tower">12 层爬塔</h4>
-          <p data-i18n="hl_tower_text">挑战爬塔解锁增益与碎片，碎片可合成稀有 NFT；地图中掉落 NFT 碎片与资源。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="hl_br">大逃杀 + 观众下注</h4>
-          <p data-i18n="hl_br_text">独特的观战下注模式，玩家与大玩家对赌、代币波动预测、可设置 5/30/60 分钟一局。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="hl_esports">电竞/体育竞猜</h4>
-          <p data-i18n="hl_esports_text">LOL/刀塔/永劫无间，以及 NBA/欧洲杯/世界杯与搏击赛事；代币作为筹码参与。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="hl_stake">质押理财</h4>
-          <p data-i18n="hl_stake_text">支持 USDT/ARC 质押获取收益；项目方仅保留 10~15% 用于风控与运维。</p>
-        </div>
-        <div class="card">
-          <h4 data-i18n="hl_market">自由市场</h4>
-          <p data-i18n="hl_market_text">NFT、材料与增益道具自由买卖，形成闭环经济；手续费进入分红与流动池。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 登顶路线：爬山时间线 -->
-  <section id="roadmap" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_roadmap">登顶路线</h2>
-      <ol class="mountain">
-        <li class="m-step active">
-          <span class="m-title" data-i18n="rm_p1_title">阶段一（1 个月）</span>
-          <p class="m-text" data-i18n="rm_p1_text">上线 App + 大逃杀核心地图 + 社群体系 + 基础经济与分红看板。</p>
-        </li>
-        <li class="m-step">
-          <span class="m-title" data-i18n="rm_p2_title">阶段二（+1 个月）</span>
-          <p class="m-text" data-i18n="rm_p2_text">引入电竞/体育竞猜，开放会员、质押与排行榜，代币公测上线自由兑换。</p>
-        </li>
-        <li class="m-step">
-          <span class="m-title" data-i18n="rm_p3_title">阶段三（+2 个月）</span>
-          <p class="m-text" data-i18n="rm_p3_text">金融衍生品、子游戏互通、代币生态扩展；持续运营与全球化增长。</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- 可验证 & 文档 -->
-  <section id="verify" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_verify">链上可核验</h2>
-      <p data-i18n="verify_text">
-        所有销毁、产出、资金流向与治理投票均上链可查；后续开放区块浏览器与多签地址展示。
-      </p>
-    </div>
-  </section>
-
-  <section id="docs" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_docs">文档与白皮书</h2>
-      <p class="muted" data-i18n="docs_text">白皮书、代币经济、合约审计等材料上线后将在此处展示。</p>
-    </div>
-  </section>
-
-  <!-- 团队 -->
-  <section id="team" class="section">
-    <div class="wrap">
-      <h2 data-i18n="sec_team">团队</h2>
-      <p class="muted" data-i18n="team_text">核心成员匿名公开、履历与职责披露，社区协作与外包开发将逐步开放。</p>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <div>© <span id="year"></span> Arc Protocol</div>
-      <div class="muted">hi@arcprotocol.org</div>
-    </div>
+  <!-- Footer (optional, can include contact or social links) -->
+  <footer>
+    <p>© 2025 Arc Game. All rights reserved.</p>
   </footer>
 
-  <script src="/assets/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
