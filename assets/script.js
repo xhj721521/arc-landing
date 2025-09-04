@@ -1,4 +1,4 @@
-// 导航激活态
+// 导航激活
 document.querySelectorAll('.nav .nav-item').forEach(a=>{
   a.addEventListener('click', ()=>{
     document.querySelectorAll('.nav .nav-item').forEach(n=>n.classList.remove('is-active'));
@@ -19,7 +19,7 @@ function countUp(el, dur=900){
 }
 document.querySelectorAll('[data-count]').forEach(el=>countUp(el));
 
-// 环形进度（58% 示例）——只改这里即可
+// 环形进度（58% 示例）
 (function(){
   const r=58, C=2*Math.PI*r; // 周长≈364
   const pct=0.58; // 58%
@@ -29,6 +29,7 @@ document.querySelectorAll('[data-count]').forEach(el=>countUp(el));
 
 // 页脚年份
 const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
 
 
 
