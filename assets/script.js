@@ -195,9 +195,22 @@
     const d = Math.max(rect.width, rect.height);
     t.style.setProperty("--ripple-x", (e.clientX - rect.left - d/2) + "px");
     t.style.setProperty("--ripple-y", (e.clientY - rect.top  - d/2) + "px");
+  });// ScrollSpy
+const sections = ['subscribe','allocation','cases','mechanism','gameplay','roadmap','proof','docs','team','faq'];
+const links = sections.map(id => [id, document.querySelector(`.menu a[href="#${id}"]`)]);
+const spy = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    const id = e.target.id;
+    if (e.isIntersecting){
+      links.forEach(([k,a])=> a && a.classList.toggle('active', k===id));
+    }
   });
+}, {rootMargin: "-40% 0px -55% 0px", threshold: 0});
+sections.forEach(id=>{ const el = document.getElementById(id); if(el) spy.observe(el); });
+
 
 })();
+
 
 
 
