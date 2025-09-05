@@ -1,1 +1,182 @@
+:root{
+  --bg0:#0b1220; --bg1:#0f1a2a;
+  --ink:#e9eef6; --muted:#a5b3c6;
+  --brand:#ffd36e; --brand-soft:rgba(255,211,110,.18);
+  --pri:#39c3ff; --pri2:#6b8cff;
+  --glass:rgba(18,26,40,.58);
+  --border:rgba(255,255,255,.07);
+  --shadow:0 10px 28px rgba(0,0,0,.35);
+}
+
+@font-face{
+  font-family:"Orbitron"; src:url("../fonts/Orbitron-Variable.woff2") format("woff2");
+  font-display:swap; font-weight:100 900;
+}
+@font-face{
+  font-family:"Inter"; src:url("../fonts/Inter-Variable.woff2") format("woff2");
+  font-display:swap; font-weight:100 900;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink);
+  background: radial-gradient(1200px 700px at 70% -20%, #17314e 0%, var(--bg0) 58%) fixed var(--bg0);
+  font-family: "Inter","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{width:min(1120px,92%);margin:auto}
+.no-scrollbar::-webkit-scrollbar{display:none}
+
+/* = 背景层 = */
+.bg-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22;z-index:-3}
+#stars{position:fixed;inset:0;z-index:-2}
+.scanlines{position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  repeating-linear-gradient(to bottom, rgba(255,255,255,.018) 0 2px, transparent 2px 4px)}
+
+/* 顶部导航 */
+.nav{position:sticky;top:0;z-index:20;border-bottom:1px solid var(--border);backdrop-filter: blur(12px)}
+.nav>.wrap{display:flex;align-items:center;gap:18px;padding:10px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+.brand img{height:28px}
+.nav nav{display:flex;gap:12px;margin-left:auto;margin-right:10px;flex-wrap:wrap}
+.nav nav a{opacity:.88;padding:8px 10px;border-radius:10px}
+.nav nav a:hover{background:var(--brand-soft);opacity:1}
+.lang-cta{display:flex;gap:10px;align-items:center}
+#lang{background:#0e1726;color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:6px 10px}
+
+/* 霓虹按钮 */
+.btn-neon{position:relative;display:inline-flex;gap:8px;align-items:center;
+  color:#fff;padding:9px 14px;border-radius:12px;overflow:hidden}
+.btn-neon>span{position:relative;z-index:1}
+.btn-neon i{position:absolute;inset:0;border-radius:12px;pointer-events:none;
+  background:linear-gradient(90deg,var(--pri),var(--pri2));
+  box-shadow:0 0 22px rgba(57,195,255,.45), inset 0 0 12px rgba(107,140,255,.25)}
+.btn-neon.lg{padding:12px 18px}
+.btn-neon.sm{padding:7px 12px}
+.btn-ghost{border:1px solid var(--border);border-radius:12px;padding:10px 14px;opacity:.9}
+.btn-ghost.lg{padding:12px 18px}
+.btn-ghost.disabled{opacity:.5;pointer-events:none}
+
+/* 英雄区标题 + 故障效果 */
+.hero{padding:76px 0 22px}
+.fx-title{
+  font-family:"Orbitron","Inter",system-ui;
+  font-size:46px; letter-spacing:.04em; margin:0;
+  background:linear-gradient(180deg,#fff 10%, #e9e2c6 45%, var(--brand) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 18px rgba(255,211,110,.45),0 0 34px rgba(57,195,255,.35);
+}
+.glitch{position:relative}
+.glitch span{
+  position:absolute;left:0;top:0;clip-path:polygon(0 0,100% 0,100% 28%,0 35%);
+  color:transparent;background:linear-gradient(180deg,#8ed0ff,#fff);-webkit-background-clip:text;
+  animation:gl 4.5s infinite steps(40);opacity:.35
+}
+@keyframes gl{ 0%{transform:translate(0,0)} 12%{transform:translate(2px,-1px)} 25%{transform:translate(-2px,1px)} 37%{transform:translate(1px,0)} 50%{transform:translate(0,0)} 100%{transform:translate(0,0)} }
+.fx-sub{max-width:820px;margin:14px 0 0;opacity:.92}
+.cta-row{display:flex;gap:14px;margin-top:20px}
+.ticker{margin-top:16px;padding:10px 14px;border-radius:14px;border:1px solid var(--border);background:rgba(14,23,38,.6)}
+
+/* 玻璃/全息卡片 */
+.card{border:1px solid var(--border);border-radius:18px;background:var(--glass);box-shadow:var(--shadow);padding:18px}
+.holo{position:relative;overflow:hidden}
+.holo:before{
+  content:""; position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
+  background: conic-gradient(from 90deg, rgba(57,195,255,.35), rgba(107,140,255,.25), rgba(255,211,110,.35), rgba(57,195,255,.35));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  padding:1px; opacity:.55;
+}
+
+/* 通用布局 */
+.section{padding:60px 0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.sec-title{font-size:26px;margin:0 0 16px 2px}
+.sec-title:after{content:"";display:block;width:66px;height:3px;border-radius:6px;margin-top:10px;
+  background:linear-gradient(90deg,var(--pri),var(--pri2))}
+
+/* Sparkline + 翻牌 */
+#kpiCard{display:flex;align-items:center;gap:22px}
+.kpi{min-width:210px}
+.flip{font-size:38px;font-weight:900;letter-spacing:.04em;font-family:"Orbitron","Inter",system-ui}
+
+/* 认购 */
+.price-line{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.tag.hot{display:inline-block;background:linear-gradient(90deg,#ff7a7a,#ffb86b);color:#0a0a0a;padding:4px 10px;border-radius:10px;font-weight:800}
+.price{font-size:22px;margin-top:6px}
+.price s{opacity:.5;margin-right:8px}
+.countdown #cd{font-family:ui-monospace,monospace;font-size:22px;margin-top:8px}
+.progress{margin:14px 0}
+.bar{height:10px;background:#0d1a2a;border-radius:999px;border:1px solid var(--border)}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));border-radius:999px}
+.p-line{margin-top:8px;opacity:.9}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+.tier{border:1px solid var(--border);border-radius:14px;padding:14px}
+.tier.muted{opacity:.6}
+.t-name{font-weight:800}
+.t-price{font-size:22px;margin:6px 0}
+.rights ul{margin:10px 0 0 18px;line-height:1.6}
+
+/* 分红案例 */
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.case{border:1px solid var(--border);border-radius:14px;padding:12px}
+.case .c-hd{font-weight:900;margin-bottom:8px}
+
+/* 玩法亮点 */
+.v-cards .v-card{display:flex;flex-direction:column;gap:10px;border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .28s}
+.v-cards .v-card:hover{transform:translateY(-4px)}
+.v-cards img{height:140px;object-fit:cover}
+
+/* 下载 */
+.dl{display:flex;gap:12px;flex-wrap:wrap}
+.dlb{display:inline-flex;align-items:center;gap:8px}
+
+/* 路线图 */
+.slope{width:100%;height:auto}
+.slope text{fill:#cde7ff;font-size:14px}
+.road-notes{margin-top:8px;opacity:.92}
+
+/* 链上数据 */
+.c-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mini-icons{display:flex;gap:10px;margin-top:10px;opacity:.85}
+.mini-icons img{height:18px}
+.mono{font-family:ui-monospace,Consolas,monospace}
+
+/* 分配与分红 */
+.rules{line-height:1.7;margin-top:6px}
+.calc label{display:flex;justify-content:space-between;gap:10px;margin:8px 0}
+.calc input{width:180px;background:#0e1726;color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:6px 10px}
+.small{font-size:12px;opacity:.76}
+.muted{opacity:.78}
+
+/* K线容器 */
+#kline{border:1px solid var(--border);border-radius:12px}
+
+/* 联系 */
+.icons{display:flex;gap:14px;flex-wrap:wrap}
+.icon{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:12px;padding:8px 12px}
+.icon img{height:16px}
+
+/* 页脚 */
+.footer{opacity:.72;padding:36px 0}
+
+/* 卡片倾斜（桌面） */
+@media (pointer:fine){
+  .tilt{transform-style:preserve-3d; transition:transform .2s}
+  .tilt:hover{transform:perspective(700px) rotateX(2.5deg) rotateY(-2.5deg)}
+}
+
+/* 响应式 */
+@media (max-width:960px){
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .fx-title{font-size:34px}
+}
+@media (max-width:640px){
+  .grid-3{grid-template-columns:1fr}
+}
 
