@@ -213,4 +213,14 @@ section{position:relative;overflow:hidden}
 
 /* Accessibility tweaks */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px dashed #6b8cff;outline-offset:2px}
-
+/* 放在 theme.css 末尾 */
+.v-cards .v-card img,
+.v-cards .v-card object.map-svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  display: block;
+  background: radial-gradient(120% 140% at 50% 50%, rgba(57,195,255,.06), rgba(0,0,0,.0));
+  border-radius: 12px;
+}
