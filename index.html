@@ -5,25 +5,44 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>ARC Protocol · 链游募资｜链上数据可查｜每周分红</title>
   <meta name="theme-color" content="#0b1220"/>
-  <link rel="preload" as="video" href="./assets/video/hero.mp4">
-  <link rel="preload" as="image" href="./assets/img/hero-poster.jpg">
-  <link rel="stylesheet" href="./assets/css/theme.css?v=1.1">
-  <script>window.__VER__="1.1"</script>
+
+  <!-- 预加载：视频封面、视频、可选字体（有文件就留，无文件就删掉这两行字体） -->
+  <link rel="preload" as="image" href="/assets/img/hero-poster.jpg">
+  <link rel="preload" as="video"  href="/assets/video/hero.mp4">
+  <!-- 可选字体：若 /assets/fonts 不存在则删除这两行 -->
+  <!--
+  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Orbitron-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  -->
+
+  <link rel="stylesheet" href="/assets/css/theme.css?v=1.2">
+  <link rel="icon" href="/assets/img/logo-light.svg" type="image/svg+xml">
+  <script>window.__VER__="1.2"</script>
+
+  <!-- 先加载图表库，确保后面的 script.js 能用到 -->
+  <script defer src="/assets/js/libs/chart.umd.min.js"></script>
+  <script defer src="/assets/js/libs/lightweight-charts.standalone.production.js"></script>
+  <!-- 你的主逻辑放最后（defer 会按顺序执行） -->
+  <script defer src="/assets/js/script.js?v=1.2"></script>
 </head>
+
 <body>
 
-  <!-- 背景：视频 + 星空粒子 + 网格 & 扫描线叠加 -->
-  <video class="bg-video" src="./assets/video/hero.mp4" autoplay muted loop playsinline poster="./assets/img/hero-poster.jpg"></video>
+  <!-- 背景：视频 + 星空粒子 + 扫描线叠加 -->
+  <video class="bg-video" autoplay muted loop playsinline poster="/assets/img/hero-poster.jpg">
+    <source src="/assets/video/hero.mp4" type="video/mp4"/>
+  </video>
   <canvas id="stars"></canvas>
   <div class="scanlines"></div>
 
   <!-- 顶部导航 -->
   <header class="nav glass">
     <div class="wrap">
-      <a class="brand" href="#subscribe">
-        <img src="./assets/img/logo-light.svg" alt="AOMI"/>
-        <span>AOMI Protocol</span>
+      <a class="brand" href="#subscribe" aria-label="ARC Protocol">
+        <img src="/assets/img/logo-light.svg" alt="ARC Logo"/>
+        <span>ARC Protocol</span>
       </a>
+
       <nav>
         <a href="#subscribe"  data-i18n="nav_subscribe">认购与进度</a>
         <a href="#highlights" data-i18n="nav_highlights">玩法亮点</a>
@@ -35,8 +54,9 @@
         <a href="#token"      data-i18n="nav_token">代币信息</a>
         <a href="#contact"    data-i18n="nav_contact">联系我们</a>
       </nav>
+
       <div class="lang-cta">
-        <select id="lang">
+        <select id="lang" aria-label="language">
           <option value="zh">中文</option><option value="en">English</option>
           <option value="es">Español</option><option value="vi">Tiếng Việt</option>
           <option value="th">ไทย</option><option value="ms">Bahasa</option>
@@ -57,12 +77,14 @@
         <span aria-hidden="true">唤醒未知，铸就你的传奇</span>
       </h1>
       <p class="fx-sub" data-i18n="hero_sub">
-        探索·试炼·集市·远征 —— 以 ARC加密币驱动的神域链游生态。连接九大功能页与团队地图，延展长期玩法与价值。
+        探索·试炼·集市·远征 —— 以 ARC 加密币驱动的神域链游生态。连接九大功能页与团队地图，延展长期玩法与价值。
       </p>
+
       <div class="cta-row">
         <a href="#subscribe" class="btn-neon lg" data-i18n="btn_subscribe"><span>立即认购</span><i></i></a>
         <a href="#highlights" class="btn-ghost lg" data-i18n="btn_view_skin">查看玩法亮点</a>
       </div>
+
       <div id="ticker" class="ticker glass"></div>
     </div>
   </section>
@@ -74,7 +96,7 @@
         <div class="flip" id="fundTotal">0</div>
         <span data-i18n="kpi_raised">累计募集（USDT）</span>
       </div>
-      <canvas id="spark" height="40"></canvas>
+      <canvas id="spark" height="40" aria-label="fund-sparkline"></canvas>
       <div class="kpi-row">
         <div><b id="sold">0</b><span data-i18n="kpi_sold">已售（枚）</span></div>
         <div><b id="burn">0</b><span data-i18n="kpi_burn">销毁（枚）</span></div>
@@ -86,7 +108,9 @@
   <!-- 认购与进度 -->
   <section id="subscribe" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_subscribe">认购与进度</h2>
+
     <div class="grid-2">
+      <!-- 左：价格/倒计时/进度/权益 -->
       <div class="card holo tilt">
         <div class="price-line">
           <div>
@@ -137,6 +161,7 @@
         </div>
       </div>
 
+      <!-- 右：分红案例 -->
       <div class="card holo">
         <h3 data-i18n="case_title">分红案例（示例）</h3>
         <div class="case-grid">
@@ -168,27 +193,15 @@
   <section id="highlights" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_highlights">玩法亮点</h2>
     <div class="grid-3 v-cards">
-      <div class="v-card tilt">
-        <img src="./assets/img/highlight-01.jpg" alt="">
-        <h4 data-i18n="h1">团队地图</h4>
-        <p data-i18n="h1d">引入“团队地图”吸引队长裂变拉新；图块收益共享。</p>
-      </div>
-      <div class="v-card tilt">
-        <img src="./assets/img/highlight-02.jpg" alt="">
-        <h4 data-i18n="h2">十二层爬塔</h4>
-        <p data-i18n="h2d">多维试炼与成就体系，装备与碎片随机掉落。</p>
-      </div>
-      <div class="v-card tilt">
-        <img src="./assets/img/highlight-03.jpg" alt="">
-        <h4 data-i18n="h3">大逃杀下注</h4>
-        <p data-i18n="h3d">观众可下注公平对决；链上结算，公开透明。</p>
-      </div>
-      <div class="v-card tilt"><img src="./assets/img/highlight-04.jpg" alt=""><h4>裂变拉新</h4><p>榜单/徽章/周赛，奖励可见</p></div>
-      <div class="v-card tilt"><img src="./assets/img/highlight-05.jpg" alt=""><h4>理财质押</h4><p>灵活锁仓，手续费归股东</p></div>
-      <div class="v-card tilt"><img src="./assets/img/highlight-06.jpg" alt=""><h4>NFT 装备</h4><p>铸造/合成/交易自由</p></div>
-      <div class="v-card tilt"><img src="./assets/img/highlight-07.jpg" alt=""><h4>公平赛制</h4><p>链上随机，录像可验</p></div>
-      <div class="v-card tilt"><img src="./assets/img/highlight-08.jpg" alt=""><h4>公测竞猜</h4><p>LOL/刀塔/NBA/世界杯</p></div>
-      <div class="v-card tilt"><img src="./assets/img/highlight-09.jpg" alt=""><h4>衍生品</h4><p>ETF/永续/期权互通</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-01.jpg" alt=""><h4 data-i18n="h1">团队地图</h4><p data-i18n="h1d">引入“团队地图”吸引队长裂变拉新；图块收益共享。</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-02.jpg" alt=""><h4 data-i18n="h2">十二层爬塔</h4><p data-i18n="h2d">多维试炼与成就体系，装备与碎片随机掉落。</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-03.jpg" alt=""><h4 data-i18n="h3">大逃杀下注</h4><p data-i18n="h3d">观众可下注公平对决；链上结算，公开透明。</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-04.jpg" alt=""><h4>裂变拉新</h4><p>榜单/徽章/周赛，奖励可见</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-05.jpg" alt=""><h4>理财质押</h4><p>灵活锁仓，手续费归股东</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-06.jpg" alt=""><h4>NFT 装备</h4><p>铸造/合成/交易自由</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-07.jpg" alt=""><h4>公平赛制</h4><p>链上随机，录像可验</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-08.jpg" alt=""><h4>公测竞猜</h4><p>LOL/刀塔/NBA/世界杯</p></div>
+      <div class="v-card tilt"><img src="/assets/img/highlight-09.jpg" alt=""><h4>衍生品</h4><p>ETF/永续/期权互通</p></div>
     </div>
   </section>
 
@@ -196,9 +209,9 @@
   <section id="download" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_download">游戏下载</h2>
     <div class="dl">
-      <a class="btn-neon dlb" href="#"><img src="./assets/icons/windows.svg"><span>Windows</span><i></i></a>
-      <a class="btn-neon dlb" href="#"><img src="./assets/icons/android.svg"><span>Android</span><i></i></a>
-      <a class="btn-neon dlb" href="#"><img src="./assets/icons/ios.svg"><span>iOS / TestFlight</span><i></i></a>
+      <a class="btn-neon dlb" href="#"><img src="/assets/icons/windows.svg" alt=""><span>Windows</span><i></i></a>
+      <a class="btn-neon dlb" href="#"><img src="/assets/icons/android.svg" alt=""><span>Android</span><i></i></a>
+      <a class="btn-neon dlb" href="#"><img src="/assets/icons/ios.svg" alt=""><span>iOS / TestFlight</span><i></i></a>
     </div>
     <p class="small" data-i18n="dl_note">* 当前为内测包，占位下载链接待替换。</p>
   </section>
@@ -207,7 +220,7 @@
   <section id="roadmap" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_roadmap">登顶路线</h2>
     <div class="card holo">
-      <svg class="slope" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet">
+      <svg class="slope" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet" aria-label="roadmap">
         <defs>
           <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="#39c3ff"/><stop offset="1" stop-color="#6b8cff"/>
@@ -233,19 +246,21 @@
     <div class="card holo">
       <div class="c-grid">
         <div><b data-i18n="c1">合约地址</b><div class="mono">0x0000...0000</div></div>
-        <div><b data-i18n="c2">开源仓库</b><a class="mono" href="#" target="_blank">github.com/…</a></div>
-        <div><b data-i18n="c3">周报</b><a class="mono" href="#" target="_blank">weekly.json</a></div>
-        <div><b data-i18n="c4">第三方审计</b><a class="mono" href="#" target="_blank">audit.pdf</a></div>
-        <div><b data-i18n="c5">链上浏览</b><a class="mono" href="#" target="_blank">etherscan/bscscan</a></div>
+        <div><b data-i18n="c2">开源仓库</b><a class="mono" href="#" target="_blank" rel="noopener">github.com/…</a></div>
+        <div><b data-i18n="c3">周报</b><a class="mono" href="#" target="_blank" rel="noopener">weekly.json</a></div>
+        <div><b data-i18n="c4">第三方审计</b><a class="mono" href="#" target="_blank" rel="noopener">audit.pdf</a></div>
+        <div><b data-i18n="c5">链上浏览</b><a class="mono" href="#" target="_blank" rel="noopener">etherscan / bscscan</a></div>
         <div><b data-i18n="c6">快速链接</b><span class="mono">Docs / API</span></div>
       </div>
+
+      <!-- 小图标（务必在 /assets/icons/ 放好下列文件） -->
       <div class="mini-icons">
-        <img src="./assets/icons/etherscan.svg" alt="">
-        <img src="./assets/icons/bscscan.svg" alt="">
-        <img src="./assets/icons/github.svg" alt="">
-        <img src="./assets/icons/audit.svg" alt="">
-        <img src="./assets/icons/docs.svg" alt="">
-        <img src="./assets/icons/explorer.svg" alt="">
+        <img src="/assets/icons/etherscan.svg" alt="etherscan">
+        <img src="/assets/icons/bscscan.svg"  alt="bscscan">
+        <img src="/assets/icons/github.svg"   alt="github">
+        <img src="/assets/icons/audit.svg"    alt="audit">
+        <img src="/assets/icons/docs.svg"     alt="docs">
+        <img src="/assets/icons/explorer.svg" alt="explorer">
       </div>
     </div>
   </section>
@@ -261,8 +276,9 @@
           <li>第2月起：<b>30%</b> 分红（USDT） / <b>40%</b> LP / <b>15%</b> 营销 / <b>15%</b> 项目方</li>
           <li>损耗按周统计，以 <b>ARC 代币</b> 分发；净收益以 <b>USDT</b> 分发</li>
         </ul>
-        <canvas id="pie" height="200"></canvas>
+        <canvas id="pie" height="200" aria-label="distribution-pie"></canvas>
       </div>
+
       <div class="card holo tilt">
         <h3 data-i18n="d_calc">分红小计算器</h3>
         <div class="calc">
@@ -281,7 +297,7 @@
   <section id="analytics" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_analytics">资金与销毁曲线</h2>
     <div class="card holo">
-      <canvas id="lines" height="260"></canvas>
+      <canvas id="lines" height="260" aria-label="multi-lines"></canvas>
       <p class="small muted" data-i18n="a_note">示例数据用于展示；占位数据在 script.js 中可替换为你的链上数据。</p>
     </div>
   </section>
@@ -307,21 +323,19 @@
   <section id="contact" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_contact">联系我们</h2>
     <div class="icons">
-      <a href="#" class="icon"><img src="./assets/icons/telegram.svg"> Telegram</a>
-      <a href="#" class="icon"><img src="./assets/icons/twitter.svg"> Twitter</a>
-      <a href="mailto:team@aomi.org" class="icon"><img src="./assets/icons/email.svg"> Email</a>
+      <a href="#" class="icon"><img src="/assets/icons/telegram.svg" alt=""> Telegram</a>
+      <a href="#" class="icon"><img src="/assets/icons/twitter.svg"  alt=""> Twitter</a>
+      <a href="mailto:team@aomi.org" class="icon"><img src="/assets/icons/email.svg" alt=""> Email</a>
     </div>
   </section>
 
   <footer class="wrap footer">
-    © AOMI Protocol — All on-chain. <span id="year"></span>
+    © ARC Protocol — All on-chain. <span id="year"></span>
   </footer>
-
-  <script src="./assets/js/libs/chart.umd.min.js"></script>
-  <script src="./assets/js/libs/lightweight-charts.standalone.production.js"></script>
-  <script src="./assets/js/script.js?v=1.1"></script>
 </body>
 </html>
+
+
 
 
 
