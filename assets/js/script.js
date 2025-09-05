@@ -316,7 +316,65 @@
     const y = d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
     el.textContent = `${y}-${m}-${day}`;
   }
+// —— 获取 SVG 文档（兼容 inline 与 <object>）
+function getTeamMapDoc() {
+  const obj = document.getElementById('teamMapObj');
+  if (obj && obj.contentDocument) return obj.contentDocument; // <object>
+  // 若你改成 inline <svg id="team-map">:
+  return document.getElementById('team-map')?.ownerSVGElement?.ownerDocument || document;
+}
 
+// —— 把 i18n 文案写入 SVG
+function updateTeamMapLang(dict) {
+  const svgDoc = getTeamMapDoc();
+  if (!svgDoc || !dict) return;
+  svgDoc.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+}
+
+// —— 更新数值（你可以从链上/后端喂数据）
+function setTeamMapStats({ outputARC, entryFeeARC, captain, used, total }) {
+  const svgDoc = getTeamMapDoc();
+  if (!svgDoc) return;
+
+  const nf = new Intl.NumberFormat(); // 千分位
+  const out = svgDoc.getElementById('t_out_value');
+  const fee = svgDoc.getElementById('t_fee_value');
+  const cap = svgDoc.getElementById('t_captain');
+  const slots = svgDoc.getElementById('t_slots');
+
+  if (out) out.textContent = `${nf.format(outputARC)} ARC`;
+  if (fee) fee.textContent = `${entryFeeARC} ARC`;
+  if (cap) cap.textContent = captain;
+  if (slots) slots.textContent = `${used}/${total}`;
+}
+
+// —— 当 <object> 加载完、或语言切换时，刷新
+(function bootstrapTeamMap(){
+  const obj = document.getElementById('teamMapObj');
+  const applyAll = () => {
+    // 取得当前语言的词典（你现有的 i18n 结构）
+    const lang = window.currentLang || document.getElementById('lang')?.value || 'zh';
+    const dict = window.I18N?.[lang] || null;
+    updateTeamMapLang(dict);
+    setTeamMapStats({
+      outputARC: 12345,   // TODO: 替换为真实数据
+      entryFeeARC: 5,     // TODO: 替换为真实数据
+      captain: '0x3aB…91C',
+      used: 87, total: 120
+    });
+  };
+
+  if (obj) obj.addEventListener('load', applyAll);
+  // 首次也调用一次（inline SVG 时有用）
+  document.addEventListener('DOMContentLoaded', applyAll);
+
+  // 绑定你的语言下拉（如果已有全站回调，可在回调里顺便调用 updateTeamMapLang）
+  const sel = document.getElementById('lang');
+  if (sel) sel.addEventListener('change', () => setTimeout(applyAll, 0));
+})();
 })();
 
 
