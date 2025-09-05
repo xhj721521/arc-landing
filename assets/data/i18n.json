@@ -1,14 +1,43 @@
 {
-  "week": "2025-W36",
-  "P_week_arc": 123450,
-  "C_week_arc": 100000,
-  "R": 1.2345,
-  "halving": true,
-  "cumulative": {
-    "burn_arc": 250000,
-    "addLP_arc": 150000,
-    "dividend_usdt": 18000,
-    "dividend_arc": 14000
-  }
+  "zh":{
+    "nav_subscribe":"认购与进度","nav_highlights":"玩法亮点","nav_download":"游戏下载","nav_roadmap":"登顶路线","nav_chain":"链上数据","nav_dist":"分配与分红","nav_analytics":"资金与销毁","nav_token":"代币信息","nav_contact":"联系我们",
+    "cta_connect":"连接钱包",
+    "hero_title":"唤醒未知，铸就你的传奇","hero_sub":"探索·试炼·集市·远征 —— 以 ARC 驱动的神域链游生态。连接九大功能页与团队地图，延展长期玩法与价值。",
+    "btn_subscribe":"立即认购","btn_view_skin":"查看玩法亮点",
+    "kpi_raised":"累计募集（USDT）","kpi_sold":"已售（枚）","kpi_burn":"销毁（枚）","kpi_lp":"流动池（USDT）",
+    "sec_subscribe":"认购与进度","tag_early":"早鸟","early_note":"早鸟价是对早期支持者的回馈，限量 20 枚，售完恢复标准价。","countdown":"预售倒计时","cap":"枚",
+    "tier_early":"早鸟","tier_early_desc":"限量 20 枚，价格优惠，权益相同","btn_buy_early":"购买",
+    "tier_standard":"标准","tier_std_desc":"总量 80 枚，售罄即止","btn_buy_std":"购买",
+    "tier_presale":"公测预约","tier_presale_desc":"预约开放倒计时",
+    "shareholder_title":"股东权益（要点）","case_title":"分红案例（示例）","case_note":"注：公测第1月分配规则为 50% 分红 / 40% LP / 10% 营销；第2月起为 30% 分红 / 40% LP / 15% 营销 / 15% 项目方运营。",
+    "sec_highlights":"玩法亮点","h1":"团队地图","h1d":"引入“团队地图”吸引队长裂变拉新；图块收益共享。","h2":"十二层爬塔","h2d":"多维试炼与成就体系，装备与碎片随机掉落。","h3":"大逃杀下注","h3d":"观众可下注公平对决；链上结算，公开透明。",
+    "sec_download":"游戏下载","dl_note":"* 当前为内测包，占位下载链接待替换。",
+    "sec_roadmap":"登顶路线",
+    "sec_chain":"链上数据","c1":"合约地址","c2":"开源仓库","c3":"周报","c4":"第三方审计","c5":"链上浏览","c6":"快速链接",
+    "sec_dist":"分配与分红","d_title":"分配规则（公测第1月 / 第2月起）","d_calc":"分红小计算器",
+    "sec_analytics":"资金与销毁曲线","a_note":"示例数据用于展示；占位数据在 script.js 中可替换为你的链上数据。",
+    "sec_token":"代币信息",
+    "sec_contact":"联系我们"
+  },
+  "en":{
+    "nav_subscribe":"Sale & Progress","nav_highlights":"Highlights","nav_download":"Download","nav_roadmap":"Roadmap","nav_chain":"On-chain Data","nav_dist":"Allocation & Dividend","nav_analytics":"Funds & Burn","nav_token":"Token","nav_contact":"Contact",
+    "cta_connect":"Connect Wallet",
+    "hero_title":"Awaken the Unknown, Forge Your Legend","hero_sub":"Explore · Trials · Bazaar · Expedition — ARC-powered on-chain game world with long-term value and guild/teams.",
+    "btn_subscribe":"Subscribe Now","btn_view_skin":"View Highlights",
+    "kpi_raised":"Total Raised (USDT)","kpi_sold":"Sold (pcs)","kpi_burn":"Burned","kpi_lp":"Liquidity (USDT)",
+    "sec_subscribe":"Sale & Progress","tag_early":"Early Bird","early_note":"Reward early supporters. 20 slots at $400, then back to $500.","countdown":"Presale Countdown","cap":"pcs",
+    "tier_early":"Early Bird","tier_early_desc":"20 slots, same rights with discount","btn_buy_early":"Buy",
+    "tier_standard":"Standard","tier_std_desc":"80 slots, until sold out","btn_buy_std":"Buy",
+    "tier_presale":"Public Beta","tier_presale_desc":"Booking opens soon",
+    "shareholder_title":"Shareholder Rights (Key Points)","case_title":"Dividend Examples","case_note":"Month-1: 50% dividend / 40% LP / 10% marketing. From Month-2: 30% dividend / 40% LP / 15% marketing / 15% ops.",
+    "sec_highlights":"Highlights","h1":"Team Map","h1d":"Guild leaders drive growth; tile revenue sharing.","h2":"12-Layer Tower","h2d":"Progression & achievements; items/fragments drop.","h3":"BR Betting","h3d":"Spectators bet fair matches; on-chain settlement.",
+    "sec_download":"Download","dl_note":"* Internal test build. Replace with real links later.",
+    "sec_roadmap":"Roadmap to Summit",
+    "sec_chain":"On-chain Data","c1":"Contract","c2":"Open Source","c3":"Weekly","c4":"Audit","c5":"Explorer","c6":"Quick Links",
+    "sec_dist":"Allocation & Dividend","d_title":"Allocation (Month-1 / From Month-2)","d_calc":"Mini Dividend Calculator",
+    "sec_analytics":"Funds & Burn Curves","a_note":"Demo data only. Replace in script.js.",
+    "sec_token":"Token",
+    "sec_contact":"Contact Us"
+  },
+  "es":{},"vi":{},"th":{},"ms":{},"ar":{}
 }
-
