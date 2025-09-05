@@ -155,4 +155,144 @@ if (window.matchMedia('(pointer:fine)').matches){
 /* ===== init ===== */
 loadI18n();
 $("#year").textContent = new Date().getFullYear();
+// ---------- Subscribe / Sale logic ----------
+(function () {
+  const $ = (sel) => document.querySelector(sel);
+
+  const els = {
+    soldA:   $("#sold"),    // KPI卡上的已售
+    soldB:   $("#sold2"),   // 进度条下的已售
+    bar:     $("#bar"),     // 进度条
+    fund:    $("#fundTotal"),
+    cd:      $("#cd"),
+    btns:    document.querySelectorAll('[data-tier]'),
+    priceLine: document.querySelector(".price-line .price")
+  };
+
+  const fmt = (n) => Number(n || 0).toLocaleString();
+
+  // 允许用 URL 快速演示：?early=5&std=12
+  function readQueryOverride(state) {
+    const q = new URLSearchParams(location.search);
+    const e = q.get("early"), s = q.get("std");
+    if (e !== null) state.tiers.early.sold    = Math.max(0, Math.min(+e, state.tiers.early.cap));
+    if (s !== null) state.tiers.standard.sold = Math.max(0, Math.min(+s, state.tiers.standard.cap));
+  }
+
+  async function loadState() {
+    try {
+      const res = await fetch("/assets/data/sale.json?_=" + (window.__VER__ || Date.now()));
+      const json = await res.json();
+      readQueryOverride(json);
+      return json;
+    } catch (e) {
+      console.warn("sale.json 加载失败，使用兜底数据", e);
+      // 兜底：即使找不到文件也不至于报错
+      return {
+        currency: "USDT",
+        capTotal: 100,
+        tiers: {
+          early:    { labelZh: "早鸟", price: 400, cap: 20, sold: 0 },
+          standard: { labelZh: "标准", price: 500, cap: 80, sold: 0 }
+        },
+        presale: { start: "2025-09-08T00:00:00Z", end: "2025-09-15T00:00:00Z" }
+      };
+    }
+  }
+
+  function computeTotals(state) {
+    const e = state.tiers.early, s = state.tiers.standard;
+    const sold = e.sold + s.sold;
+    const raised = e.sold * e.price + s.sold * s.price;
+    const pct = Math.min(100, Math.round((sold / state.capTotal) * 100));
+    return { sold, raised, pct, e, s };
+  }
+
+  function updateUI(state) {
+    const { sold, raised, pct, e, s } = computeTotals(state);
+    // 数字
+    if (els.soldA) els.soldA.textContent = fmt(sold);
+    if (els.soldB) els.soldB.textContent = fmt(sold);
+    if (els.fund)  els.fund.textContent  = fmt(raised);
+    if (els.bar)   els.bar.style.width   = pct + "%";
+
+    // 价格线：早鸟售罄就只显示 $500
+    if (els.priceLine) {
+      const earlyLeft = e.cap - e.sold;
+      if (earlyLeft <= 0) {
+        els.priceLine.innerHTML = `<b>$${s.price}</b> <span>(剩余 ${fmt(s.cap - s.sold)} 枚)</span>`;
+      } else {
+        els.priceLine.innerHTML = `<s>$${s.price}</s> <b>$${e.price}</b> <span>(早鸟剩余 ${fmt(earlyLeft)} / ${fmt(e.cap)})</span>`;
+      }
+    }
+
+    // 按钮状态
+    const now = Date.now();
+    const start = Date.parse(state.presale.start);
+    const end   = Date.parse(state.presale.end);
+    const started = now >= start, ended = now >= end;
+
+    els.btns.forEach((btn) => {
+      const tier = btn.getAttribute("data-tier");
+      const t = state.tiers[tier];
+      let disabled = false, label = "购买";
+
+      if (!started) { disabled = true; label = "未开始"; }
+      if (ended)    { disabled = true; label = "已结束"; }
+      if (t.sold >= t.cap) { disabled = true; label = "售罄"; }
+
+      btn.classList.toggle("disabled", disabled);
+      btn.setAttribute("aria-disabled", disabled ? "true" : "false");
+      btn.querySelector("span") && (btn.querySelector("span").textContent = label);
+      btn.onclick = (e) => {
+        e.preventDefault();
+        if (disabled) return;
+        // 这里接入钱包/支付流程。先占位：
+        alert(`即将购买：${t.labelZh}（$${t.price}），敬请期待连接钱包`);
+      };
+    });
+  }
+
+  function startCountdown(state) {
+    if (!els.cd) return;
+    const start = Date.parse(state.presale.start);
+    const end   = Date.parse(state.presale.end);
+
+    function tick() {
+      const now = Date.now();
+      const target = (now < start) ? start : (now < end ? end : end);
+      let diff = target - now;
+      if (diff < 0) diff = 0;
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      els.cd.textContent = [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
+
+      // 标签切换
+      const labelEl = els.cd.previousElementSibling;
+      if (labelEl) {
+        if (now < start) labelEl.textContent = "预售倒计时";
+        else if (now < end) labelEl.textContent = "结束倒计时";
+        else labelEl.textContent = "已结束";
+      }
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+
+  // 对外：演示时可在控制台调用 window.__demoSold({early: x, standard: y})
+  window.__demoSold = (partial) => {
+    if (!window.__SALE_STATE) return;
+    Object.assign(window.__SALE_STATE.tiers.early,    partial.early    || {});
+    Object.assign(window.__SALE_STATE.tiers.standard, partial.standard || {});
+    updateUI(window.__SALE_STATE);
+  };
+
+  // 启动
+  loadState().then((state) => {
+    window.__SALE_STATE = state;
+    updateUI(state);
+    startCountdown(state);
+  });
+})();
 
