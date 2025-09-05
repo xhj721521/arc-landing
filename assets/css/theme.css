@@ -179,4 +179,28 @@ img{display:block;max-width:100%}
 @media (max-width:640px){
   .grid-3{grid-template-columns:1fr}
 }
+/* —— 通用：让每个分区能垫 SVG 动态底 —— */
+.section, .wrap.section { position: relative; overflow: hidden; }
+.bg-svg { position: absolute; inset: -2px; z-index: 0; pointer-events: none; opacity: .38; }
+.section > *:not(.bg-svg) { position: relative; z-index: 1; }
 
+/* HUD 背景的细调 */
+.bg-svg.hud { opacity: .32; filter: drop-shadow(0 0 8px rgba(57,195,255,.15)); }
+
+/* Finance 背景细调（更克制） */
+.bg-svg.finance { opacity: .26; }
+
+/* 轻微扫描线层（可复用） */
+.bg-scan {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    0deg, rgba(111,170,255,.06) 0, rgba(111,170,255,.06) 1px, transparent 2px, transparent 4px
+  );
+  animation: scanMove 8s linear infinite;
+}
+@keyframes scanMove { to { background-position-y: 100%; } }
+
+/* 无障碍：用户选择“减少动效”时，停掉动画 */
+@media (prefers-reduced-motion: reduce) {
+  .bg-svg, .bg-scan { display: none !important; }
+}
