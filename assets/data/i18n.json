@@ -41,3 +41,22 @@
   },
   "es":{},"vi":{},"th":{},"ms":{},"ar":{}
 }
+{
+  "zh": {
+    "team_title": "团队地图",
+    "team_total_output_label": "总产量",
+    "team_entry_fee_label": "进入费用",
+    "team_captain": "队长",
+    "team_slots": "席位",
+    "team_join_btn": "申请加入"
+  },
+  "en": {
+    "team_title": "Team Map",
+    "team_total_output_label": "Total Output",
+    "team_entry_fee_label": "Entry Fee",
+    "team_captain": "Captain",
+    "team_slots": "Slots",
+    "team_join_btn": "Apply to Join"
+  }
+  /* 其余语言照填 */
+}
