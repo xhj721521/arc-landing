@@ -1,177 +1,127 @@
-/* ===== 小工具 ===== */
-const $ = s=>document.querySelector(s);
-const $$ = s=>document.querySelectorAll(s);
-const fmt = n=>Number(n).toLocaleString();
-const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* ========== 工具 ========== */
+const $ = (s,sc=document)=>sc.querySelector(s);
+const $$ = (s,sc=document)=>Array.from(sc.querySelectorAll(s));
+const fmt = n => Number(n||0).toLocaleString();
 
-/* ===== 多语言 ===== */
-const LANGS=["zh","en","es","vi","th","ms","ar"];
-let curLang= localStorage.getItem("lang") || "zh";
-$("#lang").value = curLang;
-async function loadI18n(){
-  try{
-    const res = await fetch(`./assets/data/i18n.json?v=${window.__VER__}`);
-    const map = await res.json();
-    const pack = map[curLang] || map.zh;
-    $$("[data-i18n]").forEach(el=>{
-      const k = el.getAttribute("data-i18n");
-      if(pack[k]) el.textContent = pack[k];
-    });
-  }catch(e){ console.warn("i18n error", e); }
-}
-$("#lang").addEventListener("change",e=>{
-  curLang = e.target.value; localStorage.setItem("lang", curLang); loadI18n();
+/* Reveal on view */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target);} });
+},{threshold:.12});
+$$('.section .card, .v-cards .v-card').forEach(el=>io.observe(el));
+
+/* Tilt */
+$$('.tilt').forEach(el=>{
+  let r=6;
+  el.addEventListener('mousemove',e=>{
+    const b=el.getBoundingClientRect(), x=e.clientX-b.left, y=e.clientY-b.top;
+    const rx=((y/b.height)-.5)*-r, ry=((x/b.width)-.5)*r;
+    el.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+  });
+  el.addEventListener('mouseleave',()=>el.style.transform='rotateX(0) rotateY(0)');
 });
 
-/* ===== 英雄快讯条 ===== */
-$("#ticker").textContent = "【公告】预售 8 号 20:00 开启：早鸟 20 枚 $400/枚，之后 $500/枚。";
-
-/* ===== 倒计时（改成你的预售时间） ===== */
-function startCountdown(){
-  const t = new Date(); t.setDate(8); t.setHours(20,0,0,0);
-  function tick(){
-    let s = Math.max(0, Math.floor((t - new Date())/1000));
-    const h = String(Math.floor(s/3600)).padStart(2,"0");
-    s%=3600; const m = String(Math.floor(s/60)).padStart(2,"0"); s=String(s%60).padStart(2,"0");
-    $("#cd").textContent = `${h}:${m}:${s}`; requestAnimationFrame(tick);
-  } tick();
-}
-startCountdown();
-
-/* ===== 认购进度（占位数据，接你的后台即可） ===== */
-let SOLD = 12;  // 已售
-const CAP  = 100;
-function updateProgress(){
-  $("#sold").textContent = fmt(SOLD);
-  $("#sold2").textContent= fmt(SOLD);
-  $("#bar").style.width = `${Math.min(100, SOLD/CAP*100)}%`;
-  $("#fundTotal").textContent = fmt(500 * SOLD); // 粗略：按标准价估算资金（也可改成真实USDT）
-}
-updateProgress();
-
-/* ===== Sparkline ===== */
-const funds = [1,2,3,4,5,12,13,14,18,20,26,30,40,48,55,60,68,75,82,90];
-new Chart($("#spark"),{
-  type:"line",
-  data:{labels: funds.map((_,i)=>i+1), datasets:[{data:funds, tension:.35, borderWidth:2, borderColor:"#39c3ff", pointRadius:0, fill:true, backgroundColor:"rgba(57,195,255,.12)"}]},
-  options:{plugins:{legend:{display:false}}, scales:{x:{display:false},y:{display:false}}}
-});
-$("#burn").textContent = fmt(1234);
-$("#lp").textContent   = fmt(88888);
-
-/* ===== 分配饼图 ===== */
-new Chart($("#pie"),{
-  type:"doughnut",
-  data:{
-    labels:["分红","LP","营销"],
-    datasets:[{data:[50,40,10], backgroundColor:["#ffd36e","#39c3ff","#7dd97c"], borderWidth:0}]
-  },
-  options:{plugins:{legend:{position:"bottom"}}}
-});
-
-/* ===== 分红小计算器 ===== */
-function calc(){
-  const n = +$("#nft").value || 1;
-  const rev = +$("#rev").value || 0;
-  const per = 50; // 第一月
-  const pool = rev*(per/100);
-  const you  = pool*(n/100);
-  $("#usdtR").textContent = fmt(you.toFixed(2));
-  $("#arcR").textContent  = fmt((you*0.75).toFixed(0));
-}
-$("#nft").addEventListener("input",calc);
-$("#rev").addEventListener("input",calc);
-calc();
-
-/* ===== 四曲线（资金/销量/销毁/底池） ===== */
-new Chart($("#lines"),{
-  type:"line",
-  data:{
-    labels: Array.from({length:12},(_,i)=>`W${i+1}`),
-    datasets:[
-      {label:"资金(USDT)", data:[2,4,6,8,10,12,15,18,20,22,25,28], borderColor:"#39c3ff", backgroundColor:"rgba(57,195,255,.10)", tension:.35, pointRadius:0, fill:true},
-      {label:"销量(枚)",    data:[1,2,4,5,7,10,12,14,16,18,20,22], borderColor:"#ffd36e", backgroundColor:"rgba(255,211,110,.10)", tension:.35, pointRadius:0, fill:true},
-      {label:"销毁(枚)",    data:[0,0,1,2,3,4,6,7,8,10,12,13],    borderColor:"#ff7a7a", backgroundColor:"rgba(255,122,122,.08)", tension:.35, pointRadius:0, fill:true},
-      {label:"底池(USDT)", data:[0,1,2,3,5,8,10,12,14,17,20,24], borderColor:"#7dd97c", backgroundColor:"rgba(125,217,124,.10)", tension:.35, pointRadius:0, fill:true}
-    ]
-  },
-  options:{responsive:true, plugins:{legend:{position:"bottom"}}, scales:{y:{beginAtZero:true}}}
-});
-
-/* ===== 代币K线（占位） ===== */
+/* Ticker */
 (function(){
-  const el = document.getElementById('kline');
-  const chart = LightweightCharts.createChart(el, {
-    layout:{background:{type:'solid', color:'transparent'}, textColor:'#cfe2ff'},
-    grid:{vertLines:{color:'rgba(255,255,255,0.06)'}, horzLines:{color:'rgba(255,255,255,0.06)'}},
-    rightPriceScale:{borderVisible:false}, timeScale:{borderVisible:false}
-  });
-  const series = chart.addCandlestickSeries({
-    upColor:'#7dd97c', downColor:'#ff7a7a', borderUpColor:'#7dd97c', borderDownColor:'#ff7a7a', wickUpColor:'#7dd97c', wickDownColor:'#ff7a7a'
-  });
-  const base=100; const data=Array.from({length:30},(_,i)=>{
-    const t=Math.floor(Date.now()/1000)-(30-i)*21600;
-    const o=base+i*2+Math.random()*4; const c=o+(Math.random()*6-3);
-    const h=Math.max(o,c)+Math.random()*3; const l=Math.min(o,c)-Math.random()*3;
-    return {time:t, open:o, high:h, low:l, close:c};
-  });
-  series.setData(data);
+  const t = $('#ticker'); if(!t) return;
+  const items = [
+    'ARC 预售 9/8 开启 · 早鸟 20 枚',
+    '每周分红：USDT（净收益）+ ARC（损耗）',
+    '链上透明：分红/销毁/LP 可查',
+    '股东享 LP 滑点与手续费收益'
+  ];
+  let i=0;
+  setInterval(()=>{
+    t.innerHTML = `<span class="item">🚀 ${items[i%items.length]}</span>`;
+    i++;
+  }, 5000);
+  t.innerHTML = `<span class="item">🚀 ${items[0]}</span>`;
 })();
 
-/* ===== 星空粒子（低耗） ===== */
-(function starfield(){
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d',{alpha:true});
-  let w,h, stars=[]; const count = 140;
-  function resize(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight }
-  function resetStar(s){ s.x=Math.random()*w; s.y=Math.random()*h; s.z=.2+Math.random()*1.2; s.r=.3+s.z*.8; s.v=.05+s.z*.07 }
-  function init(){ resize(); stars = Array.from({length:count},()=>{const s={}; resetStar(s); return s}) }
-  function draw(){
-    if(prefersReduce) return; // 尊重系统降级
-    ctx.clearRect(0,0,w,h);
-    ctx.fillStyle="rgba(255,255,255,.8)";
-    for(const s of stars){
-      ctx.globalAlpha = .15 + s.z*.35;
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
-      s.x += s.v; if(s.x>s.r+w) s.x = -s.r;
-    }
-    requestAnimationFrame(draw);
+/* 数字计数 */
+function animateCount(el, to, dur=600){
+  const from = Number(el.textContent.replace(/,/g,''))||0;
+  const st = performance.now();
+  function f(t){
+    const p = Math.min(1,(t-st)/dur);
+    const v = Math.round(from + (to-from)*(0.5-0.5*Math.cos(Math.PI*p)));
+    el.textContent = fmt(v);
+    if(p<1) requestAnimationFrame(f);
   }
-  init(); draw(); window.addEventListener('resize',resize);
-})();
-
-/* ===== 卡片轻微倾斜（桌面） ===== */
-if (window.matchMedia('(pointer:fine)').matches){
-  $$(".tilt").forEach(el=>{
-    el.addEventListener('mousemove',e=>{
-      const r=el.getBoundingClientRect(), cx=e.clientX-r.left, cy=e.clientY-r.top;
-      const dx=(cx-r.width/2)/r.width, dy=(cy-r.height/2)/r.height;
-      el.style.transform=`perspective(700px) rotateX(${dy*-4}deg) rotateY(${dx*4}deg)`;
-    });
-    el.addEventListener('mouseleave',()=>{ el.style.transform='perspective(700px) rotateX(0) rotateY(0)' });
-  });
+  requestAnimationFrame(f);
 }
 
-/* ===== init ===== */
-loadI18n();
-$("#year").textContent = new Date().getFullYear();
-// ---------- Subscribe / Sale logic ----------
-(function () {
-  const $ = (sel) => document.querySelector(sel);
+/* 年份 */
+const yel = $('#year'); if (yel) yel.textContent = new Date().getFullYear();
 
+/* ========== KPI / Sparkline ========== */
+(function(){
+  const c = $('#spark'); if(!c || !window.Chart) return;
+  const ctx = c.getContext('2d');
+  const g = ctx.createLinearGradient(0,0,c.width,0); g.addColorStop(0,'#39c3ff'); g.addColorStop(1,'#6b8cff');
+  new Chart(c,{
+    type:'line',
+    data:{ labels:Array.from({length:24},(_,i)=>i+1),
+      datasets:[{ data:Array.from({length:24},()=>Math.floor(80+Math.random()*40)),
+        borderColor:g, tension:.35, pointRadius:0, fill:false, borderWidth:2 }]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}, tooltip:{enabled:false}}, scales:{x:{display:false},y:{display:false}}}
+  });
+})();
+
+/* ========== 分配饼图 ========== */
+let pieChart=null;
+function renderPie(firstMonth=true){
+  const c = $('#pie'); if(!c || !window.Chart) return;
+  const data1 = [50,40,10], data2=[30,40,15,15];
+  const labels1 = ['分红(USDT)','注入LP','营销'];
+  const labels2 = ['分红(USDT)','注入LP','营销','项目方'];
+  const data = firstMonth?data1:data2, labels = firstMonth?labels1:labels2;
+  const colors = ['#44d7b6','#5aa0ff','#ffa84d','#a06bff'];
+  if(pieChart) pieChart.destroy();
+  pieChart = new Chart(c,{ type:'doughnut',
+    data:{ labels, datasets:[{ data, backgroundColor:colors, borderWidth:0 }]},
+    options:{ plugins:{legend:{position:'bottom',labels:{color:'#cfe0ff'}}}, cutout:'62%' }
+  });
+}
+renderPie(true);
+
+/* ========== 多线图 ========== */
+(function(){
+  const c = $('#lines'); if(!c || !window.Chart) return;
+  const labels = Array.from({length:16},(_,i)=>`W${i+1}`);
+  function rand(s){let a=0;return labels.map(()=>a+=Math.round(50+Math.random()*80))}
+  new Chart(c,{ type:'line',
+    data:{ labels, datasets:[
+      {label:'募集累计',  data:rand(), borderColor:'#58d1ff', pointRadius:0, tension:.35},
+      {label:'销毁累计',  data:rand(), borderColor:'#a77bff', pointRadius:0, tension:.35},
+      {label:'LP 底池',  data:rand(), borderColor:'#44d7b6', pointRadius:0, tension:.35},
+      {label:'销量',      data:rand(), borderColor:'#ffa84d', pointRadius:0, tension:.35}
+    ]},
+    options:{ plugins:{legend:{position:'bottom',labels:{color:'#cfe0ff'}}},
+      scales:{x:{ticks:{color:'#b9c9e6'}}, y:{ticks:{color:'#b9c9e6'}}} });
+})();
+
+/* ========== 轻量 K 线（占位） ========== */
+(function(){
+  const el = $('#kline'); if(!el || !window.LightweightCharts) return;
+  const chart = LightweightCharts.createChart(el,{ layout:{background:{type:0,color:'transparent'}, textColor:'#cfe0ff'},
+    grid:{vertLines:{color:'rgba(255,255,255,.06)'}, horzLines:{color:'rgba(255,255,255,.06)'}},
+    crosshair:{mode:LightweightCharts.CrosshairMode.Normal}, rightPriceScale:{borderVisible:false}, timeScale:{borderVisible:false}});
+  const s = chart.addCandlestickSeries({ upColor:'#44d7b6', downColor:'#ff6b7a', borderVisible:false, wickUpColor:'#44d7b6', wickDownColor:'#ff6b7a'});
+  const now=Date.now(), day=86400000;
+  const data = Array.from({length:60},(_,i)=>{ const t = Math.floor((now - (59-i)*day)/1000); const o=100+Math.random()*10; const c=o+(Math.random()*6-3); const hi=Math.max(o,c)+Math.random()*3; const lo=Math.min(o,c)-Math.random()*3; return {time:t, open:o, high:hi, low:lo, close:c};});
+  s.setData(data);
+})();
+
+/* ========== 认购与进度（sale.json） ========== */
+(function () {
   const els = {
-    soldA:   $("#sold"),    // KPI卡上的已售
-    soldB:   $("#sold2"),   // 进度条下的已售
-    bar:     $("#bar"),     // 进度条
-    fund:    $("#fundTotal"),
-    cd:      $("#cd"),
+    soldA:   $("#sold"), soldB: $("#sold2"), bar: $("#bar"),
+    fund:    $("#fundTotal"), cd: $("#cd"),
     btns:    document.querySelectorAll('[data-tier]'),
     priceLine: document.querySelector(".price-line .price")
   };
 
-  const fmt = (n) => Number(n || 0).toLocaleString();
-
-  // 允许用 URL 快速演示：?early=5&std=12
   function readQueryOverride(state) {
     const q = new URLSearchParams(location.search);
     const e = q.get("early"), s = q.get("std");
@@ -187,14 +137,9 @@ $("#year").textContent = new Date().getFullYear();
       return json;
     } catch (e) {
       console.warn("sale.json 加载失败，使用兜底数据", e);
-      // 兜底：即使找不到文件也不至于报错
       return {
-        currency: "USDT",
-        capTotal: 100,
-        tiers: {
-          early:    { labelZh: "早鸟", price: 400, cap: 20, sold: 0 },
-          standard: { labelZh: "标准", price: 500, cap: 80, sold: 0 }
-        },
+        currency: "USDT", capTotal: 100,
+        tiers: { early:{labelZh:"早鸟",price:400,cap:20,sold:0}, standard:{labelZh:"标准",price:500,cap:80,sold:0} },
         presale: { start: "2025-09-08T00:00:00Z", end: "2025-09-15T00:00:00Z" }
       };
     }
@@ -203,22 +148,20 @@ $("#year").textContent = new Date().getFullYear();
   function computeTotals(state) {
     const e = state.tiers.early, s = state.tiers.standard;
     const sold = e.sold + s.sold;
-    const raised = e.sold * e.price + s.sold * s.price;
-    const pct = Math.min(100, Math.round((sold / state.capTotal) * 100));
+    const raised = e.sold*e.price + s.sold*s.price;
+    const pct = Math.min(100, Math.round((sold/state.capTotal)*100));
     return { sold, raised, pct, e, s };
   }
 
   function updateUI(state) {
     const { sold, raised, pct, e, s } = computeTotals(state);
-    // 数字
-    if (els.soldA) els.soldA.textContent = fmt(sold);
+    if (els.soldA) animateCount(els.soldA, sold, 600);
     if (els.soldB) els.soldB.textContent = fmt(sold);
-    if (els.fund)  els.fund.textContent  = fmt(raised);
+    if (els.fund)  animateCount(els.fund,  raised, 600);
     if (els.bar)   els.bar.style.width   = pct + "%";
 
-    // 价格线：早鸟售罄就只显示 $500
-    if (els.priceLine) {
-      const earlyLeft = e.cap - e.sold;
+    const earlyLeft = e.cap - e.sold;
+    if (els.priceLine){
       if (earlyLeft <= 0) {
         els.priceLine.innerHTML = `<b>$${s.price}</b> <span>(剩余 ${fmt(s.cap - s.sold)} 枚)</span>`;
       } else {
@@ -226,7 +169,6 @@ $("#year").textContent = new Date().getFullYear();
       }
     }
 
-    // 按钮状态
     const now = Date.now();
     const start = Date.parse(state.presale.start);
     const end   = Date.parse(state.presale.end);
@@ -236,20 +178,13 @@ $("#year").textContent = new Date().getFullYear();
       const tier = btn.getAttribute("data-tier");
       const t = state.tiers[tier];
       let disabled = false, label = "购买";
-
       if (!started) { disabled = true; label = "未开始"; }
       if (ended)    { disabled = true; label = "已结束"; }
       if (t.sold >= t.cap) { disabled = true; label = "售罄"; }
-
       btn.classList.toggle("disabled", disabled);
       btn.setAttribute("aria-disabled", disabled ? "true" : "false");
       btn.querySelector("span") && (btn.querySelector("span").textContent = label);
-      btn.onclick = (e) => {
-        e.preventDefault();
-        if (disabled) return;
-        // 这里接入钱包/支付流程。先占位：
-        alert(`即将购买：${t.labelZh}（$${t.price}），敬请期待连接钱包`);
-      };
+      btn.onclick = (e) => { e.preventDefault(); if (disabled) return; alert(`即将购买：${t.labelZh}（$${t.price}），敬请期待连接钱包`); };
     });
   }
 
@@ -257,18 +192,14 @@ $("#year").textContent = new Date().getFullYear();
     if (!els.cd) return;
     const start = Date.parse(state.presale.start);
     const end   = Date.parse(state.presale.end);
-
     function tick() {
       const now = Date.now();
       const target = (now < start) ? start : (now < end ? end : end);
-      let diff = target - now;
-      if (diff < 0) diff = 0;
+      let diff = target - now; if (diff < 0) diff = 0;
       const h = Math.floor(diff / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
       const s = Math.floor((diff % 60000) / 1000);
-      els.cd.textContent = [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
-
-      // 标签切换
+      els.cd.textContent = [h,m,s].map(n=>String(n).padStart(2,"0")).join(":");
       const labelEl = els.cd.previousElementSibling;
       if (labelEl) {
         if (now < start) labelEl.textContent = "预售倒计时";
@@ -276,11 +207,9 @@ $("#year").textContent = new Date().getFullYear();
         else labelEl.textContent = "已结束";
       }
     }
-    tick();
-    setInterval(tick, 1000);
+    tick(); setInterval(tick, 1000);
   }
 
-  // 对外：演示时可在控制台调用 window.__demoSold({early: x, standard: y})
   window.__demoSold = (partial) => {
     if (!window.__SALE_STATE) return;
     Object.assign(window.__SALE_STATE.tiers.early,    partial.early    || {});
@@ -288,11 +217,11 @@ $("#year").textContent = new Date().getFullYear();
     updateUI(window.__SALE_STATE);
   };
 
-  // 启动
   loadState().then((state) => {
     window.__SALE_STATE = state;
     updateUI(state);
     startCountdown(state);
   });
 })();
+
 
