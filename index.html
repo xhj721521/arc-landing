@@ -6,26 +6,27 @@
   <title>ARC Protocol · 链游募资｜链上数据可查｜每周分红</title>
   <meta name="theme-color" content="#0b1220"/>
 
-  <!-- 预加载：视频封面、视频、可选字体（有文件就留，无文件就删掉这两行字体） -->
+  <!-- 预加载：封面与视频（请确保对应文件已存在） -->
   <link rel="preload" as="image" href="/assets/img/hero-poster.jpg">
-  <link rel="preload" as="video"  href="/assets/video/hero.mp4">
-  <!-- 可选字体：若 /assets/fonts 不存在则删除这两行 -->
+  <link rel="preload" as="video" href="/assets/video/hero.mp4">
+
+  <!-- 可选字体（若 /assets/fonts 不存在可删除这两行） -->
   <!--
   <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/Orbitron-Variable.woff2" as="font" type="font/woff2" crossorigin>
   -->
 
-  <link rel="stylesheet" href="/assets/css/theme.css?v=1.2">
+  <!-- 样式：请确保 /assets/css/theme.css 与该版本号一致 -->
+  <link rel="stylesheet" href="/assets/css/theme.css?v=1.4">
   <link rel="icon" href="/assets/img/logo-light.svg" type="image/svg+xml">
-  <script>window.__VER__="1.2"</script>
+  <script>window.__VER__="1.4";window.__OFFLINE_LIBS__=true;</script>
 
-  <!-- 先加载图表库，确保后面的 script.js 能用到 -->
+  <!-- 本地库（国内离线）：把 Chart.js 与 Lightweight Charts 放在 /assets/js/libs/ -->
   <script defer src="/assets/js/libs/chart.umd.min.js"></script>
   <script defer src="/assets/js/libs/lightweight-charts.standalone.production.js"></script>
-  <!-- 你的主逻辑放最后（defer 会按顺序执行） -->
-  <script defer src="/assets/js/script.js?v=1.2"></script>
+  <!-- 主逻辑（与 1.4 匹配） -->
+  <script defer src="/assets/js/script.js?v=1.4"></script>
 </head>
-
 <body>
 
   <!-- 背景：视频 + 星空粒子 + 扫描线叠加 -->
@@ -89,7 +90,7 @@
     </div>
   </section>
 
-  <!-- Sparkline + 翻牌 -->
+  <!-- Sparkline + 翻牌 KPI -->
   <section class="wrap section">
     <div class="card holo" id="kpiCard">
       <div class="kpi">
@@ -105,41 +106,34 @@
     </div>
   </section>
 
-  <!-- 认购与进度 -->
+  <!-- 认购与进度（含清晰的分区背景 SVG） -->
   <section id="subscribe" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_subscribe">认购与进度</h2>
-<!-- 背景：霓虹网格 + 流光曲线（认购区） -->
-<svg class="bg-svg subscribe-bg" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-  <defs>
-    <!-- 更细的网格 -->
-    <pattern id="subGrid" width="28" height="28" patternUnits="userSpaceOnUse">
-      <path d="M28 0H0V28" fill="none" stroke="rgba(57,195,255,.22)" stroke-width="1"/>
-    </pattern>
-    <!-- 渐变与发光 -->
-    <linearGradient id="subLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#39c3ff"/><stop offset="1" stop-color="#6b8cff"/>
-    </linearGradient>
-    <filter id="subGlow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  </defs>
 
-  <!-- 背景网格 -->
-  <rect width="100%" height="100%" fill="url(#subGrid)"/>
+    <!-- 背景：霓虹网格 + 流光曲线 -->
+    <svg class="bg-svg subscribe-bg" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <pattern id="subGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+          <path d="M28 0H0V28" fill="none" stroke="rgba(57,195,255,.22)" stroke-width="1"/>
+        </pattern>
+        <linearGradient id="subLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#39c3ff"/><stop offset="1" stop-color="#6b8cff"/>
+        </linearGradient>
+        <filter id="subGlow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#subGrid)"/>
+      <g filter="url(#subGlow)">
+        <path class="sub-line l1" d="M -60 420 C 120 380, 320 460, 520 410 S 880 380, 1100 430"
+              fill="none" stroke="url(#subLine)" stroke-width="3" opacity=".55"/>
+        <path class="sub-line l2" d="M -40 470 C 140 440, 340 430, 540 380 S 900 360, 1120 390"
+              fill="none" stroke="url(#subLine)" stroke-width="2" opacity=".35"/>
+      </g>
+      <circle class="pulse p1" cx="180" cy="360" r="2"/>
+      <circle class="pulse p2" cx="680" cy="320" r="2"/>
+      <circle class="pulse p3" cx="860" cy="410" r="2"/>
+    </svg>
+    <div class="bg-scan"></div>
 
-  <!-- 两条流光曲线（CSS 驱动动画） -->
-  <g filter="url(#subGlow)">
-    <path class="sub-line l1" d="M -60 420 C 120 380, 320 460, 520 410 S 880 380, 1100 430"
-          fill="none" stroke="url(#subLine)" stroke-width="3" opacity=".55"/>
-    <path class="sub-line l2" d="M -40 470 C 140 440, 340 430, 540 380 S 900 360, 1120 390"
-          fill="none" stroke="url(#subLine)" stroke-width="2" opacity=".35"/>
-  </g>
-
-  <!-- 三个轻微脉冲点 -->
-  <circle class="pulse p1" cx="180" cy="360" r="2"/>
-  <circle class="pulse p2" cx="680" cy="320" r="2"/>
-  <circle class="pulse p3" cx="860" cy="410" r="2"/>
-</svg>
-<!-- 可选扫描线（想更明显就保留） -->
-<div class="bg-scan"></div>
     <div class="grid-2">
       <!-- 左：价格/倒计时/进度/权益 -->
       <div class="card holo tilt">
@@ -165,15 +159,13 @@
             <div class="t-name" data-i18n="tier_early">早鸟</div>
             <div class="t-price">$400</div>
             <div class="t-desc" data-i18n="tier_early_desc">限量 20 枚，价格优惠，权益相同</div>
-            <a class="btn-neon sm" href="#"><span data-i18n="btn_buy_early">购买<a class="btn-neon sm" href="#" data-tier="early"><span data-i18n="btn_buy_early">购买</span><i></i></a>
-<a class="btn-neon sm" href="#" data-tier="standard"><span data-i18n="btn_buy_std">购买</span><i></i></a>
-</span><i></i></a>
+            <a class="btn-neon sm" href="#" data-tier="early"><span data-i18n="btn_buy_early">购买</span><i></i></a>
           </div>
           <div class="tier">
             <div class="t-name" data-i18n="tier_standard">标准</div>
             <div class="t-price">$500</div>
             <div class="t-desc" data-i18n="tier_std_desc">总量 80 枚，售罄即止</div>
-            <a class="btn-neon sm" href="#"><span data-i18n="btn_buy_std">购买</span><i></i></a>
+            <a class="btn-neon sm" href="#" data-tier="standard"><span data-i18n="btn_buy_std">购买</span><i></i></a>
           </div>
           <div class="tier muted">
             <div class="t-name" data-i18n="tier_presale">公测预约</div>
@@ -273,47 +265,40 @@
     </div>
   </section>
 
-  <!-- 链上数据 -->
+  <!-- 链上数据（带 HUD 背景区分） -->
   <section id="chain" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_chain">链上数据</h2>
-    <!-- SVG HUD 背景（链上数据区） -->
-<svg class="bg-svg hud" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-  <defs>
-    <!-- 网格 -->
-    <pattern id="hudGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="rgba(57,195,255,.18)" stroke-width="1"/>
-      <circle cx="20" cy="20" r="1.5" fill="rgba(57,195,255,.45)">
-        <animate attributeName="opacity" values="0.25;0.8;0.25" dur="6s" repeatCount="indefinite"/>
-      </circle>
-    </pattern>
-    <!-- 渐变与发光 -->
-    <linearGradient id="hudLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#39c3ff"/><stop offset="1" stop-color="#6b8cff"/>
-    </linearGradient>
-    <filter id="hudGlow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  </defs>
 
-  <!-- 背景网格 -->
-  <rect width="100%" height="100%" fill="url(#hudGrid)"/>
+    <svg class="bg-svg hud" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <pattern id="hudGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M40 0H0V40" fill="none" stroke="rgba(57,195,255,.18)" stroke-width="1"/>
+          <circle cx="20" cy="20" r="1.5" fill="rgba(57,195,255,.45)">
+            <animate attributeName="opacity" values="0.25;0.8;0.25" dur="6s" repeatCount="indefinite"/>
+          </circle>
+        </pattern>
+        <linearGradient id="hudLine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#39c3ff"/><stop offset="1" stop-color="#6b8cff"/>
+        </linearGradient>
+        <filter id="hudGlow"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hudGrid)"/>
+      <path d="M -50 420 C 150 380, 350 460, 550 410 S 900 380, 1100 430"
+            fill="none" stroke="url(#hudLine)" stroke-width="3" opacity=".45" filter="url(#hudGlow)">
+        <animate attributeName="stroke-dasharray" values="0,1200;200,1200;0,1200" dur="12s" repeatCount="indefinite"/>
+        <animate attributeName="stroke-dashoffset" values="0;-400;0" dur="12s" repeatCount="indefinite"/>
+      </path>
+      <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="rgba(111,170,255,.0)"/>
+        <stop offset=".5" stop-color="rgba(111,170,255,.10)"/>
+        <stop offset="1" stop-color="rgba(111,170,255,.0)"/>
+      </linearGradient>
+      <rect x="-5%" y="-20%" width="110%" height="40%" fill="url(#scanGrad)">
+        <animateTransform attributeName="transform" type="translate" from="0 0" to="0 700" dur="10s" repeatCount="indefinite"/>
+      </rect>
+    </svg>
+    <div class="bg-scan"></div>
 
-  <!-- 缓慢流动的曲线（装饰） -->
-  <path d="M -50 420 C 150 380, 350 460, 550 410 S 900 380, 1100 430"
-        fill="none" stroke="url(#hudLine)" stroke-width="3" opacity=".45" filter="url(#hudGlow)">
-    <animate attributeName="stroke-dasharray" values="0,1200;200,1200;0,1200" dur="12s" repeatCount="indefinite"/>
-    <animate attributeName="stroke-dashoffset" values="0;-400;0" dur="12s" repeatCount="indefinite"/>
-  </path>
-
-  <!-- 轻微扫描带 -->
-  <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="rgba(111,170,255,.0)"/>
-    <stop offset=".5" stop-color="rgba(111,170,255,.10)"/>
-    <stop offset="1" stop-color="rgba(111,170,255,.0)"/>
-  </linearGradient>
-  <rect x="-5%" y="-20%" width="110%" height="40%" fill="url(#scanGrad)">
-    <animateTransform attributeName="transform" type="translate" from="0 0" to="0 700" dur="10s" repeatCount="indefinite"/>
-  </rect>
-</svg>
-<div class="bg-scan"></div>
     <div class="card holo">
       <div class="c-grid">
         <div><b data-i18n="c1">合约地址</b><div class="mono">0x0000...0000</div></div>
@@ -324,7 +309,6 @@
         <div><b data-i18n="c6">快速链接</b><span class="mono">Docs / API</span></div>
       </div>
 
-      <!-- 小图标（务必在 /assets/icons/ 放好下列文件） -->
       <div class="mini-icons">
         <img src="/assets/icons/etherscan.svg" alt="etherscan">
         <img src="/assets/icons/bscscan.svg"  alt="bscscan">
@@ -364,7 +348,7 @@
     </div>
   </section>
 
-  <!-- 资金/销量/销毁/底池 多线图 -->
+  <!-- 资金/销量/销毁/底池多线图 -->
   <section id="analytics" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_analytics">资金与销毁曲线</h2>
     <div class="card holo">
@@ -373,7 +357,7 @@
     </div>
   </section>
 
-  <!-- 代币信息 + K线 -->
+  <!-- 代币信息 + K 线 -->
   <section id="token" class="wrap section">
     <h2 class="sec-title" data-i18n="sec_token">代币信息</h2>
     <div class="grid-2">
@@ -405,6 +389,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
