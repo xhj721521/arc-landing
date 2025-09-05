@@ -1,33 +1,34 @@
 <!doctype html>
 <html lang="zh">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>ARC Protocol · 链游募资｜链上数据可查｜每周分红</title>
-  <meta name="theme-color" content="#0b1220"/>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ARC Protocol · 链游募资｜链上数据可查｜每周分红</title>
 
-  <!-- 预加载：封面与视频（请确保对应文件已存在） -->
-  <link rel="preload" as="image" href="/assets/img/hero-poster.jpg">
-  <link rel="preload" as="video" href="/assets/video/hero.mp4">
+    <!-- 使用最新资源版本，确保与脚本和样式匹配 -->
+    <link rel="stylesheet" href="/assets/css/theme.css?v=1.5" />
+    <link rel="icon" href="/assets/img/logo-light.svg" type="image/svg+xml" />
 
-  <!-- 可选字体（若 /assets/fonts 不存在可删除这两行） -->
-  <!--
-  <link rel="preload" href="/assets/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/Orbitron-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  -->
+    <script>
+      // 同步版本号，避免缓存错误
+      window.__VER__ = "1.5";
+      window.__OFFLINE_LIBS__ = true;
+    </script>
 
-  <!-- 样式：请确保 /assets/css/theme.css 与该版本号一致 -->
-  <link rel="stylesheet" href="/assets/css/theme.css?v=1.4">
-  <link rel="icon" href="/assets/img/logo-light.svg" type="image/svg+xml">
-  <script>window.__VER__="1.4";window.__OFFLINE_LIBS__=true;</script>
+    <!-- 本地库（国内离线） -->
+    <script defer src="/assets/js/libs/chart.umd.min.js"></script>
+    <script defer src="/assets/js/libs/lightweight-charts.standalone.production.js"></script>
 
-  <!-- 本地库（国内离线）：把 Chart.js 与 Lightweight Charts 放在 /assets/js/libs/ -->
-  <script defer src="/assets/js/libs/chart.umd.min.js"></script>
-  <script defer src="/assets/js/libs/lightweight-charts.standalone.production.js"></script>
-  <!-- 主逻辑（与 1.4 匹配） -->
-  <script defer src="/assets/js/script.js?v=1.4"></script>
-</head>
-<body>
+    <!-- 主脚本也升级到 1.5 版本号 -->
+    <script defer src="/assets/js/script.js?v=1.5"></script>
+  </head>
+  <body>
+    <!-- 页面其余部分保持不变 -->
+    <!-- 示例修正：连接钱包按钮的 href 建议使用 "#" 或 "javascript:void(0)" -->
+    <!-- <a class="btn-neon" href="#" data-i18n="cta_connect"><span>连接钱包</span><i></i></a> -->
+  </body>
+</html>
+
 
   <!-- 背景：视频 + 星空粒子 + 扫描线叠加 -->
   <video class="bg-video" autoplay muted loop playsinline poster="/assets/img/hero-poster.jpg">
@@ -392,6 +393,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
