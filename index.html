@@ -2,28 +2,24 @@
 <html lang="zh">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARC Protocol 链游募资｜公平透明｜投资人信心</title>
-    <!-- 引入谷歌字体与 FontAwesome 图标 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARC Protocol 2.0｜链游募资新体验</title>
+    <!-- Google Fonts: 使用未来感字体 Orbitron 和正文字体 Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-vOX6XeJPxAiU3xewbk1y5opxbfG0w7F2E6ZyZB4t++yMErvUmvNHWcyfpk9Ty6CB9Bc5mZdcNWh4PEkRj16W2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- 外部样式表 -->
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <!-- 星空背景与渐变遮罩 -->
-    <canvas id="background"></canvas>
-    <div id="overlay"></div>
-
-    <!-- 页面容器 -->
-    <div class="container">
-      <!-- 页眉和导航 -->
-      <header>
+    <canvas id="starfield"></canvas>
+    <!-- Header -->
+    <header>
+      <div class="container nav-container">
         <div class="logo">ARC Protocol</div>
-        <nav>
+        <nav class="nav">
           <ul>
             <li><a href="#features" data-i18n="nav_features">玩法亮点</a></li>
             <li><a href="#subscribe" data-i18n="nav_subscribe">认购计划</a></li>
@@ -34,241 +30,260 @@
             <li><a href="#roadmap" data-i18n="nav_roadmap">路线图</a></li>
           </ul>
         </nav>
-        <div class="language-selector">
-          <button data-lang="zh">🇨🇳 中文</button>
-          <button data-lang="vi">🇻🇳 Tiếng Việt</button>
-          <button data-lang="es">🇪🇸 Español</button>
-          <button data-lang="ar">🇦🇪 العربية</button>
+        <div class="lang-selector">
+          <button data-lang="zh">🇨🇳</button>
+          <button data-lang="vi">🇻🇳</button>
+          <button data-lang="es">🇪🇸</button>
+          <button data-lang="ar">🇦🇪</button>
         </div>
-      </header>
-
-      <!-- 公告 -->
-      <div class="announcement animate" id="announcement">
-        <strong data-i18n="announcement_title">公告</strong> · <span data-i18n="announcement_content">公测即将开启，敬请关注我们的社交媒体获取最新动态。</span>
       </div>
-
-      <!-- Hero 区 -->
-      <section class="hero animate" id="hero">
+    </header>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
         <h1 data-i18n="hero_title">唤醒未知，铸就你的传奇</h1>
         <p data-i18n="hero_sub">一场由 ARC 驱动的链上冒险。探索未知、征服十二层爬塔、参与实时对决下注，并在团队地图中与伙伴共创收益。</p>
-        <div class="buttons">
+        <div class="hero-buttons">
           <a href="#subscribe" class="btn-primary" data-i18n="btn_subscribe">立即认购</a>
-          <a href="#features" class="btn-secondary" data-i18n="btn_learn_more">了解更多</a>
+          <a href="#features" class="btn-outline" data-i18n="btn_learn_more">了解更多</a>
         </div>
-      </section>
-
-      <!-- 玩法亮点区 -->
-      <section class="features section-bg1 animate" id="features">
-        <div class="feature">
-          <i class="fas fa-map-marked-alt"></i>
-          <h3 data-i18n="feature_team">团队地图</h3>
-          <p data-i18n="feature_team_desc">队长引导玩家扩展领地并分享收益，打造可持续社区经济。</p>
+      </div>
+      <!-- 斜切分隔 -->
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="container">
+        <h2 class="section-title" data-i18n="nav_features">玩法亮点</h2>
+        <div class="feature-grid">
+          <div class="feature-hex">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3 data-i18n="feature_team">团队地图</h3>
+            <p data-i18n="feature_team_desc">队长引导玩家扩展领地并分享收益，打造可持续社区经济。</p>
+          </div>
+          <div class="feature-hex">
+            <i class="fas fa-layer-group"></i>
+            <h3 data-i18n="feature_tower">十二层爬塔</h3>
+            <p data-i18n="feature_tower_desc">丰富的多维挑战与成就系统，装备与碎片随机掉落。</p>
+          </div>
+          <div class="feature-hex">
+            <i class="fas fa-fist-raised"></i>
+            <h3 data-i18n="feature_br">大逃杀下注</h3>
+            <p data-i18n="feature_br_desc">观众可下注公平对决，链上结算公开透明。</p>
+          </div>
+          <div class="feature-hex">
+            <i class="fas fa-gamepad"></i>
+            <h3 data-i18n="feature_esports">电竞拳击竞猜</h3>
+            <p data-i18n="feature_esports_desc">未来将推出电竞赛事与拳击比赛的链上竞猜，娱乐互动兼具收益。</p>
+          </div>
+          <div class="feature-hex">
+            <i class="fas fa-chart-line"></i>
+            <h3 data-i18n="feature_derivatives">衍生品互通</h3>
+            <p data-i18n="feature_derivatives_desc">规划推出 ETF、永续合约及期权等衍生品互通机制，为玩家提供多样化金融工具。</p>
+          </div>
         </div>
-        <div class="feature">
-          <i class="fas fa-layer-group"></i>
-          <h3 data-i18n="feature_tower">十二层爬塔</h3>
-          <p data-i18n="feature_tower_desc">丰富的多维挑战与成就系统，装备与碎片随机掉落。</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-fist-raised"></i>
-          <h3 data-i18n="feature_br">大逃杀下注</h3>
-          <p data-i18n="feature_br_desc">观众可下注公平对决，链上结算公开透明。</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-gamepad"></i>
-          <h3 data-i18n="feature_esports">电竞拳击竞猜</h3>
-          <p data-i18n="feature_esports_desc">未来将推出电竞赛事与拳击比赛的链上竞猜，娱乐互动兼具收益。</p>
-        </div>
-        <div class="feature">
-          <i class="fas fa-chart-line"></i>
-          <h3 data-i18n="feature_derivatives">衍生品互通</h3>
-          <p data-i18n="feature_derivatives_desc">规划推出 ETF、永续合约及期权等衍生品互通机制，为玩家提供多样化金融工具。</p>
-        </div>
-      </section>
-
-      <!-- 认购计划区 -->
-      <section class="subscribe animate" id="subscribe">
-        <h2 data-i18n="subscribe_title">认购计划</h2>
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Subscribe Section with radial gauges -->
+    <section class="subscribe" id="subscribe">
+      <div class="container">
+        <h2 class="section-title" data-i18n="subscribe_title">认购计划</h2>
         <p class="nft-note" data-i18n="nft_note">NFT 总量100枚，永不增发，可自由交易。</p>
-        <div class="tier-cards">
-          <div class="tier-card">
+        <div class="gauge-grid">
+          <div class="gauge-card">
+            <div class="gauge" data-value="20">
+              <span>20%</span>
+            </div>
             <h3 data-i18n="tier_early_name">早鸟计划</h3>
             <p class="price">$400</p>
             <p data-i18n="tier_early_desc">限量 20 枚，价格优惠，权益相同</p>
-            <button data-i18n="btn_buy_now">立即购买</button>
+            <button class="btn-primary" data-i18n="btn_buy_now">立即购买</button>
           </div>
-          <div class="tier-card">
+          <div class="gauge-card">
+            <div class="gauge" data-value="60">
+              <span>60%</span>
+            </div>
             <h3 data-i18n="tier_standard_name">标准计划</h3>
             <p class="price">$500</p>
             <p data-i18n="tier_standard_desc">总量 80 枚，售罄即止</p>
-            <button data-i18n="btn_buy_now">立即购买</button>
+            <button class="btn-primary" data-i18n="btn_buy_now">立即购买</button>
           </div>
-          <div class="tier-card">
+          <div class="gauge-card">
+            <div class="gauge" data-value="0">
+              <span>0%</span>
+            </div>
             <h3 data-i18n="tier_presale_name">公测预约</h3>
             <p class="price">$???</p>
             <p data-i18n="tier_presale_desc">预约开放倒计时</p>
-            <button data-i18n="btn_buy_now">立即购买</button>
+            <button class="btn-primary" data-i18n="btn_buy_now">立即购买</button>
           </div>
         </div>
         <div class="countdown" data-i18n="countdown_label">预售倒计时</div>
-      </section>
-
-      <!-- 认购进度区 -->
-      <section class="progress-section animate" id="progress">
-        <h2 data-i18n="progress_title">认购进度</h2>
-        <div class="progress-bar">
-          <div class="fill" id="progress-fill"></div>
-        </div>
-        <div class="progress-info">
-          <div><span data-i18n="progress_raised">已募集 (USDT)</span>: <span id="raised">0</span></div>
-          <div><span data-i18n="progress_sold">已售 (枚)</span>: <span id="sold">0</span></div>
-          <div><span data-i18n="progress_burned">销毁 (枚)</span>: <span id="burned">0</span></div>
-        </div>
-      </section>
-
-      <!-- 投资优势区 -->
-      <section class="benefits section-bg2 animate" id="benefits">
-        <h2 data-i18n="benefits_title">投资优势</h2>
-        <div class="benefit-list">
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Benefits Section with wavy background -->
+    <section class="benefits" id="benefits">
+      <div class="container">
+        <h2 class="section-title" data-i18n="benefits_title">投资优势</h2>
+        <div class="benefit-grid">
           <div class="benefit-item">
+            <i class="fas fa-magic"></i>
             <h4 data-i18n="benefit_innov">创新链上玩法</h4>
             <p data-i18n="benefit_innov_desc">团队地图与多层爬塔结合，打造前所未有的链游体验，吸引持续的玩家流和收益来源。</p>
           </div>
           <div class="benefit-item">
+            <i class="fas fa-eye"></i>
             <h4 data-i18n="benefit_transparent">公开透明</h4>
             <p data-i18n="benefit_transparent_desc">所有数据及合约部署在链上，第三方审计认证，投资者随时可查，信任无忧。</p>
           </div>
           <div class="benefit-item">
+            <i class="fas fa-coins"></i>
             <h4 data-i18n="benefit_yield">高效收益模型</h4>
             <p data-i18n="benefit_yield_desc">分红机制结合流动性池，让代币持有者共享收益并保持市场流动，激励长期参与。</p>
           </div>
           <div class="benefit-item">
+            <i class="fas fa-globe"></i>
             <h4 data-i18n="benefit_global">全球社区</h4>
             <p data-i18n="benefit_global_desc">跨语言版本支持，与全球玩家一起探索神域，强大的社区社交驱动成长与价值。</p>
           </div>
         </div>
-      </section>
-
-      <!-- 股东权益区 -->
-      <section class="shareholder animate" id="shareholder">
-        <h2 data-i18n="shareholder_title">股东权益</h2>
-        <div class="shareholder-list">
-          <div class="shareholder-item">
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Shareholder Section -->
+    <section class="shareholder" id="shareholder">
+      <div class="container">
+        <h2 class="section-title" data-i18n="shareholder_title">股东权益</h2>
+        <div class="shareholder-grid">
+          <div class="shareholder-card">
+            <i class="fas fa-percentage"></i>
             <h4 data-i18n="shareholder_dividend">分红比例</h4>
             <p data-i18n="shareholder_dividend_desc">第一个月：收益的 50% 分给股东。第二个月起：收益的 30% 分给股东。</p>
           </div>
-          <div class="shareholder-item">
+          <div class="shareholder-card">
+            <i class="fas fa-tint"></i>
             <h4 data-i18n="shareholder_fund">资金流向</h4>
             <p data-i18n="shareholder_fund_desc">第一个月：40% 注入流动池，10% 用于项目运营。第二个月起：50% 注入流动池，20% 用于运营与营销。</p>
           </div>
-          <div class="shareholder-item">
+          <div class="shareholder-card">
+            <i class="fas fa-handshake"></i>
             <h4 data-i18n="shareholder_governance">治理与多签</h4>
             <p data-i18n="shareholder_governance_desc">公测开始，所有资金进入多签钱包，股东可参与链游未来方向表决，确保透明与民主。</p>
           </div>
-          <div class="shareholder-item">
+          <div class="shareholder-card">
+            <i class="fas fa-fire"></i>
             <h4 data-i18n="shareholder_stable">稳定机制</h4>
             <p data-i18n="shareholder_stable_desc">开采量超过消耗阈值时减产，并使用回购销毁机制确保代币经济长期稳定，不会崩盘。</p>
           </div>
         </div>
-      </section>
-
-      <!-- 代币经济区 -->
-      <section class="tokenomics animate" id="tokenomics">
-        <h2 data-i18n="tokenomics_title">代币经济</h2>
-        <div class="token-chart">
-          <canvas id="tokenChart"></canvas>
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Tokenomics Section -->
+    <section class="tokenomics" id="tokenomics">
+      <div class="container">
+        <h2 class="section-title" data-i18n="tokenomics_title">代币经济</h2>
+        <div class="chart-wrapper">
+          <canvas id="tokenChart2"></canvas>
         </div>
-      </section>
-
-      <!-- 游戏画面画廊和世界介绍 -->
-      <section class="gallery animate" id="gallery">
-        <h2 data-i18n="gallery_title">游戏画面</h2>
-        <div class="gallery-grid">
-          <div class="frame"><img src="./assets/img/game/img1.png" alt="Game Screenshot 1" /></div>
-          <div class="frame"><img src="./assets/img/game/img2.png" alt="Game Screenshot 2" /></div>
-          <div class="frame"><img src="./assets/img/game/img3.png" alt="Game Screenshot 3" /></div>
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Gallery and World -->
+    <section class="gallery-world" id="gallery">
+      <div class="container">
+        <h2 class="section-title" data-i18n="gallery_title">游戏画面</h2>
+        <div class="carousel">
+          <div class="carousel-item"><img src="./assets/img/game/img1.png" alt="game1" /></div>
+          <div class="carousel-item"><img src="./assets/img/game/img2.png" alt="game2" /></div>
+          <div class="carousel-item"><img src="./assets/img/game/img3.png" alt="game3" /></div>
         </div>
-      </section>
-
-      <section class="world animate" id="world" style="margin-top:80px;">
-        <h2 data-i18n="world_title">游戏世界介绍</h2>
+        <h2 class="section-title" data-i18n="world_title" style="margin-top: 60px;">游戏世界介绍</h2>
         <p data-i18n="world_desc1">我们的链游发生在神秘的 ARC 神域，一个由浮空岛屿、古老塔楼和神秘遗迹构成的幻想世界。</p>
         <p data-i18n="world_desc2">玩家将扮演探险者与队友一起揭开神域的秘密，挑战怪物、发现稀有资源并塑造自己的传奇故事。</p>
-      </section>
-
-      <!-- 核心团队区 -->
-      <section class="team-section animate" id="team">
-        <h2 data-i18n="team_title">核心团队</h2>
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Team Section -->
+    <section class="team" id="team">
+      <div class="container">
+        <h2 class="section-title" data-i18n="team_title">核心团队</h2>
         <div class="team-grid">
-          <div class="team-member">
-            <img src="./assets/img/team/team1.png" alt="团队成员A" />
+          <div class="team-card">
+            <img src="./assets/img/team/team1.png" alt="Team A" />
             <h4>成员 A</h4>
             <p data-i18n="team_memberA_desc">线上娱乐开发10年经验，线下娱乐公关经理3年，加密做市商多年，公测后公开身份。</p>
           </div>
-          <div class="team-member">
-            <img src="./assets/img/team/team2.png" alt="团队成员B" />
+          <div class="team-card">
+            <img src="./assets/img/team/team2.png" alt="Team B" />
             <h4>成员 B</h4>
             <p data-i18n="team_memberB_desc">资深游戏策划，5年链游研发经验，曾参与多款人气游戏项目，公测后公开身份。</p>
           </div>
-          <div class="team-member">
-            <img src="./assets/img/team/team3.png" alt="团队成员C" />
+          <div class="team-card">
+            <img src="./assets/img/team/team3.png" alt="Team C" />
             <h4>成员 C</h4>
             <p data-i18n="team_memberC_desc">区块链架构师，技术主导，曾在大型交易所任职，公测后公开身份。</p>
           </div>
         </div>
         <p class="privacy-note" data-i18n="privacy_note">为了保护团队隐私，目前仅展示背影，公测后我们将公开更多信息。</p>
-      </section>
-
-      <!-- 路线图区 -->
-      <section class="roadmap animate" id="roadmap">
-        <h2 data-i18n="roadmap_title">路线图</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="dot"></div>
-            <h4>Q1 2024</h4>
+      </div>
+      <div class="divider divider-top"></div>
+      <div class="divider divider-bottom"></div>
+    </section>
+    <!-- Roadmap Section: horizontal timeline -->
+    <section class="roadmap" id="roadmap">
+      <div class="container">
+        <h2 class="section-title" data-i18n="roadmap_title">路线图</h2>
+        <div class="roadmap-line">
+          <div class="roadmap-step">
+            <span class="circle">Q1 2024</span>
             <p>项目立项与核心团队组建</p>
           </div>
-          <div class="timeline-item">
-            <div class="dot"></div>
-            <h4>Q2 2024</h4>
+          <div class="roadmap-step">
+            <span class="circle">Q2 2024</span>
             <p>完成团队地图与爬塔玩法开发</p>
           </div>
-          <div class="timeline-item">
-            <div class="dot"></div>
-            <h4>Q3 2024</h4>
+          <div class="roadmap-step">
+            <span class="circle">Q3 2024</span>
             <p>开放早鸟认购并进行小规模内测</p>
           </div>
-          <div class="timeline-item">
-            <div class="dot"></div>
-            <h4>Q4 2024</h4>
+          <div class="roadmap-step">
+            <span class="circle">Q4 2024</span>
             <p>发布正式版，启动公测预约与电竞竞猜</p>
           </div>
-          <div class="timeline-item">
-            <div class="dot"></div>
-            <h4>2025+</h4>
+          <div class="roadmap-step">
+            <span class="circle">2025+</span>
             <p>持续更新扩展衍生品互通与社区治理</p>
           </div>
         </div>
-      </section>
-
-      <!-- 联系我们区 -->
-      <section class="contact animate" id="contact">
-        <h2 data-i18n="contact_title">联系我们</h2>
+      </div>
+      <div class="divider divider-top"></div>
+    </section>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <h2 class="section-title" data-i18n="contact_title">联系我们</h2>
         <p data-i18n="contact_text">加入我们的社区或联系团队了解更多信息。</p>
-        <div class="social-links">
+        <div class="social">
           <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
           <a href="#" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
           <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
-      </section>
-
-      <!-- 页脚 -->
-      <footer>
-        © <span id="year"></span> ARC Protocol. All rights reserved.
-      </footer>
-    </div>
-
-    <!-- 脚本文件 -->
+      </div>
+    </section>
+    <footer>
+      <div class="container">© <span id="year2"></span> ARC Protocol. All rights reserved.</div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
