@@ -1,16 +1,16 @@
 /*
- * 页面样式表
- * 采用暗色星空主题、渐变背景和霓虹色高光，适配桌面和移动端。
+ * 新版样式表，采用暗色宇宙主题、斜切分隔、六边形卡片、环形仪表盘和横向时间轴。
  */
 
-/* 全局基础样式 */
+/* CSS 变量 */
 :root {
-  --primary-color: #9146ff;
-  --secondary-color: #2a1039;
-  --text-light: #f5f5f5;
-  --text-dark: #1a1a1a;
-  --accent-color: #ffce00;
-  --max-width: 1200px;
+  --bg-color: #0a0520;
+  --primary: #9146ff;
+  --secondary: #2a1039;
+  --accent: #ffce00;
+  --light: #faf7ff;
+  --muted: #c7b6df;
+  --border-radius: 16px;
 }
 
 * {
@@ -21,19 +21,24 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #10081c;
-  color: var(--text-light);
-  line-height: 1.6;
+  background: var(--bg-color);
+  color: var(--light);
   overflow-x: hidden;
 }
 
 a {
-  color: var(--accent-color);
   text-decoration: none;
+  color: var(--accent);
 }
 
-/* 背景星空 canvas 层 */
-#background {
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* starfield canvas fills viewport */
+#starfield {
   position: fixed;
   top: 0;
   left: 0;
@@ -42,597 +47,501 @@ a {
   z-index: -2;
 }
 
-/* 渐变遮罩，增强对比度 */
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
-  z-index: -1;
-}
-
-/* 容器 */
-.container {
-  width: 90%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 80px 0;
-}
-
 header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.3);
+}
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 0;
 }
-
-header .logo {
-  font-size: 1.6rem;
-  font-weight: 700;
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
 }
-
-nav ul {
+.nav ul {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
-
-nav a {
+.nav a {
   font-weight: 500;
   transition: color 0.2s;
 }
-
-nav a:hover {
-  color: var(--accent-color);
+.nav a:hover {
+  color: var(--light);
 }
-
-/* 语言选择器样式 */
-.language-selector {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-.language-selector button {
+.lang-selector button {
   background: none;
   border: none;
-  color: var(--accent-color);
-  font-size: 0.9rem;
+  margin-left: 10px;
+  font-size: 1.2rem;
   cursor: pointer;
-  font-weight: 600;
-  padding: 4px 8px;
-  transition: color 0.2s;
+  color: var(--accent);
+  transition: transform 0.2s;
 }
-.language-selector button:hover {
-  color: #fff;
+.lang-selector button:hover {
+  transform: scale(1.1);
 }
 
-/* 公告条样式 */
-.announcement {
+/* Dividers: slanted shapes using clip-path */
+.divider {
+  position: absolute;
+  left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px 20px;
-  border-radius: 8px;
+  height: 80px;
+  background: var(--bg-color);
+  z-index: -1;
+}
+.divider-top {
+  top: -40px;
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+.divider-bottom {
+  bottom: -40px;
+  clip-path: polygon(0 0, 0 100%, 100% 0);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  padding: 160px 0 120px;
+  text-align: center;
+}
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
   margin-bottom: 20px;
+  color: var(--light);
+}
+.hero p {
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  color: var(--muted);
+}
+.hero-buttons {
   display: flex;
   justify-content: center;
-  align-items: center;
-  color: var(--accent-color);
-  font-size: 0.9rem;
-  gap: 5px;
+  gap: 20px;
 }
-
-/* 按钮样式 */
-.btn-primary {
-  background: var(--accent-color);
-  color: var(--secondary-color);
-  padding: 12px 24px;
-  border-radius: 50px;
+.btn-primary,
+.btn-outline {
+  padding: 12px 28px;
+  border-radius: 30px;
   font-weight: 600;
   transition: transform 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--secondary);
 }
 .btn-primary:hover {
   transform: translateY(-4px);
 }
-.btn-secondary {
-  border: 2px solid var(--accent-color);
-  color: var(--accent-color);
-  padding: 12px 24px;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: background 0.2s, color 0.2s;
+.btn-outline {
+  border: 2px solid var(--accent);
+  color: var(--accent);
 }
-.btn-secondary:hover {
-  background: var(--accent-color);
-  color: var(--secondary-color);
+.btn-outline:hover {
+  background: var(--accent);
+  color: var(--secondary);
 }
 
-/* Hero 区 */
-.hero {
-  text-align: center;
-  padding: 120px 0 100px;
-}
-.hero h1 {
-  font-size: 3rem;
+/* Section title */
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
   font-weight: 800;
-  margin-bottom: 20px;
-  line-height: 1.2;
-}
-.hero p {
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto 40px;
-  color: #c7b6df;
-}
-.hero .buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+  color: var(--accent);
 }
 
-/* 亮点区 */
-.features {
-  position: relative;
+/* Features with hexagons */
+.feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 40px;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  justify-items: center;
 }
-.features::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../img/game/img1.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.15;
-  z-index: -1;
-}
-.feature {
+.feature-hex {
+  width: 200px;
+  height: 230px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 30px;
+  backdrop-filter: blur(8px);
+  padding: 20px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  transition: transform 0.3s;
+  position: relative;
 }
-.feature:hover {
+.feature-hex:hover {
   transform: translateY(-6px);
 }
-.feature i {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
-  color: var(--accent-color);
+.feature-hex i {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  color: var(--accent);
 }
-.feature h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
+.feature-hex h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: var(--light);
 }
-.feature p {
-  font-size: 0.95rem;
-  color: #c7b6df;
+.feature-hex p {
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
-/* 认购计划区 */
-.subscribe {
-  margin-top: 80px;
-  text-align: center;
-  position: relative;
-  padding-top: 80px;
-  padding-bottom: 80px;
-}
-.subscribe::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../img/game/img2.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.15;
-  z-index: -1;
-}
-.nft-note {
-  margin-top: 15px;
-  font-size: 0.85rem;
-  color: #c7b6df;
-}
-.subscribe h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-}
-.tier-cards {
+/* Gauges */
+.gauge-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 30px;
-  margin-top: 30px;
+  margin-top: 40px;
 }
-.tier-card {
+.gauge-card {
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  border-radius: var(--border-radius);
   padding: 30px;
+  text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  transition: transform 0.3s;
 }
-.tier-card:hover {
+.gauge-card:hover {
   transform: translateY(-6px);
 }
-.tier-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-.tier-card p {
-  font-size: 0.95rem;
-  color: #c7b6df;
-  margin-bottom: 8px;
-}
-.tier-card .price {
-  font-size: 1.5rem;
+.gauge {
+  --value: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--light);
   font-weight: 700;
-  color: var(--accent-color);
-  margin: 12px 0;
+  font-size: 1.2rem;
+  background: conic-gradient(var(--accent) calc(var(--value) * 1%), rgba(255,255,255,0.1) 0%);
 }
-.tier-card button {
-  background: var(--accent-color);
-  color: var(--secondary-color);
+.gauge span {
+  position: absolute;
+  font-size: 1rem;
+}
+.gauge-card h3 {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+.gauge-card .price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 8px 0;
+}
+.gauge-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 15px;
+}
+.gauge-card button {
+  padding: 10px 20px;
   border: none;
-  padding: 10px 24px;
-  border-radius: 50px;
+  border-radius: 30px;
+  background: var(--accent);
+  color: var(--secondary);
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s;
 }
-.tier-card button:hover {
-  transform: translateY(-4px);
+.gauge-card button:hover {
+  transform: translateY(-3px);
 }
 .countdown {
-  margin-top: 20px;
+  margin-top: 30px;
   font-size: 1rem;
-  color: var(--accent-color);
+  color: var(--accent);
 }
 
-/* 认购进度区 */
-.progress-section {
-  margin-top: 80px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 40px;
-  text-align: center;
-}
-.progress-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-}
-.progress-bar {
-  position: relative;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50px;
-  height: 20px;
-  width: 100%;
-  overflow: hidden;
-}
-.progress-bar .fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #ffce00, #9146ff);
-  border-radius: 50px;
-}
-.progress-info {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  color: #c7b6df;
-}
-.progress-info div {
-  margin: 10px 20px;
-}
-
-/* 投资优势区 */
+/* Benefits wavy background */
 .benefits {
-  margin-top: 80px;
   position: relative;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding: 80px 0;
+  background: radial-gradient(circle at top left, rgba(145, 70, 255, 0.2), transparent 60%), radial-gradient(circle at bottom right, rgba(255, 206, 0, 0.15), transparent 60%);
 }
-.benefits::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../img/game/img3.png');
-  background-size: cover;
-  background-position: center;
-  opacity: 0.15;
-  z-index: -1;
-}
-.benefits h2 {
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 40px;
-}
-.benefit-list {
+.benefit-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 30px;
 }
 .benefit-item {
   background: rgba(255, 255, 255, 0.05);
-  padding: 30px;
-  border-radius: 16px;
-  text-align: left;
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
+  transition: transform 0.3s;
+  text-align: center;
 }
 .benefit-item:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
+}
+.benefit-item i {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  color: var(--accent);
 }
 .benefit-item h4 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: var(--light);
 }
 .benefit-item p {
-  font-size: 0.93rem;
-  color: #c7b6df;
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 
-/* 股东权益区 */
+/* Shareholder cards */
 .shareholder {
-  margin-top: 80px;
+  padding: 80px 0;
+  position: relative;
 }
-.shareholder h2 {
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 30px;
-}
-.shareholder-list {
+.shareholder-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 30px;
 }
-.shareholder-item {
+.shareholder-card {
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
+  backdrop-filter: blur(8px);
   padding: 25px;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
+  text-align: center;
+  transition: transform 0.3s;
 }
-.shareholder-item:hover {
-  transform: translateY(-6px);
+.shareholder-card:hover {
+  transform: translateY(-5px);
 }
-.shareholder-item h4 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
+.shareholder-card i {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  color: var(--accent);
 }
-.shareholder-item p {
-  font-size: 0.93rem;
-  color: #c7b6df;
+.shareholder-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+  color: var(--light);
+}
+.shareholder-card p {
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
-/* 代币经济区 */
+/* Tokenomics */
 .tokenomics {
-  margin-top: 80px;
-  text-align: center;
+  padding: 80px 0;
+  position: relative;
 }
-.tokenomics h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-}
-.token-chart {
+.chart-wrapper {
   max-width: 400px;
   margin: 0 auto;
 }
 
-/* 游戏画廊区 */
-.gallery {
-  margin-top: 80px;
+/* Gallery & World */
+.gallery-world {
+  padding: 80px 0;
+  position: relative;
 }
-.gallery h2 {
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  /* 水平滚动设置 */
-  scroll-snap-type: x mandatory;
+.carousel {
+  display: flex;
   overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  margin-bottom: 40px;
 }
-.gallery-grid img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
-}
-.gallery-grid img:hover {
-  transform: scale(1.05);
-}
-.frame {
-  border: 4px solid var(--secondary-color);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s;
-  display: inline-block;
+.carousel-item {
+  flex: 0 0 80%;
   scroll-snap-align: center;
-  margin-right: 20px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
-.frame:hover {
-  transform: translateY(-4px);
-}
-.frame img {
+.carousel-item img {
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* 团队区 */
-.team-section {
-  margin-top: 80px;
-  text-align: center;
-}
-.team-section h2 {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
+/* Team */
+.team {
+  padding: 80px 0;
+  position: relative;
 }
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
 }
-.team-member {
+.team-card {
   background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s;
+  text-align: center;
+  transition: transform 0.3s;
 }
-.team-member:hover {
-  transform: translateY(-4px);
+.team-card:hover {
+  transform: translateY(-5px);
 }
-.team-member img {
+.team-card img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-  border: 3px solid var(--accent-color);
+  margin-bottom: 12px;
+  border: 3px solid var(--accent);
 }
-.team-member h4 {
+.team-card h4 {
   font-size: 1.1rem;
-  margin-bottom: 5px;
+  color: var(--accent);
+  margin-bottom: 6px;
 }
-.team-member p {
+.team-card p {
   font-size: 0.85rem;
-  color: #c7b6df;
+  color: var(--muted);
 }
 .privacy-note {
   margin-top: 15px;
-  font-size: 0.85rem;
-  color: #c7b6df;
   text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
-/* 路线图区 */
+/* Roadmap horizontal timeline */
 .roadmap {
-  margin-top: 80px;
-}
-.roadmap h2 {
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 40px;
-}
-.timeline {
+  padding: 80px 0;
   position: relative;
-  margin-left: 20px;
 }
-.timeline::before {
+.roadmap-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+  padding-bottom: 40px;
+}
+.roadmap-line::before {
   content: '';
   position: absolute;
-  left: 15px;
-  top: 0;
-  width: 2px;
-  height: 100%;
-  background: var(--accent-color);
+  top: 15px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
 }
-.timeline-item {
+.roadmap-step {
   position: relative;
-  padding-left: 40px;
-  margin-bottom: 30px;
+  width: 20%;
+  text-align: center;
 }
-.timeline-item h4 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
+.roadmap-step .circle {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--accent);
+  color: var(--secondary);
+  font-weight: 700;
+  margin-bottom: 8px;
 }
-.timeline-item p {
-  font-size: 0.9rem;
-  color: #c7b6df;
-}
-.timeline-item .dot {
-  position: absolute;
-  left: 9px;
-  top: 4px;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent-color);
+.roadmap-step p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 8px;
 }
 
-/* 联系我们区 */
+/* Contact */
 .contact {
-  margin-top: 80px;
+  padding: 80px 0;
   text-align: center;
 }
 .contact h2 {
+  margin-bottom: 10px;
   font-size: 1.8rem;
-  margin-bottom: 20px;
+  color: var(--accent);
 }
 .contact p {
   font-size: 0.95rem;
+  color: var(--muted);
   margin-bottom: 20px;
-  color: #c7b6df;
 }
-.social-links {
+.social {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
-.social-links a {
-  font-size: 1.4rem;
-  color: var(--accent-color);
-  transition: color 0.2s;
+.social a {
+  font-size: 1.6rem;
+  color: var(--accent);
+  transition: transform 0.2s;
 }
-.social-links a:hover {
-  color: #fff;
+.social a:hover {
+  transform: scale(1.2);
 }
 
-/* 页脚 */
 footer {
-  padding: 40px 0;
+  padding: 30px 0;
   text-align: center;
   font-size: 0.8rem;
-  color: #a38cbc;
+  color: var(--muted);
 }
 
-/* 滚动触发动画 */
-.animate {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.animate.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 响应式调整 */
+/* Responsive */
 @media (max-width: 768px) {
   .hero h1 {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
   }
-  .hero p {
-    font-size: 1rem;
+  .feature-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
-  .progress-info {
+  .gauge {
+    width: 100px;
+    height: 100px;
+  }
+  .gauge-card {
+    padding: 20px;
+  }
+  .roadmap-line {
     flex-direction: column;
     align-items: center;
+  }
+  .roadmap-line::before {
+    height: 100%;
+    width: 2px;
+    left: 15px;
+    top: 0;
+  }
+  .roadmap-step {
+    width: 100%;
+    padding-left: 40px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .roadmap-step .circle {
+    margin-bottom: 4px;
   }
 }
