@@ -1,11 +1,13 @@
 /*
- * 主脚本文件
- * 负责初始化星空背景动画、滚动触发动画、多语言切换、动态进度显示、预售倒计时、代币经济饼图等功能。
+ * Modern site JavaScript
+ * Handles starfield animation, scroll-triggered animations, multi-language support,
+ * radial gauge updates, countdown timer, pie chart for tokenomics,
+ * and footer year update.
  */
 
-// 星空背景动画
+// Starfield animation similar to new_site but for #starfield
 function initStarfield() {
-  const canvas = document.getElementById('background');
+  const canvas = document.getElementById('starfield');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let width, height;
@@ -30,7 +32,7 @@ function initStarfield() {
     }
   }
 
-  function updateStars() {
+  function update() {
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = '#ffffff';
     stars.forEach(star => {
@@ -38,14 +40,13 @@ function initStarfield() {
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
       ctx.fill();
-      // update position (simple downward movement)
       star.y += star.speed;
       if (star.y > height) {
         star.y = 0;
         star.x = Math.random() * width;
       }
     });
-    requestAnimationFrame(updateStars);
+    requestAnimationFrame(update);
   }
 
   resize();
@@ -54,11 +55,11 @@ function initStarfield() {
     resize();
     initStars();
   });
-  updateStars();
+  update();
 }
 
-// IntersectionObserver 用于滚动触发动画
-function initAnimations() {
+// Scroll-trigger animations using IntersectionObserver
+function initScrollAnimations() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -67,78 +68,62 @@ function initAnimations() {
       }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
-}
-
-// 多语言切换
-async function initI18n() {
-  const res = await fetch('./assets/data/i18n.json');
-  const data = await res.json();
-  let currentLang = 'zh';
-
-  function updateTexts() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const translation = data[currentLang][key];
-      if (translation) el.textContent = translation;
-    });
-  }
-
-  // 语言按钮绑定
-  document.querySelectorAll('.language-selector button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const lang = btn.getAttribute('data-lang');
-      if (data[lang]) {
-        currentLang = lang;
-        updateTexts();
-      }
-    });
+  document.querySelectorAll('.section-title, .feature-hex, .gauge-card, .benefit-item, .shareholder-card, .chart-wrapper, .carousel-item, .team-card, .roadmap-step, .contact').forEach(el => {
+    el.classList.add('animate');
+    observer.observe(el);
   });
-
-  updateTexts();
 }
 
-// 动态认购进度演示
-function initProgress() {
-  const fill = document.getElementById('progress-fill');
-  const raisedEl = document.getElementById('raised');
-  const soldEl = document.getElementById('sold');
-  const burnedEl = document.getElementById('burned');
-  // 模拟数据，可以替换为实际数据接口
-  const targetRaised = 50000;
-  const targetSold = 60;
-  const targetBurned = 10;
-  let current = 0;
-  const duration = 2000; // 动画时长
-  const startTime = performance.now();
+// Multi-language support using i18n.json
+async function initI18n() {
+  try {
+    const res = await fetch('./assets/data/i18n.json');
+    const translations = await res.json();
+    let currentLang = 'zh';
 
-  function animate(time) {
-    const progress = Math.min((time - startTime) / duration, 1);
-    current = progress;
-    const raised = Math.floor(targetRaised * current);
-    const sold = Math.floor(targetSold * current);
-    const burned = Math.floor(targetBurned * current);
-    raisedEl.textContent = raised.toLocaleString();
-    soldEl.textContent = sold;
-    burnedEl.textContent = burned;
-    fill.style.width = `${Math.floor((sold / 100) * 100)}%`;
-    if (progress < 1) {
-      requestAnimationFrame(animate);
+    function applyTranslations() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const text = translations[currentLang][key];
+        if (text) {
+          el.textContent = text;
+        }
+      });
     }
+    document.querySelectorAll('.lang-selector button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang');
+        if (translations[lang]) {
+          currentLang = lang;
+          applyTranslations();
+        }
+      });
+    });
+    applyTranslations();
+  } catch (err) {
+    console.error('Failed to load translations', err);
   }
-  requestAnimationFrame(animate);
 }
 
-// 预售倒计时
+// Initialize radial gauges (conic-gradient) based on data-value attribute
+function initGauges() {
+  document.querySelectorAll('.gauge').forEach(gauge => {
+    const value = gauge.getAttribute('data-value');
+    gauge.style.setProperty('--value', value);
+    // The displayed percentage inside gauge will be updated automatically by CSS
+  });
+}
+
+// Countdown timer for presale
 function initCountdown() {
   const countdownEl = document.querySelector('.countdown');
-  // 设定倒计时目标日期，可根据需要修改
-  const targetDate = new Date();
-  targetDate.setMonth(targetDate.getMonth() + 1);
-
-  function updateCountdown() {
+  if (!countdownEl) return;
+  // Set target date to one month from now (you can adjust as needed)
+  const target = new Date();
+  target.setMonth(target.getMonth() + 1);
+  function update() {
     const now = new Date();
-    const diff = targetDate - now;
+    const diff = target - now;
     if (diff <= 0) {
       countdownEl.textContent = '00天00:00:00';
       return;
@@ -147,17 +132,17 @@ function initCountdown() {
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
-    countdownEl.textContent = `${days.toString().padStart(2, '0')}天${hours.toString().padStart(2, '0')}:${minutes
-      .toString()
-      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    countdownEl.textContent = `${String(days).padStart(2, '0')}天${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  update();
+  setInterval(update, 1000);
 }
 
-// 绘制代币经济饼图
-function initTokenChart() {
-  const ctx = document.getElementById('tokenChart').getContext('2d');
+// Draw tokenomics chart using Chart.js
+function initTokenomicsChart() {
+  const canvas = document.getElementById('tokenChart2');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
   new Chart(ctx, {
     type: 'pie',
     data: {
@@ -166,7 +151,7 @@ function initTokenChart() {
         {
           data: [20, 50, 20, 10],
           backgroundColor: ['#9146ff', '#ffce00', '#00c19d', '#ff5656'],
-          borderColor: '#10081c',
+          borderColor: '#0a0520',
           borderWidth: 1
         }
       ]
@@ -175,7 +160,7 @@ function initTokenChart() {
       plugins: {
         legend: {
           labels: {
-            color: '#f5f5f5'
+            color: '#faf7ff'
           }
         }
       }
@@ -183,18 +168,19 @@ function initTokenChart() {
   });
 }
 
-// 更新页脚年份
+// Update footer year
 function updateYear() {
-  document.getElementById('year').textContent = new Date().getFullYear();
+  const yearEl = document.getElementById('year2');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   initStarfield();
-  initAnimations();
+  initScrollAnimations();
   initI18n();
-  initProgress();
+  initGauges();
   initCountdown();
-  initTokenChart();
+  initTokenomicsChart();
   updateYear();
 });
 
