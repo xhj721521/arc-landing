@@ -1,393 +1,1118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>ARC Protocol · 链游募资｜链上数据可查｜每周分红</title>
-    <!-- 使用最新资源版本，确保与脚本和样式匹配 -->
-    <link rel="stylesheet" href="/assets/css/theme.css?v=1.5" />
-    <link rel="icon" href="/assets/img/logo-light.svg" type="image/svg+xml" />
-    <script>
-      // 同步版本号，避免缓存错误
-      window.__VER__ = "1.5";
-      window.__OFFLINE_LIBS__ = true;
-    </script>
-    <!-- 本地库（国内离线） -->
-    <script defer src="/assets/js/libs/chart.umd.min.js"></script>
-    <script defer src="/assets/js/libs/lightweight-charts.standalone.production.js"></script>
-    <!-- 主脚本也升级到 1.5 版本号 -->
-    <script defer src="/assets/js/script.js?v=1.5"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARC Protocol 链游募资｜公平透明｜投资人信心</title>
+    <!-- 引入谷歌字体和 Font Awesome 图标库 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-vOX6XeJPxAiU3xewbk1y5opxbfG0w7F2E6ZyZB4t++yMErvUmvNHWcyfpk9Ty6CB9Bc5mZdcNWh4PEkRj16W2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- 引入 Chart.js 用于展示代币分配饼图 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- 页面样式 -->
+    <style>
+      /* 全局基础样式 */
+      :root {
+        --primary-color: #9146ff;
+        --secondary-color: #2a1039;
+        --text-light: #f5f5f5;
+        --text-dark: #1a1a1a;
+        --accent-color: #ffce00;
+        --max-width: 1200px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #10081c;
+        color: var(--text-light);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      /* 背景星空 canvas 层 */
+      #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+      }
+
+      /* 渐变遮罩，增强对比度 */
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+        z-index: -1;
+      }
+
+      /* 容器 */
+      .container {
+        width: 90%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 80px 0;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      header .logo {
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav a {
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      nav a:hover {
+        color: var(--accent-color);
+      }
+
+      /* 语言选择器样式 */
+      header select {
+        background: transparent;
+        color: var(--accent-color);
+        border: 1px solid var(--accent-color);
+        border-radius: 4px;
+        padding: 4px 8px;
+        margin-left: 20px;
+      }
+      header select option {
+        color: var(--secondary-color);
+        background: var(--accent-color);
+      }
+
+      /* 公告条样式 */
+      .announcement {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--accent-color);
+        font-size: 0.9rem;
+        gap: 5px;
+      }
+
+      .cta {
+        padding: 10px 20px;
+        border: 2px solid var(--accent-color);
+        border-radius: 50px;
+        color: var(--accent-color);
+        font-weight: 600;
+        transition: background 0.3s;
+      }
+
+      .cta:hover {
+        background: var(--accent-color);
+        color: var(--secondary-color);
+      }
+
+      /* 主屏幕 */
+      .hero {
+        text-align: center;
+        padding: 120px 0 100px;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        color: #c7b6df;
+      }
+
+      .hero .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .btn-primary {
+        background: var(--accent-color);
+        color: var(--secondary-color);
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: transform 0.2s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-4px);
+      }
+
+      .btn-secondary {
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s;
+      }
+
+      .btn-secondary:hover {
+        background: var(--accent-color);
+        color: var(--secondary-color);
+      }
+
+      /* 功能亮点区 */
+      .features {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px;
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+
+      .features::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/img/game/img1.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+        z-index: -1;
+      }
+
+      .feature {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+
+      .feature:hover {
+        transform: translateY(-6px);
+      }
+
+      .feature i {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: var(--accent-color);
+      }
+
+      .feature h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+
+      .feature p {
+        font-size: 0.95rem;
+        color: #c7b6df;
+      }
+
+      /* 进度条区 */
+      .progress-section {
+        margin-top: 80px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 40px;
+        text-align: center;
+      }
+
+      .progress-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      .progress-bar {
+        position: relative;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50px;
+        height: 20px;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .progress-bar .fill {
+        height: 100%;
+        width: 60%; /* 用 JS 动态更新比例 */
+        background: linear-gradient(90deg, #ffce00, #9146ff);
+        border-radius: 50px;
+      }
+
+      .progress-info {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        color: #c7b6df;
+      }
+
+      .progress-info div {
+        margin: 10px 20px;
+      }
+
+      /* 投资亮点/利益区 */
+      .benefits {
+        margin-top: 80px;
+        position: relative;
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+
+      .benefits::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/img/game/img3.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+        z-index: -1;
+      }
+
+      .benefits h2 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .benefit-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .benefit-item {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 16px;
+        text-align: left;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+
+      .benefit-item:hover {
+        transform: translateY(-6px);
+      }
+
+      .benefit-item h4 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .benefit-item p {
+        font-size: 0.93rem;
+        color: #c7b6df;
+      }
+
+      /* 代币分配区 */
+      .tokenomics {
+        margin-top: 80px;
+        text-align: center;
+      }
+
+      .tokenomics h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      .token-chart {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      /* 团队介绍区 */
+      .team-section {
+        margin-top: 80px;
+        text-align: center;
+      }
+
+      .team-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+      }
+
+      .team-member {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+
+      .team-member:hover {
+        transform: translateY(-4px);
+      }
+
+      .team-member img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+        border: 3px solid var(--accent-color);
+      }
+
+      .team-member h4 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+
+      .team-member p {
+        font-size: 0.85rem;
+        color: #c7b6df;
+      }
+
+      .privacy-note {
+        margin-top: 15px;
+        font-size: 0.85rem;
+        color: #c7b6df;
+        text-align: center;
+      }
+
+      /* 路线图区 */
+      .roadmap {
+        margin-top: 80px;
+      }
+
+      .roadmap h2 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .timeline {
+        position: relative;
+        margin-left: 20px;
+      }
+
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 15px;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: var(--accent-color);
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 30px;
+      }
+
+      .timeline-item h4 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+      }
+
+      .timeline-item p {
+        font-size: 0.9rem;
+        color: #c7b6df;
+      }
+
+      .timeline-item .dot {
+        position: absolute;
+        left: 9px;
+        top: 4px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent-color);
+      }
+
+      /* 联系区 */
+      .contact {
+        margin-top: 80px;
+        text-align: center;
+      }
+
+      .contact h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      .contact p {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        color: #c7b6df;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .social-links a {
+        font-size: 1.4rem;
+        color: var(--accent-color);
+        transition: color 0.2s;
+      }
+
+      .social-links a:hover {
+        color: #fff;
+      }
+
+      /* 页脚 */
+      footer {
+        padding: 40px 0;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #a38cbc;
+      }
+
+      /* 响应式调整 */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+        .hero p {
+          font-size: 1rem;
+        }
+        .progress-info {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* 认购计划区样式 */
+      .subscribe {
+        margin-top: 80px;
+        text-align: center;
+        position: relative;
+        padding-top: 80px;
+        padding-bottom: 80px;
+      }
+
+      .subscribe::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('/assets/img/game/img2.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.15;
+        z-index: -1;
+      }
+
+      .nft-note {
+        margin-top: 15px;
+        font-size: 0.85rem;
+        color: #c7b6df;
+      }
+      .subscribe h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+      .tier-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
+      .tier-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .tier-card:hover {
+        transform: translateY(-6px);
+      }
+      .tier-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+      }
+      .tier-card p {
+        font-size: 0.95rem;
+        color: #c7b6df;
+        margin-bottom: 8px;
+      }
+      .tier-card .price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin: 12px 0;
+      }
+      .tier-card button {
+        background: var(--accent-color);
+        color: var(--secondary-color);
+        border: none;
+        padding: 10px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .tier-card button:hover {
+        transform: translateY(-4px);
+      }
+      .countdown {
+        margin-top: 20px;
+        font-size: 1rem;
+        color: var(--accent-color);
+      }
+
+      /* 股东权益区样式 */
+      .shareholder {
+        margin-top: 80px;
+      }
+      .shareholder h2 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .shareholder-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+      }
+      .shareholder-item {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+      .shareholder-item:hover {
+        transform: translateY(-6px);
+      }
+      .shareholder-item h4 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+      .shareholder-item p {
+        font-size: 0.93rem;
+        color: #c7b6df;
+      }
+
+      /* 语言选择器样式 */
+      .language-selector {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .language-selector button {
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        font-size: 0.9rem;
+        cursor: pointer;
+        font-weight: 600;
+        padding: 4px 8px;
+        transition: color 0.2s;
+      }
+      .language-selector button:hover {
+        color: #fff;
+      }
+
+      /* 分区背景样式 */
+      .section-bg1 {
+        background-image: url('/assets/img/game/img1.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+      .section-bg2 {
+        background-image: url('/assets/img/game/img2.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+      .section-gradient1 {
+        background: linear-gradient(180deg, rgba(42, 16, 57, 0.7) 0%, rgba(16, 8, 28, 0.9) 100%);
+      }
+      .section-gradient2 {
+        background: linear-gradient(180deg, rgba(31, 14, 46, 0.7) 0%, rgba(18, 9, 28, 0.9) 100%);
+      }
+
+      /* 游戏画面画廊 */
+      .gallery {
+        margin-top: 80px;
+      }
+      .gallery h2 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+      }
+      .gallery-grid img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        transition: transform 0.2s;
+      }
+      .gallery-grid img:hover {
+        transform: scale(1.05);
+      }
+
+      /* 图片框样式 */
+      .frame {
+        border: 4px solid var(--secondary-color);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s;
+      }
+      .frame:hover {
+        transform: translateY(-4px);
+      }
+      .frame img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    </style>
   </head>
   <body>
-    <!-- 背景：视频 + 星空粒子 + 扫描线叠加 -->
-    <video class="bg-video" autoplay muted loop playsinline poster="/assets/img/hero-poster.jpg">
-      <source src="/assets/video/hero.mp4" type="video/mp4"/>
-    </video>
-    <canvas id="stars"></canvas>
-    <div class="scanlines"></div>
+    <!-- 背景层：星空 canvas 和渐变遮罩 -->
+    <canvas id="background"></canvas>
+    <div id="overlay"></div>
 
-    <!-- 顶部导航 -->
-    <header class="nav glass">
-      <div class="wrap">
-        <a class="brand" href="#subscribe" aria-label="ARC Protocol">
-          <img src="/assets/img/logo-light.svg" alt="ARC Logo" />
-          <span>ARC Protocol</span>
-        </a>
+    <!-- 页面主要内容 -->
+    <div class="container">
+      <!-- 顶部导航 -->
+      <header>
+        <div class="logo">ARC Protocol</div>
         <nav>
-          <a href="#subscribe" data-i18n="nav_subscribe">认购与进度</a>
-          <a href="#highlights" data-i18n="nav_highlights">玩法亮点</a>
-          <a href="#download" data-i18n="nav_download">游戏下载</a>
-          <a href="#roadmap" data-i18n="nav_roadmap">登顶路线</a>
-          <a href="#chain" data-i18n="nav_chain">链上数据</a>
-          <a href="#dist" data-i18n="nav_dist">分配与分红</a>
-          <a href="#analytics" data-i18n="nav_analytics">资金与销毁</a>
-          <a href="#token" data-i18n="nav_token">代币信息</a>
-          <a href="#contact" data-i18n="nav_contact">联系我们</a>
+          <ul>
+            <li><a href="#features" data-i18n="nav_features">玩法亮点</a></li>
+            <li><a href="#subscribe" data-i18n="nav_subscribe">认购计划</a></li>
+            <li><a href="#benefits" data-i18n="nav_benefits">投资优势</a></li>
+            <li><a href="#shareholder" data-i18n="nav_shareholder">股东权益</a></li>
+            <li><a href="#tokenomics" data-i18n="nav_tokenomics">代币经济</a></li>
+            <li><a href="#team" data-i18n="nav_team">核心团队</a></li>
+            <li><a href="#roadmap" data-i18n="nav_roadmap">路线图</a></li>
+          </ul>
         </nav>
-        <div class="lang-cta">
-          <select id="lang" aria-label="language">
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="vi">Tiếng Việt</option>
-            <option value="th">ไทย</option>
-            <option value="ms">Bahasa</option>
-            <option value="ar">العربية</option>
-          </select>
-          <!-- 修复连接钱包按钮的 href：用 # 代替原来的空格，避免无效链接 -->
-          <a class="btn-neon" href="#" data-i18n="cta_connect"><span>连接钱包</span><i></i></a>
-          <!-- 小屏汉堡按钮 -->
-          <button id="navToggle" class="nav-toggle" aria-label="展开菜单">☰</button>
-        </div>
-      </div>
-    </header>
+        <a href="#subscribe" class="cta" data-i18n="nav_subscribe">认购</a>
+        <select id="lang-select">
+          <option value="zh">中文</option>
+          <option value="vi">Tiếng Việt</option>
+          <option value="es">Español</option>
+          <option value="ar">العربية</option>
+        </select>
+      </header>
 
-    <!-- 英雄区 -->
-    <section class="hero">
-      <div class="wrap">
-        <h1 class="fx-title glitch" data-i18n="hero_title">
-          唤醒未知，铸就你的传奇
-          <span aria-hidden="true">唤醒未知，铸就你的传奇</span>
-        </h1>
-        <p class="fx-sub" data-i18n="hero_sub">
-          探索·试炼·集市·远征 —— 以 ARC 加密币驱动的神域链游生态。连接九大功能页与团队地图，延展长期玩法与价值。
-        </p>
-        <div class="cta-row">
-          <a href="#subscribe" class="btn-neon lg" data-i18n="btn_subscribe"><span>立即认购</span><i></i></a>
-          <a href="#highlights" class="btn-ghost lg" data-i18n="btn_view_skin">查看玩法亮点</a>
-        </div>
-        <div id="ticker" class="ticker glass"></div>
+      <!-- 公告条 -->
+      <div class="announcement">
+        <strong data-i18n="announcement_title">公告</strong>
+        <span data-i18n="announcement_content">公测即将开启，敬请关注我们的社交媒体获取最新动态。</span>
       </div>
-    </section>
 
-    <!-- Sparkline + 翻牌 KPI -->
-    <section class="wrap section">
-      <div class="card holo" id="kpiCard">
-        <div class="kpi">
-          <div class="flip" id="fundTotal">0</div>
-          <span data-i18n="kpi_raised">累计募集（USDT）</span>
+      <!-- 主屏幕 Hero 区 -->
+      <section class="hero" id="hero">
+        <h1 data-i18n="hero_title">唤醒未知，铸就你的传奇</h1>
+        <p data-i18n="hero_sub">一场由 ARC 驱动的链上冒险。探索未知、征服十二层爬塔、参与实时对决下注，并在团队地图中与伙伴共创收益。</p>
+        <div class="buttons">
+          <a href="#subscribe" class="btn-primary" data-i18n="cta_subscribe">立即认购</a>
+          <a href="#features" class="btn-secondary" data-i18n="cta_learn">了解亮点</a>
         </div>
-        <canvas id="spark" height="40" aria-label="fund-sparkline"></canvas>
-        <div class="kpi-row">
-          <div><b id="sold">0</b><span data-i18n="kpi_sold">已售（枚）</span></div>
-          <div><b id="burn">0</b><span data-i18n="kpi_burn">销毁（枚）</span></div>
-          <div><b id="lp">0</b><span data-i18n="kpi_lp">流动池（USDT）</span></div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 认购与进度 -->
-    <section id="subscribe" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_subscribe">认购与进度</h2>
-      <!-- 背景：霓虹网格 + 流光曲线 -->
-      <svg class="bg-svg subscribe-bg" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <pattern id="subGrid" width="28" height="28" patternUnits="userSpaceOnUse">
-            <path d="M28 0H0V28" fill="none" stroke="rgba(57,195,255,.22)" stroke-width="1" />
-          </pattern>
-          <linearGradient id="subLine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#39c3ff" />
-            <stop offset="1" stop-color="#6b8cff" />
-          </linearGradient>
-          <filter id="subGlow">
-            <feGaussianBlur stdDeviation="2.2" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#subGrid)" />
-        <g filter="url(#subGlow)">
-          <path class="sub-line l1" d="M -60 420 C 120 380, 320 460, 520 410 S 880 380, 1100 430" fill="none" stroke="url(#subLine)" stroke-width="3" opacity=".55" />
-          <path class="sub-line l2" d="M -40 470 C 140 440, 340 430, 540 380 S 900 360, 1120 390" fill="none" stroke="url(#subLine)" stroke-width="2" opacity=".35" />
-        </g>
-        <circle class="pulse p1" cx="180" cy="360" r="2" />
-        <circle class="pulse p2" cx="680" cy="320" r="2" />
-        <circle class="pulse p3" cx="860" cy="410" r="2" />
-      </svg>
-      <div class="bg-scan"></div>
-      <div class="grid-2">
-        <!-- 左：价格/倒计时/进度/权益 -->
-        <div class="card holo tilt">
-          <div class="price-line">
-            <div>
-              <div class="tag hot" data-i18n="tag_early">早鸟</div>
-              <div class="price"><s>$500</s> <b>$400</b> <span>(20 枚)</span></div>
-              <div class="note" data-i18n="early_note">早鸟价是对早期支持者的回馈，限量 20 枚，售完恢复标准价。</div>
-            </div>
-            <div class="countdown">
-              <div data-i18n="countdown">预售倒计时</div>
-              <div id="cd">00:00:00</div>
-            </div>
+      <!-- 游戏画面展示区 -->
+      <section class="gallery section-bg1" id="gallery">
+        <h2 data-i18n="gallery_title">游戏画面</h2>
+        <div class="gallery-grid">
+          <div class="frame"><img src="/assets/img/game/img1.png" alt="游戏画面1" /></div>
+          <div class="frame"><img src="/assets/img/game/img2.png" alt="游戏画面2" /></div>
+          <div class="frame"><img src="/assets/img/game/img3.png" alt="游戏画面3" /></div>
+        </div>
+      </section>
+
+      <!-- 游戏世界介绍区 -->
+      <section class="world section-gradient1" id="world">
+        <h2 data-i18n="world_title">游戏世界介绍</h2>
+        <p data-i18n="world_desc1">我们的链游发生在神秘的 ARC 神域，一个由浮空岛屿、古老塔楼和神秘遗迹构成的幻想世界。</p>
+        <p data-i18n="world_desc2">玩家将扮演探险者与队友一起揭开神域的秘密，挑战怪物、发现稀有资源并塑造自己的传奇故事。</p>
+      </section>
+
+      <!-- 亮点区 -->
+      <section class="features section-bg1" id="features">
+        <div class="feature">
+          <i class="fa-solid fa-users"></i>
+          <h3 data-i18n="feature_team">团队地图</h3>
+          <p data-i18n="feature_team_desc">队长引导玩家扩展领地并分享收益，打造可持续社区经济。</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-tower-observation"></i>
+          <h3 data-i18n="feature_tower">十二层爬塔</h3>
+          <p data-i18n="feature_tower_desc">挑战不断升级的试炼，获取稀有装备和碎片，解锁成就和奖励。</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-fire"></i>
+          <h3 data-i18n="feature_br">大逃杀下注</h3>
+          <p data-i18n="feature_br_desc">观看公平对决并参与链上下注，实时结算，公开透明。</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-gamepad"></i>
+          <h3 data-i18n="feature_esports">电竞体育拳击竞猜</h3>
+          <p data-i18n="feature_esports_desc">未来将支持电竞赛事和体育拳击的链上竞猜，兼顾娱乐与公平，带来更多互动玩法。</p>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3 data-i18n="feature_derivatives">衍生品互通</h3>
+          <p data-i18n="feature_derivatives_desc">规划推出 ETF、永续合约及期权等衍生品互通机制，为玩家提供多元化金融工具。</p>
+        </div>
+      </section>
+
+      <!-- 认购计划区 -->
+      <section class="subscribe section-bg2" id="subscribe">
+        <h2 data-i18n="subscribe_title">认购计划</h2>
+        <div class="tier-cards">
+          <div class="tier-card">
+            <h3 data-i18n="tier_early_name">早鸟计划</h3>
+            <p data-i18n="tier_early_desc">限量 20 枚，价格优惠，权益相同</p>
+            <p class="price">400 USDT</p>
+            <button>立即认购</button>
           </div>
-          <div class="progress">
-            <div class="bar"><span id="bar" style="width:0%"></span></div>
-            <div class="p-line"><b id="sold2">0</b>/100 <span data-i18n="cap">枚</span></div>
+          <div class="tier-card">
+            <h3 data-i18n="tier_standard_name">标准计划</h3>
+            <p data-i18n="tier_standard_desc">总量 80 枚，售罄即止</p>
+            <p class="price">500 USDT</p>
+            <button>立即认购</button>
           </div>
-          <div class="tiers">
-            <div class="tier">
-              <div class="t-name" data-i18n="tier_early">早鸟</div>
-              <div class="t-price">$400</div>
-              <div class="t-desc" data-i18n="tier_early_desc">限量 20 枚，价格优惠，权益相同</div>
-              <a class="btn-neon sm" href="#" data-tier="early"><span data-i18n="btn_buy_early">购买</span><i></i></a>
-            </div>
-            <div class="tier">
-              <div class="t-name" data-i18n="tier_standard">标准</div>
-              <div class="t-price">$500</div>
-              <div class="t-desc" data-i18n="tier_std_desc">总量 80 枚，售罄即止</div>
-              <a class="btn-neon sm" href="#" data-tier="standard"><span data-i18n="btn_buy_std">购买</span><i></i></a>
-            </div>
-            <div class="tier muted">
-              <div class="t-name" data-i18n="tier_presale">公测预约</div>
-              <div class="t-price" data-i18n="tier_presale_desc">预约开放倒计时</div>
-              <a class="btn-ghost sm disabled" href="#">Soon</a>
-            </div>
-          </div>
-          <div class="rights">
-            <h3 data-i18n="shareholder_title">股东权益（要点）</h3>
-            <ul>
-              <li data-i18n="r1">交易对补充优先权（LP 滑点与手续费收益归股东）</li>
-              <li data-i18n="r2">治理投票（资金用途 / 里程碑 / 市场与研发）</li>
-              <li data-i18n="r3">周度双分红：USDT（净收益）+ ARC（损耗）</li>
-              <li data-i18n="r4">代充值服务浮动利润归股东</li>
-              <li data-i18n="r5">链上透明：销毁/产出/分红/流动池可查</li>
-            </ul>
+          <div class="tier-card">
+            <h3 data-i18n="tier_presale_name">公测预约</h3>
+            <p data-i18n="tier_presale_desc">预约开放倒计时</p>
+            <p class="price">—</p>
+            <button disabled style="opacity:0.6;cursor:not-allowed;">敬请期待</button>
           </div>
         </div>
-        <!-- 右：分红案例 -->
-        <div class="card holo">
-          <h3 data-i18n="case_title">分红案例（示例）</h3>
-          <div class="case-grid">
-            <div class="case">
-              <div class="c-hd">Week #1</div>
-              <ul>
-                <li>净收益：10,000 USDT → <b>40% 分红 = 4,000 USDT</b></li>
-                <li>损耗池：3,000 ARC → <b>按持仓比例分发 ARC</b></li>
-                <li>LP 注入：<b>4,000 USDT</b></li>
-                <li>营销/运营：<b>2,000 USDT</b></li>
-              </ul>
-            </div>
-            <div class="case">
-              <div class="c-hd">Week #2</div>
-              <ul>
-                <li>净收益：12,000 USDT → <b>分红 4,800 USDT</b></li>
-                <li>损耗池：3,600 ARC → <b>分发 ARC</b></li>
-                <li>LP 注入：<b>4,800 USDT</b></li>
-                <li>营销/运营：<b>2,400 USDT</b></li>
-              </ul>
-            </div>
+        <div class="countdown" id="countdown"><span data-i18n="countdown_label">预售倒计时</span>：<span id="countdownTimer"></span></div>
+        <p class="nft-note" data-i18n="nft_note">NFT 总量100枚，永不增发，可自由交易。</p>
+      </section>
+
+      <!-- 募集进度区 -->
+      <section class="progress-section" id="progress">
+        <h2 data-i18n="progress_title">认购进度</h2>
+        <div class="progress-bar">
+          <div class="fill" id="progressFill"></div>
+        </div>
+        <div class="progress-info">
+          <div><strong id="raised">0</strong> <span data-i18n="progress_raised">已募集 (USDT)</span></div>
+          <div><strong id="sold">0</strong> <span data-i18n="progress_sold">已售 (枚)</span></div>
+          <div><strong id="burned">0</strong> <span data-i18n="progress_burned">销毁 (枚)</span></div>
+        </div>
+      </section>
+
+      <!-- 投资亮点区 -->
+      <section class="benefits section-gradient1" id="benefits">
+        <h2 data-i18n="benefits_title">投资优势</h2>
+        <div class="benefit-list">
+          <div class="benefit-item">
+            <h4><i class="fa-solid fa-rocket"></i> <span data-i18n="benefit_innov">创新链上玩法</span></h4>
+            <p data-i18n="benefit_innov_desc">团队地图与多层爬塔结合，打造前所未有的链游体验，吸引持续的玩家流和收益来源。</p>
           </div>
-          <p class="small" data-i18n="case_note">注：公测第1月分配规则为 50% 分红 / 40% LP / 10% 营销；第2月起为 30% 分红 / 40% LP / 15% 营销 / 15% 项目方运营。</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 玩法亮点 -->
-    <section id="highlights" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_highlights">玩法亮点</h2>
-      <div class="grid-3 v-cards">
-        <object id="teamMapObj" data="/assets/img/team-map.svg" type="image/svg+xml" class="map-svg" aria-label="团队地图"></object>
-        <div class="v-card tilt"><img src="/assets/img/highlight-02.jpg" alt=""><h4 data-i18n="h2">十二层爬塔</h4><p data-i18n="h2d">多维试炼与成就体系，装备与碎片随机掉落。</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-03.jpg" alt=""><h4 data-i18n="h3">大逃杀下注</h4><p data-i18n="h3d">观众可下注公平对决；链上结算，公开透明。</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-04.jpg" alt=""><h4>裂变拉新</h4><p>榜单/徽章/周赛，奖励可见</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-05.jpg" alt=""><h4>理财质押</h4><p>灵活锁仓，手续费归股东</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-06.jpg" alt=""><h4>NFT 装备</h4><p>铸造/合成/交易自由</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-07.jpg" alt=""><h4>公平赛制</h4><p>链上随机，录像可验</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-08.jpg" alt=""><h4>公测竞猜</h4><p>LOL/刀塔/NBA/世界杯</p></div>
-        <div class="v-card tilt"><img src="/assets/img/highlight-09.jpg" alt=""><h4>衍生品</h4><p>ETF/永续/期权互通</p></div>
-      </div>
-    </section>
-
-    <!-- 游戏下载 -->
-    <section id="download" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_download">游戏下载</h2>
-      <div class="dl">
-        <a class="btn-neon dlb" href="#"><img src="/assets/icons/windows.svg" alt=""><span>Windows</span><i></i></a>
-        <a class="btn-neon dlb" href="#"><img src="/assets/icons/android.svg" alt=""><span>Android</span><i></i></a>
-        <a class="btn-neon dlb" href="#"><img src="/assets/icons/ios.svg" alt=""><span>iOS / TestFlight</span><i></i></a>
-      </div>
-      <p class="small" data-i18n="dl_note">* 当前为内测包，占位下载链接待替换。</p>
-    </section>
-
-    <!-- 登顶路线 -->
-    <section id="roadmap" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_roadmap">登顶路线</h2>
-      <div class="card holo">
-        <svg class="slope" viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet" aria-label="roadmap">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#39c3ff" />
-              <stop offset="1" stop-color="#6b8cff" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2.5" result="b" />
-              <feMerge>
-                <feMergeNode in="b" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <path d="M40,200 L350,160 650,110 950,40" stroke="url(#g1)" stroke-width="6" fill="none" filter="url(#glow)" />
-          <g class="node"><circle cx="350" cy="160" r="7" fill="#39c3ff" /><text x="350" y="145" text-anchor="middle">阶段Ⅰ：内测（1 个月）</text></g>
-          <g class="node"><circle cx="650" cy="110" r="7" fill="#39c3ff" /><text x="650" y="95" text-anchor="middle">阶段Ⅱ：公测（1 个月）</text></g>
-          <g class="node"><circle cx="950" cy="40" r="7" fill="#39c3ff" /><text x="950" y="25" text-anchor="end">阶段Ⅲ：电竞&衍生品（2 个月）</text></g>
-        </svg>
-        <div class="road-notes">
-          <div><b>阶段Ⅰ</b>：上线 App（大逃杀/地图/社群），基础经济闭环</div>
-          <div><b>阶段Ⅱ</b>：接入竞猜（LOL/刀塔/NBA/世界杯 等）</div>
-          <div><b>阶段Ⅲ</b>：代币上市/金融衍生品/子游戏互通</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 链上数据 -->
-    <section id="chain" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_chain">链上数据</h2>
-      <svg class="bg-svg hud" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <pattern id="hudGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M40 0H0V40" fill="none" stroke="rgba(57,195,255,.18)" stroke-width="1" />
-            <circle cx="20" cy="20" r="1.5" fill="rgba(57,195,255,.45)">
-              <animate attributeName="opacity" values="0.25;0.8;0.25" dur="6s" repeatCount="indefinite" />
-            </circle>
-          </pattern>
-          <linearGradient id="hudLine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#39c3ff" />
-            <stop offset="1" stop-color="#6b8cff" />
-          </linearGradient>
-          <filter id="hudGlow">
-            <feGaussianBlur stdDeviation="2.2" result="b" />
-            <feMerge>
-              <feMergeNode in="b" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#hudGrid)" />
-        <path d="M -50 420 C 150 380, 350 460, 550 410 S 900 380, 1100 430" fill="none" stroke="url(#hudLine)" stroke-width="3" opacity=".45" filter="url(#hudGlow)">
-          <animate attributeName="stroke-dasharray" values="0,1200;200,1200;0,1200" dur="12s" repeatCount="indefinite" />
-          <animate attributeName="stroke-dashoffset" values="0;-400;0" dur="12s" repeatCount="indefinite" />
-        </path>
-        <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="rgba(111,170,255,.0)" />
-          <stop offset=".5" stop-color="rgba(111,170,255,.10)" />
-          <stop offset="1" stop-color="rgba(111,170,255,.0)" />
-        </linearGradient>
-        <rect x="-5%" y="-20%" width="110%" height="40%" fill="url(#scanGrad)">
-          <animateTransform attributeName="transform" type="translate" from="0 0" to="0 700" dur="10s" repeatCount="indefinite" />
-        </rect>
-      </svg>
-      <div class="bg-scan"></div>
-      <div class="card holo">
-        <div class="c-grid">
-          <div><b data-i18n="c1">合约地址</b><div class="mono">0x0000...0000</div></div>
-          <div><b data-i18n="c2">开源仓库</b><a class="mono" href="#" target="_blank" rel="noopener">github.com/…</a></div>
-          <div><b data-i18n="c3">周报</b><a class="mono" href="#" target="_blank" rel="noopener">weekly.json</a></div>
-          <div><b data-i18n="c4">第三方审计</b><a class="mono" href="#" target="_blank" rel="noopener">audit.pdf</a></div>
-          <div><b data-i18n="c5">链上浏览</b><a class="mono" href="#" target="_blank" rel="noopener">etherscan / bscscan</a></div>
-          <div><b data-i18n="c6">快速链接</b><span class="mono">Docs / API</span></div>
-        </div>
-        <div class="mini-icons">
-          <img src="/assets/icons/etherscan.svg" alt="etherscan" />
-          <img src="/assets/icons/bscscan.svg" alt="bscscan" />
-          <img src="/assets/icons/github.svg" alt="github" />
-          <img src="/assets/icons/audit.svg" alt="audit" />
-          <img src="/assets/icons/docs.svg" alt="docs" />
-          <img src="/assets/icons/explorer.svg" alt="explorer" />
-        </div>
-      </div>
-    </section>
-
-    <!-- 分配与分红 -->
-    <section id="dist" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_dist">分配与分红</h2>
-      <div class="grid-2">
-        <div class="card holo">
-          <h3 data-i18n="d_title">分配规则（公测第1月 / 第2月起）</h3>
-          <ul class="rules">
-            <li>第1月：<b>50%</b> 分红（USDT） / <b>40%</b> 注入 LP / <b>10%</b> 营销</li>
-            <li>第2月起：<b>30%</b> 分红（USDT） / <b>40%</b> LP / <b>15%</b> 营销 / <b>15%</b> 项目方</li>
-            <li>损耗按周统计，以 <b>ARC 代币</b> 分发；净收益以 <b>USDT</b> 分发</li>
-          </ul>
-          <canvas id="pie" height="200" aria-label="distribution-pie"></canvas>
-        </div>
-        <div class="card holo tilt">
-          <h3 data-i18n="d_calc">分红小计算器</h3>
-          <div class="calc">
-            <label>持有股东 NFT（枚）<input id="nft" type="number" value="1" min="1" max="100" /></label>
-            <label>本周净收益（USDT）<input id="rev" type="number" value="10000" /></label>
-            <div class="res">
-              <div>你本周 USDT 分红 ≈ <b id="usdtR">40</b> USDT</div>
-              <div>你本周 ARC 分红 ≈ <b id="arcR">30</b> ARC <span class="muted">(示例)</span></div>
-            </div>
+          <div class="benefit-item">
+            <h4><i class="fa-solid fa-shield-halved"></i> <span data-i18n="benefit_transparent">公开透明</span></h4>
+            <p data-i18n="benefit_transparent_desc">所有数据及合约部署在链上，第三方审计认证，投资者随时可查，信任无忧。</p>
+          </div>
+          <div class="benefit-item">
+            <h4><i class="fa-solid fa-coins"></i> <span data-i18n="benefit_yield">高效收益模型</span></h4>
+            <p data-i18n="benefit_yield_desc">分红机制结合流动性池，让代币持有者共享收益并保持市场流动，激励长期参与。</p>
+          </div>
+          <div class="benefit-item">
+            <h4><i class="fa-solid fa-globe"></i> <span data-i18n="benefit_global">全球社区</span></h4>
+            <p data-i18n="benefit_global_desc">跨语言版本支持，与全球玩家一起探索神域，强大的社区社交驱动成长与价值。</p>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 资金与销毁曲线 -->
-    <section id="analytics" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_analytics">资金与销毁曲线</h2>
-      <div class="card holo">
-        <canvas id="lines" height="260" aria-label="multi-lines"></canvas>
-        <p class="small muted" data-i18n="a_note">示例数据用于展示；占位数据在 script.js 中可替换为你的链上数据。</p>
-      </div>
-    </section>
-
-    <!-- 代币信息 + K线 -->
-    <section id="token" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_token">代币信息</h2>
-      <div class="grid-2">
-        <div class="card holo">
-          <ul class="token-info">
-            <li><b>Token:</b> ARC</li>
-            <li><b>Pair:</b> ARC/USDT</li>
-            <li><b>合约:</b> <span class="mono">0x0000...0000</span></li>
-            <li><b>上线时间:</b> <span id="launch">YYYY-MM-DD</span>（正式上线前 1 个月开放申购）</li>
-            <li><b>早鸟锁仓:</b> 30 天</li>
-          </ul>
+      <!-- 股东权益区 -->
+      <section class="shareholder section-gradient2" id="shareholder">
+        <h2 data-i18n="shareholder_title">股东权益</h2>
+        <div class="shareholder-list">
+          <div class="shareholder-item">
+            <h4 data-i18n="shareholder_dividend">分红比例</h4>
+            <p data-i18n="shareholder_dividend_desc">第一个月：收益的 50% 分给股东。第二个月起：收益的 30% 分给股东。</p>
+          </div>
+          <div class="shareholder-item">
+            <h4 data-i18n="shareholder_fund">资金流向</h4>
+            <p data-i18n="shareholder_fund_desc">第一个月：40% 注入流动池，10% 用于项目运营。第二个月起：50% 注入流动池，20% 用于运营与营销。</p>
+          </div>
+          <div class="shareholder-item">
+            <h4 data-i18n="shareholder_governance">治理与多签</h4>
+            <p data-i18n="shareholder_governance_desc">公测开始，所有资金进入多签钱包，股东可参与链游未来方向表决，确保透明与民主。</p>
+          </div>
+          <div class="shareholder-item">
+            <h4 data-i18n="shareholder_stable">稳定机制</h4>
+            <p data-i18n="shareholder_stable_desc">开采量超过消耗阈值时减产，并使用回购销毁机制确保代币经济长期稳定，不会崩盘。</p>
+          </div>
         </div>
-        <div class="card holo"><div id="kline" style="height:260px;"></div></div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 联系我们 -->
-    <section id="contact" class="wrap section">
-      <h2 class="sec-title" data-i18n="sec_contact">联系我们</h2>
-      <div class="icons">
-        <a href="#" class="icon"><img src="/assets/icons/telegram.svg" alt="" /> Telegram</a>
-        <a href="#" class="icon"><img src="/assets/icons/twitter.svg" alt="" /> Twitter</a>
-        <a href="mailto:team@aomi.org" class="icon"><img src="/assets/icons/email.svg" alt="" /> Email</a>
-      </div>
-    </section>
+      <!-- 代币经济区 -->
+      <section class="tokenomics section-gradient1" id="tokenomics">
+        <h2 data-i18n="tokenomics_title">代币经济</h2>
+        <div class="token-chart">
+          <canvas id="tokenChart"></canvas>
+        </div>
+      </section>
 
-    <footer class="wrap footer">
-      © ARC Protocol — All on-chain. <span id="year"></span>
-    </footer>
+      <!-- 团队介绍区 -->
+      <section class="team-section section-gradient2" id="team">
+        <h2 data-i18n="team_title">核心团队</h2>
+        <div class="team-grid">
+          <div class="team-member">
+            <img src="/assets/img/team/team1.png" alt="团队成员1背影" />
+            <h4>核心成员&nbsp;A</h4>
+            <p data-i18n="team_memberA_desc">线上娱乐开发 10 年经验，加密做市商 3 年，公测后公开身份。</p>
+          </div>
+          <div class="team-member">
+            <img src="/assets/img/team/team2.png" alt="团队成员2背影" />
+            <h4>核心成员&nbsp;B</h4>
+            <p data-i18n="team_memberB_desc">线下娱乐公关经理 5 年经验，专注社区运营，隐私保护公测后公开。</p>
+          </div>
+          <div class="team-member">
+            <img src="/assets/img/team/team3.png" alt="团队成员3背影" />
+            <h4>核心成员&nbsp;C</h4>
+            <p data-i18n="team_memberC_desc">加密项目顾问多年经验，负责技术与安全审计，暂不公开照片。</p>
+          </div>
+        </div>
+        <p class="privacy-note" data-i18n="privacy_note">保护团队隐私，暂不公开全部照片，公测后再公开。</p>
+      </section>
+
+      <!-- 路线图区 -->
+      <section class="roadmap section-gradient1" id="roadmap">
+        <h2 data-i18n="roadmap_title">路线图</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h4>2025 Q1</h4>
+            <p>完成内测版开发，开放团队地图与爬塔模式，小范围测试。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h4>2025 Q2</h4>
+            <p>正式公测启动，认购开放，引入大逃杀下注玩法。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h4>2025 Q3</h4>
+            <p>上线市场交易与跨链功能，扩大合作伙伴与社区活动。</p>
+          </div>
+          <div class="timeline-item">
+            <span class="dot"></span>
+            <h4>2025 Q4</h4>
+            <p>推出 DAO 治理机制，社区投票决定重大功能与发展方向。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 联系我们区 -->
+      <section class="contact section-gradient2" id="contact">
+        <h2 data-i18n="contact_title">联系我们</h2>
+        <p data-i18n="contact_text">加入我们的社区或联系团队了解更多信息。</p>
+        <div class="social-links">
+          <a href="https://twitter.com" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+          <a href="https://t.me" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+          <a href="mailto:info@arc-protocol.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </section>
+
+      <!-- 页脚 -->
+      <footer>
+        <p>© <span id="year"></span> ARC Protocol. All Rights Reserved.</p>
+      </footer>
+    </div>
+
+    <!-- 星星背景脚本：简单随机星星生成，避免影响性能 -->
     <script>
-      // 用脚本填写年份
+      const canvas = document.getElementById('background');
+      const ctx = canvas.getContext('2d');
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      const stars = [];
+      const starCount = 100;
+      for (let i = 0; i < starCount; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.2 + 0.3,
+          speed: Math.random() * 0.4 + 0.1
+        });
+      }
+
+      function drawStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ffffff';
+        stars.forEach((star) => {
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+          ctx.fill();
+        });
+        updateStars();
+        requestAnimationFrame(drawStars);
+      }
+
+      function updateStars() {
+        stars.forEach((star) => {
+          star.y += star.speed;
+          if (star.y > canvas.height) {
+            star.y = 0;
+            star.x = Math.random() * canvas.width;
+          }
+        });
+      }
+      drawStars();
+    </script>
+
+    <!-- 动态内容和图表脚本 -->
+    <script>
+      // 动态更新认购数据（示例数据，可替换为后端 API 调用）
+      const raisedEl = document.getElementById('raised');
+      const soldEl = document.getElementById('sold');
+      const burnedEl = document.getElementById('burned');
+      const progressFill = document.getElementById('progressFill');
+      function updateProgress(raised, sold, burned, goal) {
+        raisedEl.textContent = raised.toLocaleString();
+        soldEl.textContent = sold.toLocaleString();
+        burnedEl.textContent = burned.toLocaleString();
+        const percent = Math.min(100, (raised / goal) * 100);
+        progressFill.style.width = percent + '%';
+      }
+      // 示例调用：目标 100 万 USDT
+      updateProgress(600000, 150, 20, 1000000);
+
+      // 初始化代币分配饼图
+      const ctxChart = document.getElementById('tokenChart');
+      new Chart(ctxChart, {
+        type: 'doughnut',
+        data: {
+          labels: ['分红', '流动性', '营销', '运营'],
+          datasets: [
+            {
+              data: [30, 40, 15, 15],
+              backgroundColor: ['#9146ff', '#ffce00', '#00bcd4', '#8bc34a'],
+              borderWidth: 0
+            }
+          ]
+        },
+        options: {
+          cutout: '60%',
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: '#c7b6df'
+              }
+            }
+          }
+        }
+      });
+
+      // 设置当前年份
       document.getElementById('year').textContent = new Date().getFullYear();
+
+      // 预售倒计时（示例：截至 2025-12-31）
+      const countdownEl = document.getElementById('countdownTimer');
+      function updateCountdown() {
+        // 设置目标日期，这里可替换为实际预售结束时间
+        const targetDate = new Date('2025-12-31T00:00:00').getTime();
+        const now = Date.now();
+        const diff = targetDate - now;
+        if (diff <= 0) {
+          countdownEl.textContent = '已结束';
+          return;
+        }
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        countdownEl.textContent = `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // 多语言加载和切换
+      fetch('/assets/data/i18n.json')
+        .then((res) => res.json())
+        .then((i18nData) => {
+          const langSelect = document.getElementById('lang-select');
+          function setLang(lang) {
+            const dict = i18nData[lang] || i18nData['zh'];
+            document.querySelectorAll('[data-i18n]').forEach((el) => {
+              const key = el.getAttribute('data-i18n');
+              if (dict[key]) {
+                el.textContent = dict[key];
+              }
+            });
+          }
+          langSelect.addEventListener('change', () => setLang(langSelect.value));
+          // 初始化语言
+          setLang(langSelect.value);
+        });
     </script>
   </body>
 </html>
