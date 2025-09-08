@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,6 +32,7 @@
           </ul>
         </nav>
         <div class="lang-selector">
+          <button data-lang="en">🇬🇧</button>
           <button data-lang="zh">🇨🇳</button>
           <button data-lang="vi">🇻🇳</button>
           <button data-lang="es">🇪🇸</button>
@@ -40,9 +41,9 @@
       </div>
     </header>
     <!-- Hero Section -->
-    <section class="hero reveal-fade">
+    <section class="hero reveal-slow">
       <div class="container">
-        <h1 data-i18n="hero_title" class="hero-title-magic">>唤醒未来，铸就你的传奇</h1>
+        <h1 data-i18n="hero_title" class="hero-title-magic">>唤醒未知，铸就你的传奇</h1>
         <p data-i18n="hero_sub">一场由 ARC 驱动的链上冒险。探索未知、征服十二层爬塔、参与实时对决下注，并在团队地图中与伙伴共创收益。</p>
         <div class="hero-buttons">
           <a href="#subscribe" class="btn-primary" data-i18n="btn_subscribe">立即认购</a>
@@ -109,10 +110,12 @@
                 <div class="bar"><span id="earlyFill" style="width:0%"></span></div>
                 <div class="meta"><b id="soldCount">0</b> / <span id="preSaleCap">100</span> 已预售（<span id="soldPct">0%</span>）</div>
               </div>
+              <!-- Added Reserve Now button for early bird plan -->
+              <button class="btn-primary" data-i18n="btn_reserve">立即预约</button>
             </div>
             <div class="card-right">
               <label>预售倒计时</label>
-              <div id="countdown-presale" class="countdown flip compact" data-start="2025-09-15T00:00:00Z">
+              <div id="countdown-presale" class="countdown flip compact" data-start="2025-09-14T00:00:00Z">
                 <div class="unit"><div class="digit" data-val="00"><span>00</span></div><label>天</label></div>
                 <div class="sep">:</div>
                 <div class="unit"><div class="digit" data-val="00"><span>00</span></div><label>时</label></div>
@@ -248,17 +251,17 @@
         <h2 class="section-title" data-i18n="team_title">核心团队</h2>
         <div class="team-grid">
           <div class="team-card">
-            <img src="./assets/img/team/team1.png" alt="Team A" />
+            <img src="./assets/img/team/bg1.png" alt="Team A" />
             <h4>成员 A</h4>
             <p data-i18n="team_memberA_desc">线上娱乐开发10年经验，线下娱乐公关经理3年，加密做市商多年，公测后公开身份。</p>
           </div>
           <div class="team-card">
-            <img src="./assets/img/team/team2.png" alt="Team B" />
+            <img src="./assets/img/team/bg2.png" alt="Team B" />
             <h4>成员 B</h4>
             <p data-i18n="team_memberB_desc">资深游戏策划，5年链游研发经验，曾参与多款人气游戏项目，公测后公开身份。</p>
           </div>
           <div class="team-card">
-            <img src="./assets/img/team/team3.png" alt="Team C" />
+            <img src="./assets/img/team/bg3.png" alt="Team C" />
             <h4>成员 C</h4>
             <p data-i18n="team_memberC_desc">区块链架构师，技术主导，曾在大型交易所任职，公测后公开身份。</p>
           </div>
@@ -299,7 +302,7 @@
     </section>
     <!-- Contact Section -->
     
-    <section class="roadmap" id="roadmap">
+    <section class="roadmap" id="roadmap-duplicate" style="display:none">
       <div class="container">
         <h2 class="section-title gradient-animated">路线图</h2>
         <div class="roadmap-wrap">
@@ -327,9 +330,9 @@
         <h2 class="section-title" data-i18n="contact_title">联系我们</h2>
         <p data-i18n="contact_text">加入我们的社区或联系团队了解更多信息。</p>
         <div class="social">
-          <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
-          <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://twitter.com/yourhandle" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://t.me/yourtelegram" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+          <a href="mailto:info@yourdomain.com" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
       </div>
     </section>
@@ -341,6 +344,8 @@
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
+
+
 
 
 
