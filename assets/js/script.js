@@ -79,10 +79,11 @@ async function initI18n() {
   try {
     const res = await fetch('./assets/data/i18n.json');
     const translations = await res.json();
-    // Set default language to English on initial load
-    let currentLang = 'en';
+    // Initialize language from <html lang> or fall back to English
+    let currentLang = document.documentElement.getAttribute('lang') || 'en';
 
     function applyTranslations() {
+      document.documentElement.setAttribute('lang', currentLang);
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const text = translations[currentLang][key];
