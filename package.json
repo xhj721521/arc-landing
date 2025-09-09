@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build:css": "sass src/styles/style.scss assets/css/style.css --no-source-map --style=compressed && postcss assets/css/style.css --use autoprefixer -o assets/css/style.css",
     "test": "echo \"No tests specified\" && exit 1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "sass": "^1.69.5"
   }
 }
-

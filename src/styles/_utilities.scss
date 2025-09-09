@@ -1,0 +1,70 @@
+.reveal-fade {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.reveal-fade.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Slower fade animation for hero section */
+.reveal-slow {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 1.6s ease,
+    transform 1.6s ease;
+}
+.reveal-slow.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-title-magic {
+  font-family: "Cinzel Decorative", "UnifrakturCook", "Orbitron", serif;
+  background: linear-gradient(
+    90deg,
+    #ffd86b,
+    #ffe9a3,
+    #7ed6ff,
+    #00f5ff,
+    #a26bff
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation:
+    magicSweep 8s linear infinite,
+    magicBreath 3.2s ease-in-out infinite;
+}
+@keyframes magicSweep {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 300% 0;
+  }
+}
+@keyframes magicBreath {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-1px) scale(1.015);
+  }
+}
+@keyframes hexBreath {
+  0%,
+  100% {
+    transform: scale(0.995);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.01);
+    opacity: 0.9;
+  }
+}
+
