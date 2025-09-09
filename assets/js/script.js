@@ -115,28 +115,41 @@ function initGauges() {
   });
 }
 
-// Countdown timer for presale
+// Countdown timer for all elements with class "countdown"
 function initCountdown() {
-  const countdownEl = document.querySelector('.countdown');
-  if (!countdownEl) return;
-  // Set target date to one month from now (you can adjust as needed)
-  const target = new Date();
-  target.setMonth(target.getMonth() + 1);
-  function update() {
-    const now = new Date();
-    const diff = target - now;
-    if (diff <= 0) {
-      countdownEl.textContent = '00天00:00:00';
-      return;
-    }
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    countdownEl.textContent = `${String(days).padStart(2, '0')}天${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  }
-  update();
-  setInterval(update, 1000);
+  document.querySelectorAll('.countdown').forEach(el => {
+    const targetTime = new Date(el.getAttribute('data-start')).getTime();
+    const digits = [...el.querySelectorAll('.digit')];
+
+    const pad = n => String(Math.max(0, Math.floor(n))).padStart(2, '0');
+
+    const set = (d, h, m, s) => {
+      const values = [pad(d), pad(h), pad(m), pad(s)];
+      digits.forEach((digit, i) => {
+        const v = values[i];
+        if (digit.getAttribute('data-val') !== v) {
+          digit.setAttribute('data-val', v);
+          const span = digit.querySelector('span');
+          if (span) span.textContent = v;
+          digit.classList.remove('flipping');
+          void digit.offsetWidth;
+          digit.classList.add('flipping');
+        }
+      });
+    };
+
+    const tick = () => {
+      let diff = Math.max(0, targetTime - Date.now());
+      const d = diff / 86400000; diff %= 86400000;
+      const h = diff / 3600000; diff %= 3600000;
+      const m = diff / 60000; diff %= 60000;
+      const s = diff / 1000;
+      set(d, h, m, s);
+      requestAnimationFrame(tick);
+    };
+
+    tick();
+  });
 }
 
 // Draw tokenomics chart using Chart.js
@@ -190,26 +203,3 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener("load", function(){
   document.querySelectorAll('.reveal-fade, .reveal-slow').forEach(el => el.classList.add('is-in'));
 });
-;(function(){
-  function setup(id){
-    var el=document.getElementById(id); if(!el) return;
-    var ts=new Date(el.getAttribute('data-start')).getTime();
-    var dg=[...el.querySelectorAll('.digit')];
-    function pad(n){return String(Math.max(0,Math.floor(n))).padStart(2,'0')}
-    function set(d,h,m,s){
-      var vv=[pad(d),pad(h),pad(m),pad(s)];
-      dg.forEach((e,i)=>{var v=vv[i]; if(e.getAttribute('data-val')!==v){e.setAttribute('data-val',v); e.querySelector('span').textContent=v; e.classList.remove('flipping'); void e.offsetWidth; e.classList.add('flipping');}});
-    }
-    function tick(){
-      var now=Date.now(), diff=Math.max(0, ts-now);
-      var d=diff/86400000; diff%=86400000;
-      var h=diff/3600000; diff%=3600000;
-      var m=diff/60000; diff%=60000;
-      var s=diff/1000;
-      set(d,h,m,s);
-      requestAnimationFrame(tick);
-    }
-    tick();
-  }
-  setup('countdown-presale'); setup('countdown-alpha');
-})();
