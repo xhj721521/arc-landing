@@ -1,206 +1,154 @@
 /*
- * Modern site JavaScript
- * Handles starfield animation, scroll-triggered animations, multi-language support,
- * radial gauge updates, countdown timer, pie chart for tokenomics,
- * and footer year update.
- */
+* 现代网站 JavaScript
+* 处理星空动画、滚动触发动画、多语言支持，
+* 径向仪表更新、倒计​​时器、代币经济学饼图，
+* 和页脚年份更新。
+*/
 
-// Starfield animation similar to new_site but for #starfield
-function initStarfield() {
-  const canvas = document.getElementById('starfield');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  const stars = [];
-  const numStars = 150;
+// Starfield 动画类似于 new_site，但用于 #starfield
+函数initStarfield ( ) {
+ 
+  const canvas = document.getElementById ( 'starfield ' ) ;
+  如果（！画布）返回；
+  const ctx = canvas.getContext ( ' 2d' );
+  让宽度，高度；
+  const星星 = [];
+  const numStars = 150 ;
+  让动画ID；
 
-  function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+  // 多个视差层的配置
+  const层 = [
+    {星星：[],数量：50 ,大小：[ 0.5 , 1 ],速度：[ 0.1 , 0.3 ] },
+    {星星：[],数量：50 ,大小：[ 0.7 , 1.5 ],速度：[ 0.2 , 0.5 ] },
+    {星星：[],数量：50 ,大小：[ 1 , 2 ],速度：[ 0.4 , 0.8 ] }
+  ]；
+
+  函数调整大小（）{
+ 
+    宽度 = 画布。宽度=窗口。内部宽度；
+    高度 = 画布。高度=窗口。内部高度；
   }
 
-  function initStars() {
-    stars.length = 0;
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 1.5 + 0.5,
-        speed: Math.random() * 0.5 + 0.2,
-        alpha: Math.random() * 0.8 + 0.2
+  函数initStars ( ) {
+ 
+    星星。长度= 0 ；
+    对于（让i = 0 ；i < numStars；i++）{
+      星星。推（{
+        x ：数学.随机（）*宽度，
+        y ：数学.随机（）* 高度，
+        大小：Math.random （）*
+ 1.5 + 0.5 ，
+        速度：Math.random （）*
+ 0.5 + 0.2 ，
+        alpha ：Math.random （）* 0.8 + 0.2
       });
     }
-  }
-
-  function update() {
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = '#ffffff';
-    stars.forEach(star => {
-      ctx.globalAlpha = star.alpha;
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-      ctx.fill();
-      star.y += star.speed;
-      if (star.y > height) {
-        star.y = 0;
-        star.x = Math.random() * width;
+    层。forEach （层= > {
+      层。星星=[]；
+      对于（让i = 0 ；i < 层。计数；i ++）{
+        层.星星.推（{
+          x ：数学.随机（）*宽度，
+          y ：数学.随机（）* 高度，
+          尺寸：
+            Math.random () * (layer.size [ 1 ] - layer.size [ 0 ] ) + layer.size [ 0 ] ,
+          速度：
+            Math.random () * (layer.speed [ 1 ] - layer.speed [ 0 ] ) + layer.speed [ 0 ] ，
+          alpha ：Math.random （）* 0.8 + 0.2
+        });
       }
     });
-    requestAnimationFrame(update);
   }
 
-  resize();
-  initStars();
-  window.addEventListener('resize', () => {
-    resize();
-    initStars();
-  });
-  update();
-}
-
-// Scroll-trigger animations using IntersectionObserver
-function initScrollAnimations() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('show');
-        observer.unobserve(entry.target);
+  函数更新（）{
+ 
+    ctx.clearRect ( 0,0 ,宽度,高度)
+ ;
+    ctx.填充样式= '#ffffff' ;
+    星星。forEach （星星= > {
+      ctx.globalAlpha =
+ star.alpha ;​
+      ctx.beginPath （）
+ ；
+      ctx.arc ( star.x , star.y ,
+ star.size , 0 , Math.PI * 2 ) ;​​
+      ctx.填充（）；
+      星星。y + = 星星。速度；
+      如果（星星。y >高度）{
+        星星。y = 0 ；
+        星号。x = Math.random ( ) *
+宽度；
       }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.section-title, .feature-hex, .gauge-card, .benefit-item, .shareholder-card, .chart-wrapper, .carousel-item, .team-card, .roadmap-step, .contact').forEach(el => {
-    el.classList.add('animate');
-    observer.observe(el);
-  });
-}
-
-// Multi-language support using i18n.json
-async function initI18n() {
-  try {
-    const res = await fetch('./assets/data/i18n.json');
-    const translations = await res.json();
-    // Initialize language from <html lang> or fall back to English
-    let currentLang = document.documentElement.getAttribute('lang') || 'en';
-
-    function applyTranslations() {
-      document.documentElement.setAttribute('lang', currentLang);
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        const text = translations[currentLang][key];
-        if (text) {
-          el.textContent = text;
-        }
-      });
-    }
-    document.querySelectorAll('.lang-selector button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        if (translations[lang]) {
-          currentLang = lang;
-          applyTranslations();
+    层。forEach （层= > {
+      层.星星.forEach ( star = > {
+        ctx.globalAlpha =
+ star.alpha ;​
+        ctx.beginPath （）
+ ；
+        ctx.arc ( star.x , star.y ,
+ star.size , 0 , Math.PI * 2 ) ;​​
+        ctx.填充（）；
+        星星。y + = 星星。速度；
+        如果（星星。y >高度）{
+          星星。y = 0 ；
+          星号。x = Math.random ( ) *
+宽度；
         }
       });
     });
-    applyTranslations();
-  } catch (err) {
-    console.error('Failed to load translations', err);
+    请求动画帧（更新）；
+    animationId = requestAnimationFrame (更新);
   }
-}
 
-// Initialize radial gauges (conic-gradient) based on data-value attribute
-function initGauges() {
-  document.querySelectorAll('.gauge').forEach(gauge => {
-    const value = gauge.getAttribute('data-value');
-    gauge.style.setProperty('--value', value);
-    // The displayed percentage inside gauge will be updated automatically by CSS
+  函数停止（）{
+ 
+    如果（动画ID）{
+      取消动画帧（动画ID）；
+      动画ID =空；
+    }
+  }
+
+  调整大小（）；
+  初始化星星（）；
+  窗口. addEventListener ( '调整大小' , () => {
+    调整大小（）；
+    初始化星星（）；
   });
-}
-
-// Countdown timer for all elements with class "countdown"
-function initCountdown() {
-  document.querySelectorAll('.countdown').forEach(el => {
-    const targetTime = new Date(el.getAttribute('data-start')).getTime();
-    const digits = [...el.querySelectorAll('.digit')];
-
-    const pad = n => String(Math.max(0, Math.floor(n))).padStart(2, '0');
-
-    const set = (d, h, m, s) => {
-      const values = [pad(d), pad(h), pad(m), pad(s)];
-      digits.forEach((digit, i) => {
-        const v = values[i];
-        if (digit.getAttribute('data-val') !== v) {
-          digit.setAttribute('data-val', v);
-          const span = digit.querySelector('span');
-          if (span) span.textContent = v;
-          digit.classList.remove('flipping');
-          void digit.offsetWidth;
-          digit.classList.add('flipping');
-        }
-      });
-    };
-
-    const tick = () => {
-      let diff = Math.max(0, targetTime - Date.now());
-      const d = diff / 86400000; diff %= 86400000;
-      const h = diff / 3600000; diff %= 3600000;
-      const m = diff / 60000; diff %= 60000;
-      const s = diff / 1000;
-      set(d, h, m, s);
-      requestAnimationFrame(tick);
-    };
-
-    tick();
-  });
-}
-
-// Draw tokenomics chart using Chart.js
-function initTokenomicsChart() {
-  const canvas = document.getElementById('tokenChart2');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['早鸟', '标准', '团队', '预留'],
-      datasets: [
-        {
-          data: [20, 50, 20, 10],
-          backgroundColor: ['#9146ff', '#ffce00', '#00c19d', '#ff5656'],
-          borderColor: '#0a0520',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      plugins: {
-        legend: {
-          labels: {
-            color: '#faf7ff'
-          }
-        }
-      }
+  窗口.addEventListener ( 'beforeunload' ,停止)
+ ;
+  document.addEventListener ( 'visibilitychange' , ( )= > {
+    如果（文档.隐藏）{
+      停止（）;
+    }别的{
+      更新（）;
     }
   });
+  更新（）;
 }
 
-// Update footer year
-function updateYear() {
-  const yearEl = document.getElementById('year2');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+// 使用 IntersectionObserver 触发滚动动画
+函数initScrollAnimations ( ) {
+ 
+  const观察者 = new IntersectionObserver ( entries => {
+ 
+    条目.forEach （条目= > {
+      如果（entry.isIntersecting ）{
+        entry.target.classList.add ( '显示' ) ;
+​​
+        观察者.取消观察( entry.target );
+      }
+    });
+  }, {阈值：0.1 });
+  document.querySelectorAll ( ' . section-title, .feature-hex, .gauge-card, .benefit-item, .shareholder-card, .chart-wrapper, .carousel-item, .team-card, .roadmap-step, .contact' ) . forEach ( el => {
+    el.classList.add ( '动画' ) ;
+    观察者。观察（el）；
+  });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initStarfield();
-  initScrollAnimations();
-  initI18n();
-  initGauges();
-  initCountdown();
-  initTokenomicsChart();
-  updateYear();
-});
-
-
-// Apply entrance animation to elements marked with reveal-fade or reveal-slow
-window.addEventListener("load", function(){
-  document.querySelectorAll('.reveal-fade, .reveal-slow').forEach(el => el.classList.add('is-in'));
-});
+// 使用 i18n.json 实现多语言支持
+异步函数initI18n ( ) {
+  
+  尝试{
+    const res = await fetch ( './assets/data/i18n.json' );
+ 
+    const translations = await res.json ( ) ;
+    // 从 <html lang> 初始化语言或恢复为英语
